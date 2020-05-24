@@ -1,5 +1,6 @@
 package com.lewiswilson.minimalistsavingstracker.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.lewiswilson.minimalistsavingstracker.AddTransaction;
 import com.lewiswilson.minimalistsavingstracker.R;
 import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
 import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
@@ -43,8 +47,30 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AddTransaction.class));
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
         ArrayList<RecyclerItem> itemList = new ArrayList<>();
         itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+
+
 
         mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
         mRecyclerView.setHasFixedSize(true);

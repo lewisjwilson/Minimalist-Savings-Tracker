@@ -15,4 +15,8 @@
     <string name="Income">Income</string>
     <string name="Expenses">Expenses</string>
     <string name="Income_Expenses">Income/Expenses</string>
+    <string name="Amount">Amount:</string>
+    <string name="Reference">Reference:</string>
+    <string name="Yen">‎¥</string>
+    <string name="Submit">Submit</string>
 </resources>
