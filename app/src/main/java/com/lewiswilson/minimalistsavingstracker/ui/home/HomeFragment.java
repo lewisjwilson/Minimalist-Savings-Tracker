@@ -10,11 +10,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.lewiswilson.minimalistsavingstracker.R;
+import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
+import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;  //bridge between recyclerview and arraylist
+    //(can't load all items at once - provides number of
+    //items we currently need)
+    private RecyclerView.LayoutManager mLayoutManager; //aligns items in list
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -28,6 +42,19 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        ArrayList<RecyclerItem> itemList = new ArrayList<>();
+        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
+
+        mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new RecyclerAdapter(itemList);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
         return root;
     }
+
 }
