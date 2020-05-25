@@ -1,16 +1,9 @@
 package com.lewiswilson.minimalistsavingstracker;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Menu;
-import android.view.ViewGroup;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,11 +12,6 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 

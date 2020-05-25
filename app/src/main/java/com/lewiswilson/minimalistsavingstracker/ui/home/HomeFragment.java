@@ -1,10 +1,14 @@
 package com.lewiswilson.minimalistsavingstracker.ui.home;
 
+import java.lang.*;
+
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,15 +21,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.lewiswilson.minimalistsavingstracker.AddTransaction;
+import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
 import com.lewiswilson.minimalistsavingstracker.R;
 import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
 import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
+    DatabaseHelper myDB;
     private HomeViewModel homeViewModel;
 
     private RecyclerView mRecyclerView;
@@ -56,20 +64,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        ArrayList<RecyclerItem> itemList = new ArrayList<>();
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
-        itemList.add(new RecyclerItem(new BigDecimal(1320), "Netflix"));
 
+        //get database data and populate recyclerview
+        myDB = new DatabaseHelper(getActivity());
+        Cursor data = myDB.getData();
+
+        ArrayList<RecyclerItem> itemList = new ArrayList<>();
+
+        //adding to db requires: itemList.add(new RecyclerItem(int, String));
+        while (data.moveToNext()) {
+            //column index 1 of db = amount, column index 2 = reference
+            itemList.add(new RecyclerItem(data.getInt(1), data.getString(2)));
+        }
 
 
         mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
@@ -80,7 +86,19 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
+        //iterate through arraylist and add all amounts together
+        int balance = 0;
+        for(int i = 0; i < itemList.size(); i++)
+           balance += itemList.get(i).getAmount();
+
+        //format for commas between each 3 zeros
+        String string_balance = NumberFormat.getNumberInstance(Locale.US).format(balance);
+        TextView edit_balance = root.findViewById(R.id.num_balance);
+        String final_value = "¥" + string_balance;
+        edit_balance.setText(final_value);
+
         return root;
     }
+
 
 }

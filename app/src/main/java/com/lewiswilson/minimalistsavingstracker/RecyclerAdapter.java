@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> { //links rv with arraylist
 
@@ -43,7 +45,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) { //int is position of item we are binding
         RecyclerItem currentItem = mItemList.get(position);
 
-        holder.mAmountTextView.setText(String.valueOf(currentItem.getAmount()));
+        //format for commas between each 3 zeros
+        String amount_display = NumberFormat.getNumberInstance(Locale.US).format(currentItem.getAmount());
+        String final_display = "¥" + amount_display;
+        holder.mAmountTextView.setText(final_display);
         holder.mReferenceTextView.setText(currentItem.getReference());
     }
 
