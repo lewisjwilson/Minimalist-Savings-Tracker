@@ -1,9 +1,9 @@
 package com.lewiswilson.minimalistsavingstracker;
 
 public class RecyclerItem { //used to fill the recyclerview
-    private int mNegative;
-    private int mAmount;
-    private String mReference;
+    private final int mNegative;
+    private final int mAmount;
+    private final String mReference;
 
     public RecyclerItem(int negative, int amount, String reference) { //define an item
          mNegative = negative; //1 means minus sign should show, 0 means the opposite

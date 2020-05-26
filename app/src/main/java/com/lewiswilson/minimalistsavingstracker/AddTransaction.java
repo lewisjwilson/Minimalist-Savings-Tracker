@@ -15,13 +15,14 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class AddTransaction extends AppCompatActivity {
 
-    DatabaseHelper myDB;
-    ToggleButton btn_income_expenses; //not checked = income, checked = expense
-    TextView txt_minus;
-    EditText edit_amount, edit_reference;
-    Button btn_submit;
-    String new_amount, new_reference;
-    int new_amount_val;
+    private DatabaseHelper myDB;
+    private ToggleButton btn_income_expenses; //not checked = income, checked = expense
+    private TextView txt_minus;
+    private EditText edit_amount;
+    private EditText edit_reference;
+    private String new_amount;
+    private String new_reference;
+    private int new_amount_val;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class AddTransaction extends AppCompatActivity {
         txt_minus = findViewById(R.id.txt_minus_rv);
         edit_amount = findViewById(R.id.edit_amount);
         edit_reference = findViewById(R.id.edit_reference);
-        btn_submit = findViewById(R.id.btn_submit);
+        Button btn_submit = findViewById(R.id.btn_submit);
 
         btn_income_expenses.setOnClickListener(new View.OnClickListener() {
             @Override

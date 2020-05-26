@@ -1,6 +1,5 @@
 package com.lewiswilson.minimalistsavingstracker;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,13 @@ import java.util.Locale;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> { //links rv with arraylist
 
-    private ArrayList<RecyclerItem> mItemList;
+    private final ArrayList<RecyclerItem> mItemList;
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mNegativeTextView;
-        TextView mAmountTextView;
-        TextView mReferenceTextView;
+        final TextView mNegativeTextView;
+        final TextView mAmountTextView;
+        final TextView mReferenceTextView;
 
         ItemViewHolder(@NonNull View itemView) {
             super(itemView);
