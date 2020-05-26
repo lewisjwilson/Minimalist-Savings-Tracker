@@ -11,14 +11,15 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "MST_Income_Expenses.db";
-    public static final String TABLE_NAME = "transactions";
-    public static final String COL0 = "ID";
-    public static final String COL1 = "AMOUNT";
-    public static final String COL2 = "REFERENCE";
-    public static final String COL3 = "CATEGORY";
-    public static final String COL4 = "DATE_TIME_ADDED";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "MST_Income_Expenses.db";
+    private static final String TABLE_NAME = "transactions";
+    private static final String COL0 = "ID";
+    private static final String COL1 = "EXPENSE";
+    private static final String COL2 = "AMOUNT";
+    private static final String COL3 = "REFERENCE";
+    private static final String COL4 = "CATEGORY";
+    private static final String COL5 = "DATE_TIME_ADDED";
 
     SQLiteDatabase db;
 
@@ -31,10 +32,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
                 COL0 + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL1 + " INTEGER, " +
-                COL2 + " TEXT, " +
+                COL1 + " BOOLEAN, " +
+                COL2 + " INTEGER, " +
                 COL3 + " TEXT, " +
-                COL4 + " TEXT)");
+                COL4 + " TEXT, " +
+                COL5 + " TEXT)");
     }
 
     @Override
@@ -44,21 +46,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(int amount, String reference) {
+    boolean addData(boolean expense, int amount, String reference) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL1, amount);
-        contentValues.put(COL2, reference);
+        contentValues.put(COL1, expense);
+        contentValues.put(COL2, amount);
+        contentValues.put(COL3, reference);
 
         Log.d("DATABASE_HELPER", "Adding data to " + TABLE_NAME);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
 
-        if(result == -1){
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1; //return true if result is not -1
 
     }
 
@@ -66,7 +65,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        return data;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 }

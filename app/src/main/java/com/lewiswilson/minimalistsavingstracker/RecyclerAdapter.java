@@ -17,13 +17,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
     private ArrayList<RecyclerItem> mItemList;
 
-    public static class ItemViewHolder extends RecyclerView.ViewHolder {
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView mAmountTextView;
-        public TextView mReferenceTextView;
+        TextView mNegativeTextView;
+        TextView mAmountTextView;
+        TextView mReferenceTextView;
 
-        public ItemViewHolder(@NonNull View itemView) {
+        ItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            mNegativeTextView = itemView.findViewById(R.id.txt_minus_rv);
             mAmountTextView = itemView.findViewById(R.id.txt_entryamount);
             mReferenceTextView = itemView.findViewById(R.id.txt_entryreference);
         }
@@ -37,13 +39,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.example_rv_item, parent, false);
-        ItemViewHolder ivh = new ItemViewHolder(v);
-        return ivh;
+        return new ItemViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) { //int is position of item we are binding
         RecyclerItem currentItem = mItemList.get(position);
+
+        int negative = currentItem.getNegative();
+        if(negative==1){//if item is an expense
+            holder.mNegativeTextView.setVisibility(View.VISIBLE);
+        } else {
+            holder.mNegativeTextView.setVisibility(View.INVISIBLE);
+        }
+
 
         //format for commas between each 3 zeros
         String amount_display = NumberFormat.getNumberInstance(Locale.US).format(currentItem.getAmount());

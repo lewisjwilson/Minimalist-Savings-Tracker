@@ -19,4 +19,7 @@
     <string name="Reference">Reference:</string>
     <string name="Yen">‎¥</string>
     <string name="Submit">Submit</string>
+    <string name="Expense">Expense</string>
+    <string name="AmountHint">1000</string>
+    <string name="ReferenceHint">Bills</string>
 </resources>

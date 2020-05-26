@@ -30,10 +30,14 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
-    DatabaseHelper myDB;
+    private DatabaseHelper myDB;
+
+    private TextView txt_minus_rv;
+
     private HomeViewModel homeViewModel;
 
     private RecyclerView mRecyclerView;
@@ -60,7 +64,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), AddTransaction.class));
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -69,12 +73,21 @@ public class HomeFragment extends Fragment {
         myDB = new DatabaseHelper(getActivity());
         Cursor data = myDB.getData();
 
+        View rv_item = inflater.inflate(R.layout.example_rv_item, container, false);
+        txt_minus_rv = rv_item.findViewById(R.id.txt_minus_rv);
+
+
         ArrayList<RecyclerItem> itemList = new ArrayList<>();
 
         //adding to db requires: itemList.add(new RecyclerItem(int, String));
         while (data.moveToNext()) {
+            if(data.getInt(1) > 0){ //if EXPENSES boolean value is 1 (true) then show minus sign
+                txt_minus_rv.setVisibility(View.VISIBLE);
+            } else {
+                txt_minus_rv.setVisibility(View.INVISIBLE);
+            }
             //column index 1 of db = amount, column index 2 = reference
-            itemList.add(new RecyclerItem(data.getInt(1), data.getString(2)));
+            itemList.add(new RecyclerItem(data.getInt(1), data.getInt(2), data.getString(3)));
         }
 
 
@@ -89,7 +102,11 @@ public class HomeFragment extends Fragment {
         //iterate through arraylist and add all amounts together
         int balance = 0;
         for(int i = 0; i < itemList.size(); i++)
-           balance += itemList.get(i).getAmount();
+            if(itemList.get(i).getNegative()==1){
+                balance -= itemList.get(i).getAmount(); //if expense, minus the value
+            } else {
+                balance += itemList.get(i).getAmount(); //if income, add the value
+            }
 
         //format for commas between each 3 zeros
         String string_balance = NumberFormat.getNumberInstance(Locale.US).format(balance);
