@@ -18,4 +18,7 @@
     <string name="Expense">Expense</string>
     <string name="AmountHint">1000</string>
     <string name="ReferenceHint">Bills</string>
+    <string name="Edit">Edit</string>
+    <string name="EditBalance">Edit Balance</string>
+    <string name="InputNewBalance">Input new balance:</string>
 </resources>

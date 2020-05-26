@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lewiswilson.minimalistsavingstracker.AddTransaction;
 import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
+import com.lewiswilson.minimalistsavingstracker.EditBalanceDialog;
 import com.lewiswilson.minimalistsavingstracker.R;
 import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
 import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
@@ -27,9 +29,11 @@ import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
+
+    //make into shared preference
+    int balance_override;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -102,7 +106,22 @@ public class HomeFragment extends Fragment {
         String final_value = "¥" + string_balance;
         edit_balance.setText(final_value);
 
+        //edit balance manually
+        TextView tv_edit_balance = root.findViewById(R.id.txt_edit_balance);
+        tv_edit_balance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //popup window to change balance
+                balanceEdit();
+            }
+        });
+
         return root;
+    }
+
+    public void balanceEdit() {
+        EditBalanceDialog editBalanceDialog = new EditBalanceDialog();
+        editBalanceDialog.show(getActivity().getSupportFragmentManager(), "editBalanceDialog");
     }
 
 
