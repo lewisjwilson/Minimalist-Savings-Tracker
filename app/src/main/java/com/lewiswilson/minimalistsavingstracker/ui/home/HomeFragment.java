@@ -4,15 +4,17 @@ import java.lang.*;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lewiswilson.minimalistsavingstracker.AddTransaction;
 import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
-import com.lewiswilson.minimalistsavingstracker.EditBalanceDialog;
+import com.lewiswilson.minimalistsavingstracker.EditBalance;
 import com.lewiswilson.minimalistsavingstracker.R;
 import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
 import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
@@ -33,7 +35,8 @@ import java.util.Locale;
 public class HomeFragment extends Fragment {
 
     //make into shared preference
-    int balance_override;
+    public static int balance_override = 0;
+    public int difference = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -100,9 +103,22 @@ public class HomeFragment extends Fragment {
                 balance += itemList.get(i).getAmount(); //if income, add the value
             }
 
+        if(balance_override!=0) {                           //if balance_override has been activated
+            if (balance_override >= balance) {              //if override is larger than or equal to all transactions
+                difference = 0;                             //reinitialise difference in case of previous edit
+                difference = balance_override - balance;    //override - balance
+                balance = balance + difference;
+            } else {                                        //if override is less than all transactions (negative value)
+                difference = 0;                             //reset difference
+                difference = balance - balance_override;    //balance - override
+                balance = balance - difference;
+            }
+        }
+        Log.d("balance, override, difference ", balance + " " + balance_override + " " + difference);
+
         //format for commas between each 3 zeros
         String string_balance = NumberFormat.getNumberInstance(Locale.US).format(balance);
-        TextView edit_balance = root.findViewById(R.id.num_balance);
+        final TextView edit_balance = root.findViewById(R.id.num_balance);
         String final_value = "¥" + string_balance;
         edit_balance.setText(final_value);
 
@@ -112,17 +128,19 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //popup window to change balance
-                balanceEdit();
+                startActivity(new Intent(getActivity(), EditBalance.class));
+                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
         return root;
     }
 
-    public void balanceEdit() {
-        EditBalanceDialog editBalanceDialog = new EditBalanceDialog();
-        editBalanceDialog.show(getActivity().getSupportFragmentManager(), "editBalanceDialog");
-    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        //need to refresh view
+    }
 
 }

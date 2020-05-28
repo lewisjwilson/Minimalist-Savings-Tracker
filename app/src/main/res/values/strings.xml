@@ -21,4 +21,6 @@
     <string name="Edit">Edit</string>
     <string name="EditBalance">Edit Balance</string>
     <string name="InputNewBalance">Input new balance:</string>
+    <string name="_100000">100,000</string>
+    <string name="Type0Reset">Input 0 to reset</string>
 </resources>

@@ -25,6 +25,10 @@
             android:name=".AddTransaction"
             android:label = "New Transaction">
         </activity>
+        <activity
+            android:name=".EditBalance"
+            android:label = "@string/EditBalance">
+        </activity>
     </application>
 
 </manifest>

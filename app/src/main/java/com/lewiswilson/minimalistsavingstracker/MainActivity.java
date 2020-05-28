@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 
 import com.google.android.material.navigation.NavigationView;
+import com.lewiswilson.minimalistsavingstracker.ui.home.HomeFragment;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         //start of own code....above is menubar layout stuff!
-
 
 
     }

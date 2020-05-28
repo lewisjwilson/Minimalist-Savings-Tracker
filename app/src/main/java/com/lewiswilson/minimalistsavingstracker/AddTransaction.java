@@ -63,7 +63,6 @@ public class AddTransaction extends AppCompatActivity {
                     edit_reference.setText("");
 
                     startActivity(new Intent(AddTransaction.this, MainActivity.class));
-                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                     finish();
 
                 } else {

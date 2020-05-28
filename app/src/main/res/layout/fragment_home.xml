@@ -28,7 +28,7 @@
 
     <EditText
         android:id="@+id/num_balance"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:background="@null"
@@ -89,7 +89,6 @@
         android:layout_width="419dp"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@id/recycler_income_expenses"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_income_expenses" />
@@ -98,12 +97,10 @@
         android:id="@+id/recycler_income_expenses"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="4dp"
-        android:scrollbars= "vertical"
         android:background="@android:color/darker_gray"
+        android:padding="4dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider2" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
