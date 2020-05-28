@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +17,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.lewiswilson.MyApplication;
 import com.lewiswilson.minimalistsavingstracker.AddTransaction;
 import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
 import com.lewiswilson.minimalistsavingstracker.EditBalance;
@@ -34,9 +35,15 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class HomeFragment extends Fragment {
 
-    //make into shared preference
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String BAL_OVERRIDE_KEY = "balance_override";
+    public static final String DIFF_KEY = "difference";
+    private SharedPreferences sharedPreferences;
+
     public static int transaction_balance;
     public static int balance_override;
     public static int difference;
@@ -52,6 +59,14 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        //Get SharedPreferences---------------------------------------------------------------------
+
+        sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        balance_override = sharedPreferences.getInt(BAL_OVERRIDE_KEY, 0);
+        difference = sharedPreferences.getInt(DIFF_KEY, 0);
+
+        //------------------------------------------------------------------------------------------
 
         //get database data and populate recyclerview
         DatabaseHelper myDB = new DatabaseHelper(getActivity());
@@ -96,8 +111,7 @@ public class HomeFragment extends Fragment {
                 transaction_balance += itemList.get(i).getAmount(); //if income, add the value
             }
 
-        Log.d("balance before", String.valueOf(transaction_balance));
-        transaction_balance = transaction_balance + difference;
+        transaction_balance = transaction_balance + difference; //transactions plus the difference between the most recent override
 
 
         //format for commas between each 3 zeros
@@ -133,9 +147,18 @@ public class HomeFragment extends Fragment {
 
         balance_override = balance_override_val;
         difference = difference + balance_override - transaction_balance; //positive only
+        savePrefs();
 
-        Log.d("balance Override ", String.valueOf(balance_override));
-        Log.d("difference ", String.valueOf(difference));
+    }
+
+    public static void savePrefs() {
+
+        //Save SharedPreferences--------------------------------------------------------------------
+        MyApplication.mEditor.putInt(BAL_OVERRIDE_KEY, balance_override);
+        MyApplication.mEditor.putInt(DIFF_KEY, difference);
+        MyApplication.mEditor.commit();
+        //------------------------------------------------------------------------------------------
+
     }
 
 }

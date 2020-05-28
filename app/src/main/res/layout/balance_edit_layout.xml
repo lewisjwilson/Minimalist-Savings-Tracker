@@ -47,24 +47,14 @@
         android:textAlignment="center"
         android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/txt_reset_help"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_edit_balance"
-        android:layout_marginTop="0dp"
-        android:text="@string/Type0Reset"
-        android:textAlignment="center"
-        android:textSize="12sp" />
-
     <Button
         android:id="@+id/btn_editbalance"
         android:layout_width="149dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_reset_help"
+        android:layout_below="@+id/et_edit_balance"
         android:layout_alignParentStart="false"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="131dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="11dp"
         android:text="@string/Submit" />
 </RelativeLayout>
