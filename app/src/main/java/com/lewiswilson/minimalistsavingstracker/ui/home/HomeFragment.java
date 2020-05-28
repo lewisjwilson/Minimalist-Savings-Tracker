@@ -2,7 +2,9 @@ package com.lewiswilson.minimalistsavingstracker.ui.home;
 
 import java.lang.*;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,8 +37,9 @@ import java.util.Locale;
 public class HomeFragment extends Fragment {
 
     //make into shared preference
-    public static int balance_override = 0;
-    public int difference = 0;
+    public static int transaction_balance;
+    public static int balance_override;
+    public static int difference;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -49,16 +52,6 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
-
-        FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddTransaction.class));
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-
 
         //get database data and populate recyclerview
         DatabaseHelper myDB = new DatabaseHelper(getActivity());
@@ -95,30 +88,21 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         //iterate through arraylist and add all amounts together
-        int balance = 0;
+        transaction_balance = 0;
         for(int i = 0; i < itemList.size(); i++)
             if(itemList.get(i).getNegative()==1){
-                balance -= itemList.get(i).getAmount(); //if expense, minus the value
+                transaction_balance -= itemList.get(i).getAmount(); //if expense, minus the value
             } else {
-                balance += itemList.get(i).getAmount(); //if income, add the value
+                transaction_balance += itemList.get(i).getAmount(); //if income, add the value
             }
 
-        if(balance_override!=0) {                           //if balance_override has been activated
-            if (balance_override >= balance) {              //if override is larger than or equal to all transactions
-                difference = 0;                             //reinitialise difference in case of previous edit
-                difference = balance_override - balance;    //override - balance
-                balance = balance + difference;
-            } else {                                        //if override is less than all transactions (negative value)
-                difference = 0;                             //reset difference
-                difference = balance - balance_override;    //balance - override
-                balance = balance - difference;
-            }
-        }
-        Log.d("balance, override, difference ", balance + " " + balance_override + " " + difference);
+        Log.d("balance before", String.valueOf(transaction_balance));
+        transaction_balance = transaction_balance + difference;
+
 
         //format for commas between each 3 zeros
-        String string_balance = NumberFormat.getNumberInstance(Locale.US).format(balance);
-        final TextView edit_balance = root.findViewById(R.id.num_balance);
+        String string_balance = NumberFormat.getNumberInstance(Locale.US).format(transaction_balance);
+        TextView edit_balance = root.findViewById(R.id.num_balance);
         String final_value = "¥" + string_balance;
         edit_balance.setText(final_value);
 
@@ -133,14 +117,25 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AddTransaction.class));
+                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
         return root;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public static void BalanceOverride(int balance_override_val) {
 
-        //need to refresh view
+        balance_override = balance_override_val;
+        difference = difference + balance_override - transaction_balance; //positive only
+
+        Log.d("balance Override ", String.valueOf(balance_override));
+        Log.d("difference ", String.valueOf(difference));
     }
 
 }

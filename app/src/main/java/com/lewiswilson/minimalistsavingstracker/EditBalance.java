@@ -30,8 +30,7 @@ public class EditBalance extends AppCompatActivity {
             public void onClick(View v) {
                 if(et_edit_balance.length() != 0)
                 {
-                    HomeFragment.balance_override = Integer.parseInt(et_edit_balance.getText().toString());
-                    HomeFragment.refresh = true;
+                    HomeFragment.BalanceOverride(Integer.parseInt(et_edit_balance.getText().toString())); //override the value of balance
                     startActivity(new Intent(EditBalance.this, MainActivity.class));
                     finish();
 
