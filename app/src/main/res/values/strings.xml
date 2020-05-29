@@ -29,4 +29,40 @@
     <string name="Category">Category:</string>
     <string name="Date">Date:</string>
     <string name="ChooseDate">Select a date</string>
+    
+    <string-array name="income_categories">
+        <item>Gift</item>
+        <item>Salary</item>
+        <item>Sold Items</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="expense_categories">
+        <item>ATM Withdrawal</item>
+        <item>Bars/Alcohol</item>
+        <item>Cafes</item>
+        <item>Clothes Shopping</item>
+        <item>Donations</item>
+        <item>Eating Out</item>
+        <item>Educational Items</item>
+        <item>Electric Bills</item>
+        <item>Entertainment</item>
+        <item>Family</item>
+        <item>Friends</item>
+        <item>Gas Bills</item>
+        <item>Grocery Shopping</item>
+        <item>Health</item>
+        <item>Household Items</item>
+        <item>Internet Bills</item>
+        <item>Misc. Shopping</item>
+        <item>Other Bills</item>
+        <item>Partner/Lover</item>
+        <item>Pets</item>
+        <item>Phone Bills</item>
+        <item>Repayments</item>
+        <item>Transportation</item>
+        <item>TV Bills</item>
+        <item>Water Bills</item>
+        <item>Others</item>
+    </string-array>
 </resources>

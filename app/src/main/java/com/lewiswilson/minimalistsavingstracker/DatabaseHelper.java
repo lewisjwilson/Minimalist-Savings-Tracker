@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL2 = "AMOUNT";
     private static final String COL3 = "REFERENCE";
     private static final String COL4 = "CATEGORY";
-    private static final String COL5 = "DATE_TIME_ADDED";
+    private static final String COL5 = "DATE_TIME";
 
     SQLiteDatabase db;
 
@@ -44,12 +44,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    boolean addData(boolean expense, int amount, String reference) {
+    boolean addData(boolean expense, int amount, String reference, String category, String date_time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL1, expense);
         contentValues.put(COL2, amount);
         contentValues.put(COL3, reference);
+        contentValues.put(COL4, category);
+        contentValues.put(COL5, date_time);
 
         Log.d("DATABASE_HELPER", "Adding data to " + TABLE_NAME);
 
