@@ -1,19 +1,14 @@
-package com.lewiswilson.minimalistsavingstracker.ui.home;
+package com.lewiswilson.minimalistsavingstracker.ui.Home;
 
-import java.lang.*;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -39,11 +34,13 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
 
+    //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String BAL_OVERRIDE_KEY = "balance_override";
     public static final String DIFF_KEY = "difference";
     private SharedPreferences sharedPreferences;
 
+    //initialise global variables that need to be passed between methods/classes
     public static int transaction_balance;
     public static int balance_override;
     public static int difference;
@@ -66,16 +63,13 @@ public class HomeFragment extends Fragment {
         balance_override = sharedPreferences.getInt(BAL_OVERRIDE_KEY, 0);
         difference = sharedPreferences.getInt(DIFF_KEY, 0);
 
-        //------------------------------------------------------------------------------------------
-
-        //get database data and populate recyclerview
+        //Link Database to Arraylist----------------------------------------------------------------
         DatabaseHelper myDB = new DatabaseHelper(getActivity());
         Cursor data = myDB.getData();
 
+        //inflating the recyclerview example item
         View rv_item = inflater.inflate(R.layout.example_rv_item, container, false);
         TextView txt_minus_rv = rv_item.findViewById(R.id.txt_minus_rv);
-
-
         ArrayList<RecyclerItem> itemList = new ArrayList<>();
 
         //adding to db requires: itemList.add(new RecyclerItem(int, String));
@@ -89,20 +83,14 @@ public class HomeFragment extends Fragment {
             itemList.add(new RecyclerItem(data.getInt(1), data.getInt(2), data.getString(3)));
         }
 
-
         RecyclerView mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
         mRecyclerView.setHasFixedSize(true);
-        //(can't load all items at once - provides number of
-        //items we currently need)
-        //aligns items in list
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        //bridge between recyclerview and arraylist
         RecyclerView.Adapter mAdapter = new RecyclerAdapter(itemList);
-
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        //iterate through arraylist and add all amounts together
+        //sum all transactions in the arraylist together to get the balance-------------------------
         transaction_balance = 0;
         for(int i = 0; i < itemList.size(); i++)
             if(itemList.get(i).getNegative()==1){
@@ -111,16 +99,16 @@ public class HomeFragment extends Fragment {
                 transaction_balance += itemList.get(i).getAmount(); //if income, add the value
             }
 
-        transaction_balance = transaction_balance + difference; //transactions plus the difference between the most recent override
+        //transactions plus the difference between the most recent override
+        transaction_balance = transaction_balance + difference;
 
-
-        //format for commas between each 3 zeros
-        String string_balance = NumberFormat.getNumberInstance(Locale.US).format(transaction_balance);
+        //format balance display--------------------------------------------------------------------
+        String string_balance = NumberFormat.getNumberInstance(Locale.US).format(transaction_balance); //commas
         TextView edit_balance = root.findViewById(R.id.num_balance);
-        String final_value = "¥" + string_balance;
+        String final_value = "¥" + string_balance; //add the yen symbol
         edit_balance.setText(final_value);
 
-        //edit balance manually
+        //balance override "edit" click-------------------------------------------------------------
         TextView tv_edit_balance = root.findViewById(R.id.txt_edit_balance);
         tv_edit_balance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +119,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //add transaction floatingactionbutton click
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,24 +129,25 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        return root;
+        return root; //return the view
     }
 
+    //override the current balance_override and difference values
     public static void BalanceOverride(int balance_override_val) {
 
         balance_override = balance_override_val;
-        difference = difference + balance_override - transaction_balance; //positive only
+        difference = difference + balance_override - transaction_balance;
         savePrefs();
 
     }
 
+    //save the global variable values as sharedpreferences
     public static void savePrefs() {
 
-        //Save SharedPreferences--------------------------------------------------------------------
+        //Save SharedPreferences using 'MyApplication' context--------------------------------------
         MyApplication.mEditor.putInt(BAL_OVERRIDE_KEY, balance_override);
         MyApplication.mEditor.putInt(DIFF_KEY, difference);
         MyApplication.mEditor.commit();
-        //------------------------------------------------------------------------------------------
 
     }
 

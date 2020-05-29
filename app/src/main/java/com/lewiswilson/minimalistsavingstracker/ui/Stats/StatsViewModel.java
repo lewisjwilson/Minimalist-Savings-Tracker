@@ -1,16 +1,16 @@
-package com.lewiswilson.minimalistsavingstracker.ui.slideshow;
+package com.lewiswilson.minimalistsavingstracker.ui.Stats;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class StatsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public StatsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is the stats fragment");
     }
 
     public LiveData<String> getText() {

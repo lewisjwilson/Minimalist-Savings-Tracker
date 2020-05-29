@@ -23,4 +23,10 @@
     <string name="InputNewBalance">Input new balance:</string>
     <string name="_100000">100,000</string>
     <string name="Type0Reset">Input 0 to reset</string>
+    <string name="savings">Savings</string>
+    <string name="stats">Stats</string>
+    <string name="Reset">reset</string>
+    <string name="Category">Category:</string>
+    <string name="Date">Date:</string>
+    <string name="ChooseDate">Select a date</string>
 </resources>

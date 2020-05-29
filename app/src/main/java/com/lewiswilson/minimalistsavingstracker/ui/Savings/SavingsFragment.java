@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker.ui.gallery;
+package com.lewiswilson.minimalistsavingstracker.ui.Savings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +12,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.lewiswilson.minimalistsavingstracker.R;
 
-public class GalleryFragment extends Fragment {
+public class SavingsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        SavingsViewModel galleryViewModel = ViewModelProviders.of(this).get(SavingsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_savings, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
         galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

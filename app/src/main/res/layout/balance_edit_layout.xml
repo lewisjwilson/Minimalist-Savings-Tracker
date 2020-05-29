@@ -57,4 +57,18 @@
         android:layout_marginStart="131dp"
         android:layout_marginTop="11dp"
         android:text="@string/Submit" />
+
+    <TextView
+        android:id="@+id/txt_reset"
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_editbalance"
+        android:layout_alignParentStart="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        android:text="@string/Reset"
+        android:textAlignment="center"
+        android:textSize="14sp" />
 </RelativeLayout>

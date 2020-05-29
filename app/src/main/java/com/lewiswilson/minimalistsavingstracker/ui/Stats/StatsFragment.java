@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker.ui.slideshow;
+package com.lewiswilson.minimalistsavingstracker.ui.Stats;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +12,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.lewiswilson.minimalistsavingstracker.R;
 
-public class SlideshowFragment extends Fragment {
+public class StatsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel = ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        StatsViewModel slideshowViewModel = ViewModelProviders.of(this).get(StatsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_stats, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
         slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

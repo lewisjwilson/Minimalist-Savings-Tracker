@@ -5,6 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ToggleButton
+        android:id="@+id/btn_income_expenses"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="76dp"
+        android:background="#3EB82504"
+        android:checked="true"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textOff="@string/Income"
+        android:textOn="@string/Expense" />
+
     <TextView
         android:id="@+id/txt_amount"
         android:layout_width="wrap_content"
@@ -12,7 +30,7 @@
         android:layout_below="@+id/btn_income_expenses"
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="32dp"
         android:text="@string/Amount"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
@@ -23,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_income_expenses"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="32dp"
         android:layout_toEndOf="@+id/txt_amount"
         android:text="-"
         android:textColor="@android:color/black"
@@ -37,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_income_expenses"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="32dp"
         android:layout_toEndOf="@+id/txt_minus_rv"
         android:text="@string/Yen"
         android:textColor="@android:color/black"
@@ -50,7 +68,7 @@
         android:layout_below="@+id/btn_income_expenses"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="28dp"
         android:layout_toEndOf="@+id/txt_yen"
         android:autofillHints=""
@@ -67,7 +85,7 @@
         android:layout_below="@+id/txt_amount"
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="@string/Reference"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
@@ -79,9 +97,8 @@
         android:layout_below="@+id/edit_amount"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="19dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="29dp"
-        android:layout_marginBottom="51dp"
         android:layout_toEndOf="@+id/txt_reference"
         android:autofillHints=""
         android:ems="10"
@@ -90,32 +107,69 @@
         android:maxLength="12"
         android:textAlignment="center" />
 
+    <TextView
+        android:id="@+id/txt_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_reference"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="35dp"
+        android:text="@string/Category"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <Spinner
+        android:id="@+id/spn_category"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@+id/edit_reference"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="30dp"
+        android:layout_toEndOf="@id/txt_category"
+        android:autofillHints=""
+        android:background="@drawable/border"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/txt_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_category"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/Date"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edit_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spn_category"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="29dp"
+        android:layout_toEndOf="@+id/txt_date"
+        android:autofillHints=""
+        android:editable="false"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="@string/ChooseDate"
+        android:inputType="datetime"
+        android:textAlignment="center" />
+
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_reference"
+        android:layout_below="@id/edit_date"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:text="@string/Submit" />
-
-    <ToggleButton
-        android:id="@+id/btn_income_expenses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="76dp"
-        android:background="#3EB82504"
-        android:checked="true"
-        android:foregroundGravity="center"
-        android:gravity="center"
-        android:textColor="#000000"
-        android:textOff="@string/Income"
-        android:textOn="@string/Expense" />
 
 </RelativeLayout>
