@@ -48,6 +48,7 @@ public class EditBalance extends AppCompatActivity {
         txt_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HomeFragment.balance_override = 0;
                 HomeFragment.difference = 0;
                 HomeFragment.savePrefs();
                 startActivity(new Intent(EditBalance.this, MainActivity.class));

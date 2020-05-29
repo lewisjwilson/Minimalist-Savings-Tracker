@@ -19,8 +19,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL4 = "CATEGORY";
     private static final String COL5 = "DATE_TIME";
 
-    SQLiteDatabase db;
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

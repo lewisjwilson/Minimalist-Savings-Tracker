@@ -80,7 +80,8 @@ public class HomeFragment extends Fragment {
                 txt_minus_rv.setVisibility(View.INVISIBLE);
             }
             //column index 1 of db = amount, column index 2 = reference
-            itemList.add(new RecyclerItem(data.getInt(1), data.getInt(2), data.getString(3)));
+            itemList.add(new RecyclerItem(data.getInt(1), data.getInt(2), data.getString(3),
+                    data.getString(4) + " " + data.getString(5)));
         }
 
         RecyclerView mRecyclerView = root.findViewById(R.id.recycler_income_expenses);

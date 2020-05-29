@@ -47,12 +47,27 @@
             android:id="@+id/txt_entryreference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="2dp"
             android:text="Reference"
             android:textSize="20sp"
+            tools:ignore="HardcodedText">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txt_category_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_entryreference"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="Date / Category"
+            android:textSize="12sp"
             tools:ignore="HardcodedText">
 
         </TextView>
