@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lewiswilson.MyApplication;
 import com.lewiswilson.minimalistsavingstracker.AddTransaction;
 import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
+import com.lewiswilson.minimalistsavingstracker.DeleteDialog;
 import com.lewiswilson.minimalistsavingstracker.EditBalance;
 import com.lewiswilson.minimalistsavingstracker.R;
 import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
@@ -30,15 +32,17 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOnClickListener {
 
     //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String BAL_OVERRIDE_KEY = "balance_override";
     public static final String DIFF_KEY = "difference";
     private SharedPreferences sharedPreferences;
+    private ArrayList<RecyclerItem> itemList = new ArrayList<>();
 
     //initialise global variables that need to be passed between methods/classes
     public static int transaction_balance;
@@ -70,7 +74,7 @@ public class HomeFragment extends Fragment {
         //inflating the recyclerview example item
         View rv_item = inflater.inflate(R.layout.example_rv_item, container, false);
         TextView txt_minus_rv = rv_item.findViewById(R.id.txt_minus_rv);
-        ArrayList<RecyclerItem> itemList = new ArrayList<>();
+        //ArrayList<RecyclerItem> itemList = new ArrayList<>();
 
         //adding to db requires: itemList.add(new RecyclerItem(int, String));
         while (data.moveToNext()) {
@@ -87,9 +91,10 @@ public class HomeFragment extends Fragment {
         RecyclerView mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        RecyclerView.Adapter mAdapter = new RecyclerAdapter(itemList);
+        RecyclerView.Adapter mAdapter = new RecyclerAdapter(itemList, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
 
         //sum all transactions in the arraylist together to get the balance-------------------------
         transaction_balance = 0;
@@ -152,4 +157,14 @@ public class HomeFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void RecyclerOnClick(int position) {
+        Log.d(TAG, "RecyclerOnClick: " + position + " clicked");
+        Bundle args = new Bundle();
+        args.putInt("position", position);
+        DeleteDialog dialog = new DeleteDialog();
+        dialog.setArguments(args);
+        dialog.show(getActivity().getSupportFragmentManager(), "deletedialog");
+    }
 }

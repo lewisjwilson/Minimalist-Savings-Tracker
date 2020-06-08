@@ -29,7 +29,9 @@
     <string name="Category">Category:</string>
     <string name="Date">Date:</string>
     <string name="ChooseDate">Select a date</string>
-    
+    <string name="Delete">Are you sure you want to delete this entry?</string>
+    <string name="DeleteButton">DELETE</string>
+
     <string-array name="income_categories">
         <item>Gift</item>
         <item>Salary</item>
