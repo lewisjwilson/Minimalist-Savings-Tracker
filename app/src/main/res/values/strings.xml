@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Minimalist Savings Tracker</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">Minimalist Savings Tracker</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
@@ -34,37 +34,32 @@
 
     <string-array name="income_categories">
         <item>Gift</item>
+        <item>Repayments</item>
         <item>Salary</item>
         <item>Sold Items</item>
         <item>Others</item>
     </string-array>
 
     <string-array name="expense_categories">
+        <item>Alcohol</item>
         <item>ATM Withdrawal</item>
-        <item>Bars/Alcohol</item>
+        <item>Bills</item>
         <item>Cafes</item>
         <item>Clothes Shopping</item>
         <item>Donations</item>
         <item>Eating Out</item>
-        <item>Educational Items</item>
-        <item>Electric Bills</item>
+        <item>Educational</item>
         <item>Entertainment</item>
         <item>Family</item>
         <item>Friends</item>
-        <item>Gas Bills</item>
         <item>Grocery Shopping</item>
         <item>Health</item>
-        <item>Household Items</item>
-        <item>Internet Bills</item>
+        <item>Household</item>
         <item>Misc. Shopping</item>
-        <item>Other Bills</item>
         <item>Partner/Lover</item>
         <item>Pets</item>
-        <item>Phone Bills</item>
         <item>Repayments</item>
         <item>Transportation</item>
-        <item>TV Bills</item>
-        <item>Water Bills</item>
         <item>Others</item>
     </string-array>
 </resources>

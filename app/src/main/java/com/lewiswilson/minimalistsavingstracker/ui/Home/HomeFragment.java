@@ -1,8 +1,10 @@
 package com.lewiswilson.minimalistsavingstracker.ui.Home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +27,7 @@ import com.lewiswilson.minimalistsavingstracker.AddTransaction;
 import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
 import com.lewiswilson.minimalistsavingstracker.DeleteDialog;
 import com.lewiswilson.minimalistsavingstracker.EditBalance;
+import com.lewiswilson.minimalistsavingstracker.MainActivity;
 import com.lewiswilson.minimalistsavingstracker.R;
 import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
 import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
@@ -83,8 +87,8 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
             } else {
                 txt_minus_rv.setVisibility(View.INVISIBLE);
             }
-            //column index 1 of db = amount, column index 2 = reference
-            itemList.add(new RecyclerItem(data.getInt(1), data.getInt(2), data.getString(3),
+            //column index 0 of db = id, column index 1 of db = expense, column index 2 = amount...
+            itemList.add(new RecyclerItem(data.getLong(0), data.getInt(1), data.getInt(2), data.getString(3),
                     data.getString(4) + " " + data.getString(5)));
         }
 
@@ -160,11 +164,24 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
 
     @Override
     public void RecyclerOnClick(int position) {
+        long databaseid = itemList.get(position).getID(); //get the database id of the clicked item
         Log.d(TAG, "RecyclerOnClick: " + position + " clicked");
         Bundle args = new Bundle();
-        args.putInt("position", position);
+        args.putLong("id", databaseid);
         DeleteDialog dialog = new DeleteDialog();
         dialog.setArguments(args);
+
+        //when dialog is dismissed, refesh mainactivity
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                Intent intent = new Intent(getActivity(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+
+            }
+        });
+
         dialog.show(getActivity().getSupportFragmentManager(), "deletedialog");
+
     }
 }
