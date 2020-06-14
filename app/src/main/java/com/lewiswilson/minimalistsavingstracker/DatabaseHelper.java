@@ -65,9 +65,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //get all of the data from the database
-
     public Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        //get data in order of date and time
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY datetime(" + COL5 + ") DESC", null);
     }
 }
