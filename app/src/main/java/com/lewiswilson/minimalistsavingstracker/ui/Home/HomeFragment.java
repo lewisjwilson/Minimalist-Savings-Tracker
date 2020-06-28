@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,8 @@ import com.lewiswilson.minimalistsavingstracker.MainActivity;
 import com.lewiswilson.minimalistsavingstracker.R;
 import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
 import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
+
+import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -51,11 +54,13 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
     public static int transaction_balance;
     public static int balance_override;
     public static int difference;
+    public static int yearint;
+    public static int monthint;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        final View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -72,38 +77,27 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
 
         //Link Database to Arraylist----------------------------------------------------------------
         //current year and month
-        int yearint = Calendar.getInstance().get(Calendar.YEAR);
-        int monthint = Calendar.getInstance().get(Calendar.MONTH);
-        String yearstr = String.valueOf(yearint);
-        String monthstr = String.format("%02d", monthint + 1); //padding with leading 0 where needed
+        yearint = Calendar.getInstance().get(Calendar.YEAR);
+        monthint = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        final String yearstr = String.valueOf(yearint);
+        final String monthstr = String.format("%02d", monthint); //padding with leading 0 where needed
         Log.d(TAG, "onCreateView: " + yearstr + " " + monthstr);
-        DatabaseHelper myDB = new DatabaseHelper(getActivity());
+        final DatabaseHelper myDB = new DatabaseHelper(getActivity());
         Cursor data = myDB.getDisplayData(yearstr, monthstr); //add data from database into recyclerview
 
         //change textview for year and month
-        TextView txt_year_month = root.findViewById(R.id.txt_year_month);
+        final TextView txt_year_month = root.findViewById(R.id.txt_year_month);
         txt_year_month.setText(yearstr + "/" + monthstr);
 
         //inflating the recyclerview example item
         View rv_item = inflater.inflate(R.layout.example_rv_item, container, false);
-        TextView txt_minus_rv = rv_item.findViewById(R.id.txt_minus_rv);
+        final TextView txt_minus_rv = rv_item.findViewById(R.id.txt_minus_rv);
+        DatatoRecycler(data, txt_minus_rv);
 
-        //adding to db requires: itemList.add(new RecyclerItem(int, String));
-        while (data.moveToNext()) {
-            if(data.getInt(1) > 0){ //if EXPENSES boolean value is 1 (true) then show minus sign
-                txt_minus_rv.setVisibility(View.VISIBLE);
-            } else {
-                txt_minus_rv.setVisibility(View.INVISIBLE);
-            }
-            //column index 0 of db = id, column index 1 of db = expense, column index 2 = amount...
-            displayedItemList.add(new RecyclerItem(data.getLong(0), data.getInt(1), data.getInt(2), data.getString(3),
-                    data.getString(4) + " " + data.getString(5)));
-        }
-
-        RecyclerView mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
+        final RecyclerView mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        RecyclerView.Adapter mAdapter = new RecyclerAdapter(displayedItemList, this);
+        final RecyclerView.Adapter mAdapter = new RecyclerAdapter(displayedItemList, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -130,6 +124,50 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
             }
         });
 
+        ImageButton prev_month = root.findViewById(R.id.btn_month_prev);
+        prev_month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(monthint>1){ //changing the year and month values
+                    monthint--;
+                } else {
+                    yearint--;
+                    monthint = 12;
+                }
+                String newyearstr = String.valueOf(yearint);
+                String newmonthstr = String.format("%02d", monthint);
+
+                displayedItemList.clear(); //clear current recycler item list
+                Cursor data = myDB.getDisplayData(newyearstr, newmonthstr); //get data within new year and month
+                DatatoRecycler(data, txt_minus_rv); //add the data to the recycler adapter
+                mAdapter.notifyDataSetChanged(); //update the recyclerview
+                Log.d(TAG, "onClick: " + monthint);
+                txt_year_month.setText(newyearstr + "/" + newmonthstr); //set textview text
+            }
+        });
+
+        ImageButton next_month = root.findViewById(R.id.btn_month_next);
+        next_month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(monthint<12){ //changing the year and month values
+                    monthint++;
+                } else {
+                    yearint++;
+                    monthint = 1;
+                }
+                String newyearstr = String.valueOf(yearint);
+                String newmonthstr = String.format("%02d", monthint);
+
+                displayedItemList.clear(); //clear current recycler item list
+                Cursor data = myDB.getDisplayData(newyearstr, newmonthstr); //get data within new year and month
+                DatatoRecycler(data, txt_minus_rv); //add the data to the recycler adapter
+                mAdapter.notifyDataSetChanged(); //update the recyclerview
+                Log.d(TAG, "onClick: " + monthint);
+                txt_year_month.setText(newyearstr + "/" + newmonthstr); //set textview text
+            }
+        });
+
         //add transaction floatingactionbutton click
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +179,20 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
         });
 
         return root; //return the view
+    }
+
+    public void DatatoRecycler(Cursor data, TextView txt_minus_rv) {
+        //adding to db requires: itemList.add(new RecyclerItem(int, String));
+        while (data.moveToNext()) {
+            if(data.getInt(1) > 0){ //if EXPENSES boolean value is 1 (true) then show minus sign
+                txt_minus_rv.setVisibility(View.VISIBLE);
+            } else {
+                txt_minus_rv.setVisibility(View.INVISIBLE);
+            }
+            //column index 0 of db = id, column index 1 of db = expense, column index 2 = amount...
+            displayedItemList.add(new RecyclerItem(data.getLong(0), data.getInt(1), data.getInt(2), data.getString(3),
+                    data.getString(4) + " " + data.getString(5)));
+        }
     }
 
     //override the current balance_override and difference values

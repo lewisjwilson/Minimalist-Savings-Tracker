@@ -69,6 +69,7 @@
         android:id="@+id/btn_month_prev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:cropToPadding="false"
         android:src="@android:drawable/arrow_down_float"
         app:layout_constraintBottom_toTopOf="@id/divider1"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -76,20 +77,19 @@
 
     <EditText
         android:id="@+id/txt_year_month"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@null"
         android:enabled="false"
-        android:inputType="numberSigned"
         android:text="YY/MM"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textColorHint="#000000"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/btn_month_next"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/btn_month_prev"
         app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <ImageButton
