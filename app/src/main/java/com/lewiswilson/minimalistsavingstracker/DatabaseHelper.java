@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import static android.content.ContentValues.TAG;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -64,10 +66,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, COL0 + "=?", new String[]{String.valueOf(id)});
     }
 
-    //get all of the data from the database
-    public Cursor getData() {
+    //get data to display from the database
+    public Cursor getDisplayData(String year , String month) { //YYYY; MM
         SQLiteDatabase db = this.getWritableDatabase();
         //get data in order of date and time
-        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY datetime(" + COL5 + ") DESC", null);
+        return db.rawQuery("SELECT *" +
+                        " FROM " + TABLE_NAME +
+                        " WHERE strftime('%m'," + COL5 + ")='" + month + "'" + //select month
+                        " AND strftime('%Y'," + COL5 + ")='" + year + "'" + //select year
+                        " ORDER BY datetime(" + COL5 + ") DESC", null);
+    }
+
+    //get all data from the database
+    public Cursor getAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //get data in order of date and time
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+    }
+
+    //sum all transactions
+    public int sumTransactions() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor expenCur =  db.rawQuery("SELECT SUM(" + COL2 + ") AS expenses" +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COL1 + "='1'", null);
+
+        int expenses = 0;
+        if (expenCur.moveToFirst()) {
+            expenses = expenCur.getInt(expenCur.getColumnIndex("expenses"));
+        }
+
+        Cursor incomeCur = db.rawQuery("SELECT SUM(" + COL2 + ") AS income" +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COL1 + "='0'", null);
+
+        int income = 0;
+        if (incomeCur.moveToFirst()) {
+            income = incomeCur.getInt(incomeCur.getColumnIndex("income"));
+        }
+
+        return income - expenses;
     }
 }

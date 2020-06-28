@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +32,7 @@ import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
@@ -46,7 +45,7 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
     public static final String BAL_OVERRIDE_KEY = "balance_override";
     public static final String DIFF_KEY = "difference";
     private SharedPreferences sharedPreferences;
-    private ArrayList<RecyclerItem> itemList = new ArrayList<>();
+    private ArrayList<RecyclerItem> displayedItemList = new ArrayList<>();
 
     //initialise global variables that need to be passed between methods/classes
     public static int transaction_balance;
@@ -66,19 +65,28 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
         });
 
         //Get SharedPreferences---------------------------------------------------------------------
-
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         balance_override = sharedPreferences.getInt(BAL_OVERRIDE_KEY, 0);
         difference = sharedPreferences.getInt(DIFF_KEY, 0);
+        Log.d(TAG, "difference: " + difference);
 
         //Link Database to Arraylist----------------------------------------------------------------
+        //current year and month
+        int yearint = Calendar.getInstance().get(Calendar.YEAR);
+        int monthint = Calendar.getInstance().get(Calendar.MONTH);
+        String yearstr = String.valueOf(yearint);
+        String monthstr = String.format("%02d", monthint + 1); //padding with leading 0 where needed
+        Log.d(TAG, "onCreateView: " + yearstr + " " + monthstr);
         DatabaseHelper myDB = new DatabaseHelper(getActivity());
-        Cursor data = myDB.getData();
+        Cursor data = myDB.getDisplayData(yearstr, monthstr); //add data from database into recyclerview
+
+        //change textview for year and month
+        TextView txt_year_month = root.findViewById(R.id.txt_year_month);
+        txt_year_month.setText(yearstr + "/" + monthstr);
 
         //inflating the recyclerview example item
         View rv_item = inflater.inflate(R.layout.example_rv_item, container, false);
         TextView txt_minus_rv = rv_item.findViewById(R.id.txt_minus_rv);
-        //ArrayList<RecyclerItem> itemList = new ArrayList<>();
 
         //adding to db requires: itemList.add(new RecyclerItem(int, String));
         while (data.moveToNext()) {
@@ -88,27 +96,20 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
                 txt_minus_rv.setVisibility(View.INVISIBLE);
             }
             //column index 0 of db = id, column index 1 of db = expense, column index 2 = amount...
-            itemList.add(new RecyclerItem(data.getLong(0), data.getInt(1), data.getInt(2), data.getString(3),
+            displayedItemList.add(new RecyclerItem(data.getLong(0), data.getInt(1), data.getInt(2), data.getString(3),
                     data.getString(4) + " " + data.getString(5)));
         }
 
         RecyclerView mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        RecyclerView.Adapter mAdapter = new RecyclerAdapter(itemList, this);
+        RecyclerView.Adapter mAdapter = new RecyclerAdapter(displayedItemList, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
 
         //sum all transactions in the arraylist together to get the balance-------------------------
-        transaction_balance = 0;
-        for(int i = 0; i < itemList.size(); i++)
-            if(itemList.get(i).getNegative()==1){
-                transaction_balance -= itemList.get(i).getAmount(); //if expense, minus the value
-            } else {
-                transaction_balance += itemList.get(i).getAmount(); //if income, add the value
-            }
-
+        transaction_balance = myDB.sumTransactions();
         //transactions plus the difference between the most recent override
         transaction_balance = transaction_balance + difference;
 
@@ -144,7 +145,6 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
 
     //override the current balance_override and difference values
     public static void BalanceOverride(int balance_override_val) {
-
         balance_override = balance_override_val;
         difference = difference + balance_override - transaction_balance;
         savePrefs();
@@ -153,7 +153,6 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
 
     //save the global variable values as sharedpreferences
     public static void savePrefs() {
-
         //Save SharedPreferences using 'MyApplication' context--------------------------------------
         MyApplication.mEditor.putInt(BAL_OVERRIDE_KEY, balance_override);
         MyApplication.mEditor.putInt(DIFF_KEY, difference);
@@ -164,7 +163,7 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
 
     @Override
     public void RecyclerOnClick(int position) {
-        long databaseid = itemList.get(position).getID(); //get the database id of the clicked item
+        long databaseid = displayedItemList.get(position).getID(); //get the database id of the clicked item
         Log.d(TAG, "RecyclerOnClick: " + position + " clicked");
         Bundle args = new Bundle();
         args.putLong("id", databaseid);

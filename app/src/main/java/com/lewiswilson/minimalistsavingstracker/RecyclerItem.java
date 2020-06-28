@@ -31,7 +31,6 @@ public class RecyclerItem { //used to fill the recyclerview
     }
 
     public String getDateCategory() {
-
         return mDateCategory;
     }
 }
