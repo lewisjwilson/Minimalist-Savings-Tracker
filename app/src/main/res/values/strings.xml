@@ -34,6 +34,7 @@
 
     <string-array name="income_categories">
         <item>Gift</item>
+        <item>Refunds</item>
         <item>Repayments</item>
         <item>Salary</item>
         <item>Sold Items</item>
@@ -58,6 +59,7 @@
         <item>Misc. Shopping</item>
         <item>Partner/Lover</item>
         <item>Pets</item>
+        <item>Rent</item>
         <item>Repayments</item>
         <item>Transportation</item>
         <item>Others</item>
