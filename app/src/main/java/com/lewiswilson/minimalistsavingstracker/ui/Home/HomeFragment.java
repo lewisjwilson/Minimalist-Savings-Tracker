@@ -31,8 +31,6 @@ import com.lewiswilson.minimalistsavingstracker.R;
 import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
 import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
 
-import org.w3c.dom.Text;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,10 +87,10 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
         final TextView txt_year_month = root.findViewById(R.id.txt_year_month);
         txt_year_month.setText(yearstr + "/" + monthstr);
 
-        //inflating the recyclerview example item
+        //inflating the recyclerview example item and attaching the data to the adapter-------------
         View rv_item = inflater.inflate(R.layout.example_rv_item, container, false);
         final TextView txt_minus_rv = rv_item.findViewById(R.id.txt_minus_rv);
-        DatatoRecycler(data, txt_minus_rv);
+        DatatoRecycler(data, txt_minus_rv); //get database data and put into recyclerview
 
         final RecyclerView mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
         mRecyclerView.setHasFixedSize(true);
@@ -124,6 +122,7 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
             }
         });
 
+        //previous month button click
         ImageButton prev_month = root.findViewById(R.id.btn_month_prev);
         prev_month.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +145,7 @@ public class HomeFragment extends Fragment implements RecyclerAdapter.RecyclerOn
             }
         });
 
+        //next month button click
         ImageButton next_month = root.findViewById(R.id.btn_month_next);
         next_month.setOnClickListener(new View.OnClickListener() {
             @Override

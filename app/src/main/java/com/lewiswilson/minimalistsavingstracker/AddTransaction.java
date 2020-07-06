@@ -155,13 +155,12 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
                     public void onTimeSet(TimePicker view, int hourOfDay,int minute) {
 
                         int mHour = hourOfDay;
-                        int mMinute = minute;
 
                         String selected_month_day = String.format("%02d-%02d", month, day);
                         String selected_time = String.format("%02d:%02d", mHour, minute);
                         edit_date.setText("" + year + "-" + selected_month_day + " " + selected_time);
                     }
-                }, hour, minute, false);
+                }, hour, minute, true);
         timePickerDialog.show();
     }
 

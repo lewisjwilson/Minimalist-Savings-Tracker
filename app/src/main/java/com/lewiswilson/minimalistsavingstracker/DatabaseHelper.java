@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import static android.content.ContentValues.TAG;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -105,6 +103,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             income = incomeCur.getInt(incomeCur.getColumnIndex("income"));
         }
 
+        expenCur.close();
+        incomeCur.close();
         return income - expenses;
     }
 }
