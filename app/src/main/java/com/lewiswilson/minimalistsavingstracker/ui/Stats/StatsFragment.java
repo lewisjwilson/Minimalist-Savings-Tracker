@@ -1,5 +1,6 @@
 package com.lewiswilson.minimalistsavingstracker.ui.Stats;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,11 +14,20 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
 import com.lewiswilson.minimalistsavingstracker.R;
 
 import java.util.ArrayList;
@@ -36,28 +46,47 @@ public class StatsFragment extends Fragment {
             }
         });
 
+        //imprt database
+        final DatabaseHelper myDB = new DatabaseHelper(getActivity());
 
-        PieChart pieChart = root.findViewById(R.id.pieChart);
-        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        //setup piechart
+        HorizontalBarChart barChart = root.findViewById(R.id.barChart);
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
 
-        pieChart.setUsePercentValues(false); //show as percentages
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setDrawHoleEnabled(false);
-        pieChart.setExtraOffsets(20, 20, 20, 20);
+        barChart.getDescription().setEnabled(false);
+        barChart.setExtraOffsets(20, 20, 20, 20);
 
-        pieEntries.add(new PieEntry(2000, "Test1"));
-        pieEntries.add(new PieEntry(1000, "Test2"));
 
-        pieChart.animateY(700, Easing.EaseInCubic); //opening animation
+        //get data to display from DBHelper class
+        Cursor data = myDB.getSummedData();
+        int dataCount = data.getCount();
+        String[] labels = new String[dataCount];
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Test Values");
-        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        //adding data from db to arraylists
+        for(int i=0; i<dataCount; i++){
+            data.moveToNext();
+            barEntries.add(new BarEntry(i, data.getFloat(1)));
+            labels[i] = data.getString(0);
+        }
 
-        PieData pieData = new PieData(pieDataSet);
-        pieData.setValueTextSize(10f);
-        pieData.setValueTextColor(Color.BLACK);
+        //up to here
 
-        pieChart.setData(pieData);
+        barChart.animateY(700, Easing.EaseInCubic); //opening animation
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "");
+        barDataSet.setDrawValues(false);
+
+        BarData barData = new BarData(barDataSet);
+        barData.setValueTextSize(10f);
+        barData.setValueTextColor(Color.BLACK);
+
+        YAxis rightAxis = barChart.getAxisRight();
+        rightAxis.setLabelCount(dataCount);
+
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+        barChart.setPinchZoom(false);
+        barChart.setDrawValueAboveBar(false);
+        barChart.setData(barData);
 
         return root;
     }
