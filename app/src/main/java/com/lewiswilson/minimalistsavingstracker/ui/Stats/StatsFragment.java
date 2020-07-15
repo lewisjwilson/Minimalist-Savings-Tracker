@@ -3,6 +3,7 @@ package com.lewiswilson.minimalistsavingstracker.ui.Stats;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ import com.lewiswilson.minimalistsavingstracker.R;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 public class StatsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,30 +49,29 @@ public class StatsFragment extends Fragment {
             }
         });
 
-        //imprt database
+        //import database
         final DatabaseHelper myDB = new DatabaseHelper(getActivity());
 
-        //setup piechart
+        //setup barchart
         HorizontalBarChart barChart = root.findViewById(R.id.barChart);
         ArrayList<BarEntry> barEntries = new ArrayList<>();
 
         barChart.getDescription().setEnabled(false);
-        barChart.setExtraOffsets(20, 20, 20, 20);
+        barChart.setExtraOffsets(0, 10, 0, 10);
 
 
         //get data to display from DBHelper class
         Cursor data = myDB.getSummedData();
         int dataCount = data.getCount();
-        String[] labels = new String[dataCount];
+        ArrayList labels = new ArrayList();
 
         //adding data from db to arraylists
         for(int i=0; i<dataCount; i++){
             data.moveToNext();
             barEntries.add(new BarEntry(i, data.getFloat(1)));
-            labels[i] = data.getString(0);
+            labels.add(data.getString(0));
+            Log.d(TAG, "onCreateView: " + data.getString(0));
         }
-
-        //up to here
 
         barChart.animateY(700, Easing.EaseInCubic); //opening animation
 
@@ -80,11 +82,13 @@ public class StatsFragment extends Fragment {
         barData.setValueTextSize(10f);
         barData.setValueTextColor(Color.BLACK);
 
-        YAxis rightAxis = barChart.getAxisRight();
+        XAxis rightAxis = barChart.getXAxis();
         rightAxis.setLabelCount(dataCount);
+        rightAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+        rightAxis.setDrawGridLines(false); //remove gridlines
 
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         barChart.setPinchZoom(false);
+        barChart.setTouchEnabled(false);
         barChart.setDrawValueAboveBar(false);
         barChart.setData(barData);
 

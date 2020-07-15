@@ -42,7 +42,7 @@
     </string-array>
 
     <string-array name="expense_categories">
-        <item>Alcohol</item>
+        <item>Alcohol/Bars</item>
         <item>ATM Withdrawal</item>
         <item>Bills</item>
         <item>Cafes</item>
