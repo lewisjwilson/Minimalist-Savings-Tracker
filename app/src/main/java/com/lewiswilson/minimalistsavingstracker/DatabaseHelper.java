@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "MST_Income_Expenses.db";
 
     private static final String T1_TABLENAME = "transactions";
@@ -20,12 +20,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String T1_CAT = "CATEGORY";
     private static final String T1_DATETIME = "DATE_TIME";
 
-    /**private static final String T2_TABLENAME = "budgeting";
+    private static final String T2_TABLENAME = "budgeting";
     private static final String T2_PK = "ID";
     private static final String T2_CAT = "CATEGORY";
     private static final String T2_TARGET = "TARGET";
     private static final String T2_AMOUNT = "AMOUNT";
-    private static final String T2_TARGETMONTH = "MONTH";**/
+    private static final String T2_TARGETMONTH = "MONTH";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,20 +47,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T1_CAT + " TEXT, " +
                 T1_DATETIME + " TEXT)");
 
-        /**db.execSQL("CREATE TABLE " + T2_TABLENAME + " (" +
+        db.execSQL("CREATE TABLE " + T2_TABLENAME + " (" +
                 T2_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 T2_CAT + " TEXT, " +
                 T2_TARGET + " INTEGER, " +
                 T2_AMOUNT + " INTEGER, " +
-                T2_TARGETMONTH + " TEXT)");**/
+                T2_TARGETMONTH + " TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String t1query = "DROP TABLE IF EXISTS " + T1_TABLENAME;
-        //String t2query = "DROP TABLE IF EXISTS " + T2_TABLENAME;
+        String t2query = "DROP TABLE IF EXISTS " + T2_TABLENAME;
         db.execSQL(t1query);
-        //db.execSQL(t2query);
+        db.execSQL(t2query);
         onCreate(db);
     }
 
