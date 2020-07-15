@@ -2,7 +2,6 @@ package com.lewiswilson.minimalistsavingstracker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,7 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "k";
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_savings, R.id.nav_stats)
+                R.id.nav_home, R.id.nav_budgeting, R.id.nav_stats)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -55,10 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.action_credits: //if credits is selected
-                Log.d(TAG, "onOptionsItemSelected: Credits selected");
-
                 startActivity(new Intent(this, Credits.class));
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

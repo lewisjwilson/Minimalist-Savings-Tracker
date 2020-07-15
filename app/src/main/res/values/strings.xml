@@ -23,7 +23,7 @@
     <string name="InputNewBalance">Input new balance:</string>
     <string name="_100000">100,000</string>
     <string name="Type0Reset">Input 0 to reset</string>
-    <string name="savings">Savings</string>
+    <string name="budgeting">Budgeting</string>
     <string name="stats">Stats</string>
     <string name="Reset">reset</string>
     <string name="Category">Category:</string>
@@ -33,6 +33,8 @@
     <string name="DeleteButton">DELETE</string>
     <string name="icon_attr">Icon Attributions</string>
     <string name="special_thanks">A Special Thanks to:</string>
+    <string name="choose_category">Choose a Category:</string>
+    <string name="target_value">Monthly Target:</string>
 
     <string-array name="income_categories">
         <item>Gift</item>
@@ -45,7 +47,6 @@
 
     <string-array name="expense_categories">
         <item>Alcohol/Bars</item>
-        <item>ATM Withdrawal</item>
         <item>Bills</item>
         <item>Cafes</item>
         <item>Clothes Shopping</item>

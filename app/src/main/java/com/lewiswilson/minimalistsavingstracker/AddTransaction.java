@@ -45,7 +45,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
         txt_minus = findViewById(R.id.txt_minus_rv);
         edit_amount = findViewById(R.id.edit_amount);
         edit_reference = findViewById(R.id.edit_reference);
-        edit_category = findViewById(R.id.spn_category);
+        edit_category = findViewById(R.id.spn_cat_add);
         edit_date = findViewById(R.id.edit_date);
         btn_submit = findViewById(R.id.btn_submit);
 

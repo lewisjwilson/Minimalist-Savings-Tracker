@@ -1,14 +1,14 @@
-package com.lewiswilson.minimalistsavingstracker.ui.Savings;
+package com.lewiswilson.minimalistsavingstracker.ui.Budgeting;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SavingsViewModel extends ViewModel {
+public class BudgetingViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public SavingsViewModel() {
+    public BudgetingViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is the savings fragment");
     }
