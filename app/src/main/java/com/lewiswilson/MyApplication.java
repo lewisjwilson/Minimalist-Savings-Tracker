@@ -18,4 +18,5 @@ public class MyApplication extends Application { //used to get context/prefs in 
         mPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         mEditor = mPrefs.edit();
     }
+
 }

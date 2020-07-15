@@ -30,6 +30,10 @@
             android:name=".EditBalance"
             android:label = "@string/EditBalance">
         </activity>
+        <activity
+            android:name=".Credits"
+            android:label="Credits">
+        </activity>
     </application>
 
 </manifest>

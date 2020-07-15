@@ -49,27 +49,26 @@ public class StatsFragment extends Fragment {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
 
         barChart.getDescription().setEnabled(false);
-        barChart.setExtraOffsets(-5, 10, 25, 10);
+        barChart.setExtraOffsets(-5, 10, 25, 10); //graph padding
 
         //get data to display from DBHelper class
-        Cursor data = myDB.getSummedData();
-        int dataCount = data.getCount();
+        Cursor data = myDB.getSummedData(); //get summmed data from the db
+        int dataCount = data.getCount(); //count the number of entries obtained
         ArrayList labels = new ArrayList();
 
         //adding data from db to arraylists
         for(int i=0; i<dataCount; i++){
             data.moveToNext();
-            barEntries.add(new BarEntry(i, data.getFloat(1)));
-            labels.add(data.getString(0));
+            barEntries.add(new BarEntry(i, data.getFloat(1))); //add values to arraylist
+            labels.add(data.getString(0)); //add labels to arraylist
         }
 
 
         barChart.animateY(700, Easing.EaseInCubic); //opening animation
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "");
-        barDataSet.setDrawValues(true);
-        barDataSet.setColor(Color.parseColor("#11f0d9"));
-        barDataSet.setBarBorderColor(Color.BLACK);
+        barDataSet.setDrawValues(true); //show the values on/by the bars
+        barDataSet.setColor(Color.parseColor("#11f0d9")); //bar colour
 
         BarData barData = new BarData(barDataSet);
         barData.setValueTextSize(10f);
@@ -77,17 +76,17 @@ public class StatsFragment extends Fragment {
 
         XAxis rightAxis = barChart.getXAxis();
         rightAxis.setPosition(XAxis.XAxisPosition.BOTTOM); //move axis labels to the left
-        rightAxis.setLabelCount(dataCount);
-        rightAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-        rightAxis.setDrawGridLines(false); //remove gridlines
+        rightAxis.setLabelCount(dataCount); //set number of bars as the number of rows from the db from earlier
+        rightAxis.setValueFormatter(new IndexAxisValueFormatter(labels)); //set labels as xaxis labels
+        rightAxis.setDrawGridLines(false); //remove xaxis gridline
 
-        barChart.setPinchZoom(false);
-        barChart.setTouchEnabled(false);
-        barChart.setDrawValueAboveBar(true);
+        barChart.setPinchZoom(false); //prevent zooming
+        barChart.setTouchEnabled(false); //prevent touch activities
+        barChart.setDrawValueAboveBar(true); //show values above the bars
         barChart.getAxisLeft().setAxisMinimum(0f); //prevent padding between labels and bars
-        barChart.getLegend().setEnabled(false);
-        barChart.getAxisRight().setEnabled(false);
-        barChart.setData(barData);
+        barChart.getLegend().setEnabled(false); //hide legend view
+        barChart.getAxisRight().setEnabled(false); //hide bottom scale
+        barChart.setData(barData); //tie data to barchart
 
         return root;
     }

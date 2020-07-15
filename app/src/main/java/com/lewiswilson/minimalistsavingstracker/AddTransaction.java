@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
-import java.util.Collections;
 
 
 public class AddTransaction extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

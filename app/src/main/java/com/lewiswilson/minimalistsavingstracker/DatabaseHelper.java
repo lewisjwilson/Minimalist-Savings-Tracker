@@ -82,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 
-    public Cursor getSummedData() { //sum expenses by unique category
+    public Cursor getSummedData() { //sum expenses by unique category (ordered)
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT " + COL4 + ", SUM(" + COL2 + ")" +
                 " AS " + COL2 + " FROM " +
