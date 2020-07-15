@@ -3,7 +3,6 @@ package com.lewiswilson.minimalistsavingstracker.ui.Stats;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,23 +16,16 @@ import androidx.lifecycle.ViewModelProviders;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
 import com.lewiswilson.minimalistsavingstracker.R;
 
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 public class StatsFragment extends Fragment {
 
@@ -57,8 +49,7 @@ public class StatsFragment extends Fragment {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
 
         barChart.getDescription().setEnabled(false);
-        barChart.setExtraOffsets(0, 10, 0, 10);
-
+        barChart.setExtraOffsets(-5, 10, 25, 10);
 
         //get data to display from DBHelper class
         Cursor data = myDB.getSummedData();
@@ -70,26 +61,32 @@ public class StatsFragment extends Fragment {
             data.moveToNext();
             barEntries.add(new BarEntry(i, data.getFloat(1)));
             labels.add(data.getString(0));
-            Log.d(TAG, "onCreateView: " + data.getString(0));
         }
+
 
         barChart.animateY(700, Easing.EaseInCubic); //opening animation
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "");
-        barDataSet.setDrawValues(false);
+        barDataSet.setDrawValues(true);
+        barDataSet.setColor(Color.parseColor("#11f0d9"));
+        barDataSet.setBarBorderColor(Color.BLACK);
 
         BarData barData = new BarData(barDataSet);
         barData.setValueTextSize(10f);
         barData.setValueTextColor(Color.BLACK);
 
         XAxis rightAxis = barChart.getXAxis();
+        rightAxis.setPosition(XAxis.XAxisPosition.BOTTOM); //move axis labels to the left
         rightAxis.setLabelCount(dataCount);
         rightAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         rightAxis.setDrawGridLines(false); //remove gridlines
 
         barChart.setPinchZoom(false);
         barChart.setTouchEnabled(false);
-        barChart.setDrawValueAboveBar(false);
+        barChart.setDrawValueAboveBar(true);
+        barChart.getAxisLeft().setAxisMinimum(0f); //prevent padding between labels and bars
+        barChart.getLegend().setEnabled(false);
+        barChart.getAxisRight().setEnabled(false);
         barChart.setData(barData);
 
         return root;

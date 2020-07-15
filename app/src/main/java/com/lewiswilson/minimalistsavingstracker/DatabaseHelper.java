@@ -87,7 +87,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT " + COL4 + ", SUM(" + COL2 + ")" +
                 " AS " + COL2 + " FROM " +
                 TABLE_NAME + " WHERE " + COL1 + " = 1 " +
-                "GROUP BY " +  COL4, null);
+                "GROUP BY " +  COL4 +
+                " ORDER BY " + COL2 + " ASC", null);
     }
 
     //sum all transactions
