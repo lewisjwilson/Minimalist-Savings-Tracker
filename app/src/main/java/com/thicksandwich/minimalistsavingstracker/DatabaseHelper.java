@@ -26,7 +26,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String T2_TARGET = "TARGET";
     private static final String T2_AMOUNT = "AMOUNT"; //not used
     private static final String T2_TARGETMONTH = "MONTH";
-    private static final String TAG = "";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -175,6 +174,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " SET " + T2_TARGET + " = '" + target + "'" +
                 " WHERE " + T2_CAT + " = '" + category + "'" +
                 " AND " + T2_TARGETMONTH + " = '" + targetmonth + "'");
+    }
+
+    //get data to display from the database
+    public Cursor getBudgetData(String targetmonth) { //YYYY-MM
+        SQLiteDatabase db = this.getWritableDatabase();
+        //get data in order of date and time
+        return db.rawQuery("SELECT *" +
+                " FROM " + T2_TABLENAME +
+                " WHERE " + T2_TARGETMONTH + " = '" + targetmonth + "'", null);
     }
 
 }
