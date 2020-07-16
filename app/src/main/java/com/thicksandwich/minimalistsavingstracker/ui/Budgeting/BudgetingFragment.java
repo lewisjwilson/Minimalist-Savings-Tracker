@@ -39,7 +39,7 @@ import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
-public class BudgetingFragment extends Fragment {
+public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter.RecyclerOnClickListener {
 
     private Spinner edit_category;
     private EditText edit_target;
@@ -61,12 +61,14 @@ public class BudgetingFragment extends Fragment {
         });
 
         //getting current month and year
+        DateFormat dateFormatDay = new SimpleDateFormat("dd");
         DateFormat dateFormatMonth = new SimpleDateFormat("MM");
         DateFormat dateFormatYear = new SimpleDateFormat("YYYY");
         Date date = new Date();
-        String month = dateFormatMonth.format(date); //set current month as targetmonth
-        String year = dateFormatYear.format(date); //set current year
-        final String targetmonth = year + "-" + month;
+        String day = dateFormatDay.format(date); //set current month as targetmonth
+        final String month = dateFormatMonth.format(date); //set current month as targetmonth
+        final String year = dateFormatYear.format(date); //set current year
+        final String targetmonth = year + "-" + month + "-" + day;
 
         //import database
         final DatabaseHelper myDB = new DatabaseHelper(getActivity());
@@ -75,16 +77,13 @@ public class BudgetingFragment extends Fragment {
         edit_category = root.findViewById(R.id.spn_cat_budget);
         edit_target = root.findViewById(R.id.edit_target);
         btn_settarget = root.findViewById(R.id.btn_settarget);
-
-        //inflating the recyclerview budget item and attaching the data to the adapter--------------
-        View budrv_item = inflater.inflate(R.layout.budget_rv_item, container, false);
         Cursor data = myDB.getBudgetData(targetmonth);
         DatatoRecycler(data);
 
         final RecyclerView mRecyclerView = root.findViewById(R.id.recycler_bud);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        final RecyclerView.Adapter mAdapter = new BudgetRecyclerAdapter(budgetItemList);
+        final RecyclerView.Adapter mAdapter = new BudgetRecyclerAdapter(budgetItemList, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -116,14 +115,16 @@ public class BudgetingFragment extends Fragment {
 
                 if(edit_target.length() != 0){
 
-                    if(myDB.budgetExists(category, targetmonth) == true){ //if such a record already exists
-                        myDB.updateBudget(category, target, targetmonth);
+                    if(myDB.budgetExists(category, year, month) == true){ //if such a record already exists
+                        myDB.updateBudget(category, target, year, month);
+                        myDB.getAmountToBudget(category);
                         Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
                                 "Target Updated", Snackbar.LENGTH_LONG);
                         sb.show();
 
                     } else { //if such a record does not yet exist
                         myDB.addBudget(category, target, targetmonth);
+                        myDB.getAmountToBudget(category);
                         Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
                                 "Budget Added", Snackbar.LENGTH_LONG);
                         sb.show();
@@ -137,8 +138,6 @@ public class BudgetingFragment extends Fragment {
 
             }
         });
-
-
         return root;
     }
 
@@ -151,5 +150,11 @@ public class BudgetingFragment extends Fragment {
                     data.getInt(3), //amount
                     data.getInt(2))); //target
         }
+    }
+
+    @Override
+    public void RecyclerOnClick(int position) { //when recyclerview is clicked
+        long databaseid = budgetItemList.get(position).getID(); //get the database id of the clicked item
+        Log.d(TAG, "RecyclerOnClick: " + position + " clicked");
     }
 }

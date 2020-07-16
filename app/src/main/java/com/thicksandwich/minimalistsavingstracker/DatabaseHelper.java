@@ -143,20 +143,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(T2_CAT, category);
         contentValues.put(T2_TARGET, target);
-        contentValues.put(T2_TARGETMONTH, targetmonth); //current YYYY-MM
+        contentValues.put(T2_TARGETMONTH, targetmonth); //current YYYY-MM-DD
 
         long result = db.insert(T2_TABLENAME, null, contentValues);
         return result != -1; //return true if result is not -1
     }
 
-    public boolean budgetExists(String category, String targetmonth){
+    public void getAmountToBudget(String category){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //copy summed data from current month/year into budgeting table AMOUNT field for selected category
+        db.execSQL("UPDATE " + T2_TABLENAME +
+                " SET " + T2_AMOUNT + " = (SELECT COALESCE(SUM(" + T1_AMOUNT + "),0) " +
+                " FROM " + T1_TABLENAME +
+                " WHERE " + T1_CAT + " = '" + category + "')" +
+                " WHERE " + T2_CAT + " = '" + category + "'" +
+                " AND strftime('%Y %m'," + T2_TARGETMONTH + ") = strftime('%Y %m', 'now')");
+    }
+
+    public boolean budgetExists(String category, String year, String month){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //select all values in the db that have target month = current month and
+        //select all values in the db that have target month&year = current month and year and
         //category is the same as spinner selection
         Cursor cur = db.rawQuery("SELECT * FROM " + T2_TABLENAME +
                 " WHERE " + T2_CAT + " = '" + category + "'" +
-                " AND " + T2_TARGETMONTH + " = '" + targetmonth + "'", null);
+                " AND strftime('%Y %m', 'now') = '" + year + " " + month + "'", null);
 
         if(cur.getCount() <= 0){ //if such a value does not exist
             cur.close();
@@ -167,22 +178,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateBudget(String category, String target, String targetmonth){
+    public void updateBudget(String category, String target, String year, String month){
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("UPDATE " + T2_TABLENAME +
                 " SET " + T2_TARGET + " = '" + target + "'" +
                 " WHERE " + T2_CAT + " = '" + category + "'" +
-                " AND " + T2_TARGETMONTH + " = '" + targetmonth + "'");
+                " AND strftime('%Y %m', 'now') = '" + year + " " + month + "'");
     }
 
     //get data to display from the database
-    public Cursor getBudgetData(String targetmonth) { //YYYY-MM
+    public Cursor getBudgetData(String targetmonth) { //YYYY-MM-DD
         SQLiteDatabase db = this.getWritableDatabase();
         //get data in order of date and time
         return db.rawQuery("SELECT *" +
                 " FROM " + T2_TABLENAME +
-                " WHERE " + T2_TARGETMONTH + " = '" + targetmonth + "'", null);
+                " WHERE strftime('%Y %m'," + T2_TARGETMONTH + ") = strftime('%Y %m', 'now')", null);
     }
 
 }

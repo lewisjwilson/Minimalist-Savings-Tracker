@@ -18,9 +18,9 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
     private final ArrayList<BudgetRecyclerItem> mItemList;
     private RecyclerOnClickListener budrvListener;
 
-    public BudgetRecyclerAdapter(ArrayList<BudgetRecyclerItem> itemList) { //Onclicklistener passed to constructor
+    public BudgetRecyclerAdapter(ArrayList<BudgetRecyclerItem> itemList, BudgetRecyclerAdapter.RecyclerOnClickListener rvListener) { //Onclicklistener passed to constructor
         mItemList = itemList;
-        //this.budrvListener = rvListener; //set to global recyclerview listener variable
+        this.budrvListener = rvListener; //set to global recyclerview listener variable
     }
 
     @NonNull
