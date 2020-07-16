@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker;
 
 public class RecyclerItem { //used to fill the recyclerview
     private final long mID;

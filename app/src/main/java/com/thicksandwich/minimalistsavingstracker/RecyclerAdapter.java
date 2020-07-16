@@ -1,6 +1,5 @@
-package com.lewiswilson.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker;
 
-import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

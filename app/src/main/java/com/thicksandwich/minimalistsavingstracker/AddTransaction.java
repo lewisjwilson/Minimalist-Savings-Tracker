@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;

@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker;
 
 import org.junit.Test;
 

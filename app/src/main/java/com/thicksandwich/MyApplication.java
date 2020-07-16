@@ -1,4 +1,4 @@
-package com.lewiswilson;
+package com.thicksandwich;
 
 import android.app.Application;
 import android.content.Context;

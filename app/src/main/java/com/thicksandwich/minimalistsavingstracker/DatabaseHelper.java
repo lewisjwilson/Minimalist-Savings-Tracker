@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker;
 
 import android.content.ContentValues;
 import android.content.Context;

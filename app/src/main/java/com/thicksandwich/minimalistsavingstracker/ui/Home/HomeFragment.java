@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker.ui.Home;
+package com.thicksandwich.minimalistsavingstracker.ui.Home;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,15 +21,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.lewiswilson.MyApplication;
-import com.lewiswilson.minimalistsavingstracker.AddTransaction;
-import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
-import com.lewiswilson.minimalistsavingstracker.DeleteDialog;
-import com.lewiswilson.minimalistsavingstracker.EditBalance;
-import com.lewiswilson.minimalistsavingstracker.MainActivity;
-import com.lewiswilson.minimalistsavingstracker.R;
-import com.lewiswilson.minimalistsavingstracker.RecyclerAdapter;
-import com.lewiswilson.minimalistsavingstracker.RecyclerItem;
+import com.thicksandwich.MyApplication;
+import com.thicksandwich.minimalistsavingstracker.AddTransaction;
+import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
+import com.thicksandwich.minimalistsavingstracker.DeleteDialog;
+import com.thicksandwich.minimalistsavingstracker.EditBalance;
+import com.thicksandwich.minimalistsavingstracker.MainActivity;
+import com.thicksandwich.minimalistsavingstracker.R;
+import com.thicksandwich.minimalistsavingstracker.RecyclerAdapter;
+import com.thicksandwich.minimalistsavingstracker.RecyclerItem;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;

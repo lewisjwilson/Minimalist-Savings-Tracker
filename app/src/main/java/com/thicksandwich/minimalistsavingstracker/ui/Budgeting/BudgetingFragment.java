@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker.ui.Budgeting;
+package com.thicksandwich.minimalistsavingstracker.ui.Budgeting;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,8 +17,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.lewiswilson.minimalistsavingstracker.DatabaseHelper;
-import com.lewiswilson.minimalistsavingstracker.R;
+import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
+import com.thicksandwich.minimalistsavingstracker.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

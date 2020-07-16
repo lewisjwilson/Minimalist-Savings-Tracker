@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.lewiswilson.minimalistsavingstracker.ui.Home.HomeFragment;
 
 public class DeleteDialog extends androidx.fragment.app.DialogFragment {
     private DialogInterface.OnDismissListener onDismissListener;

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.lewiswilson.minimalistsavingstracker.ui.Home.HomeFragment"
+        android:name="com.thicksandwich.minimalistsavingstracker.ui.Home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
 
@@ -14,13 +14,13 @@
 
     <fragment
         android:id="@+id/nav_budgeting"
-        android:name="com.lewiswilson.minimalistsavingstracker.ui.Budgeting.BudgetingFragment"
+        android:name="com.thicksandwich.minimalistsavingstracker.ui.Budgeting.BudgetingFragment"
         android:label="@string/budgeting"
         tools:layout="@layout/fragment_budgeting" />
 
     <fragment
         android:id="@+id/nav_stats"
-        android:name="com.lewiswilson.minimalistsavingstracker.ui.Stats.StatsFragment"
+        android:name="com.thicksandwich.minimalistsavingstracker.ui.Stats.StatsFragment"
         android:label="@string/stats"
         tools:layout="@layout/fragment_stats" />
 </navigation>

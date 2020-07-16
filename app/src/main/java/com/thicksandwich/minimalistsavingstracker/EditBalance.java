@@ -1,4 +1,4 @@
-package com.lewiswilson.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.lewiswilson.minimalistsavingstracker.ui.Home.HomeFragment;
+import com.thicksandwich.minimalistsavingstracker.ui.Home.HomeFragment;
 
 
 public class EditBalance extends AppCompatActivity {
