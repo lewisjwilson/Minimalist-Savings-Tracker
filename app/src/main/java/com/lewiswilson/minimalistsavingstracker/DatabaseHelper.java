@@ -64,7 +64,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    boolean addData(boolean expense, int amount, String reference, String category, String date_time) {
+    boolean addBudget(boolean category, int target){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(T2_CAT, target);
+        contentValues.put(T2_TARGET, target);
+
+        long result = db.insert(T2_TABLENAME, null, contentValues);
+
+        return result != -1; //return true if result is not -1
+
+    }
+
+    boolean addTransaction(boolean expense, int amount, String reference, String category, String date_time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(T1_EXPENSE, expense);

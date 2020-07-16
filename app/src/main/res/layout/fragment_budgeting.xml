@@ -92,6 +92,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_target" />
 
+    <Button
+        android:id="@+id/btn_settarget"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/set_target"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_target" />
+
     <View
         android:id="@+id/divider_bud"
         android:layout_width="match_parent"
@@ -100,18 +111,19 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_target" />
+        app:layout_constraintTop_toBottomOf="@id/btn_settarget" />
 
-    <ScrollView
-        android:id="@+id/scrollview_bud"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_bud"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:background="@android:color/darker_gray"
+        android:padding="4dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider_bud">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_bud"
+        app:layout_constraintVertical_bias="1.0" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

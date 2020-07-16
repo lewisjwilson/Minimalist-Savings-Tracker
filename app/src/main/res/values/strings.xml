@@ -35,6 +35,7 @@
     <string name="special_thanks">A Special Thanks to:</string>
     <string name="choose_category">Choose a Category:</string>
     <string name="target_value">Monthly Target:</string>
+    <string name="set_target">Set Target</string>
 
     <string-array name="income_categories">
         <item>Gift</item>

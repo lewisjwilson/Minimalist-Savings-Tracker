@@ -114,7 +114,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
         if(btn_income_expenses.isChecked()){
             bool_expense = true;
         }
-        boolean insertData = myDB.addData(bool_expense, amount, reference, category, date_time);
+        boolean insertData = myDB.addTransaction(bool_expense, amount, reference, category, date_time);
 
         if(!insertData) {
             Snackbar sb_insert_error = Snackbar.make(findViewById(R.id.add_transactions), "Error inserting data", Snackbar.LENGTH_LONG);
