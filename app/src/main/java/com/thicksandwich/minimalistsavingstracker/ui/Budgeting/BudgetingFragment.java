@@ -1,6 +1,7 @@
 package com.thicksandwich.minimalistsavingstracker.ui.Budgeting;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,13 @@ import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
 import com.thicksandwich.minimalistsavingstracker.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+
+import static android.content.ContentValues.TAG;
 
 public class BudgetingFragment extends Fragment {
 
@@ -51,18 +57,6 @@ public class BudgetingFragment extends Fragment {
         edit_target = root.findViewById(R.id.edit_target);
         btn_settarget = root.findViewById(R.id.btn_settarget);
 
-        //on "Set Target" button click
-        btn_settarget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
-                        "Added Category: " + edit_category.getSelectedItem().toString() + "\n" +
-                        "with Target: " + edit_target.getText().toString(), Snackbar.LENGTH_LONG);
-                sb.show();
-            }
-        });
-
         ArrayList<CharSequence> categories = new ArrayList<CharSequence>(Arrays.asList(getResources().getStringArray(R.array.expense_categories)));
         categories.add("Monthly Total"); //add Monthly Total to spinner array
 
@@ -79,6 +73,48 @@ public class BudgetingFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        //on "Set Target" button click
+        btn_settarget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String category = edit_category.getSelectedItem().toString();
+                String target = edit_target.getText().toString();
+
+                //getting current month and year
+                DateFormat dateFormatMonth = new SimpleDateFormat("MM");
+                DateFormat dateFormatYear = new SimpleDateFormat("YYYY");
+                Date date = new Date();
+                String month = dateFormatMonth.format(date); //set current month as targetmonth
+                String year = dateFormatYear.format(date); //set current year
+                String targetmonth = year + "-" + month;
+
+                if(edit_target.length() != 0){
+
+                    if(myDB.budgetExists(category, targetmonth) == true){ //if such a record already exists
+                        myDB.updateBudget(category, target, targetmonth);
+                        Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                                "Target Updated", Snackbar.LENGTH_LONG);
+                        sb.show();
+
+                    } else { //if such a record does not yet exist
+                        myDB.addBudget(category, target, targetmonth);
+                        Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                                "Budget Added", Snackbar.LENGTH_LONG);
+                        sb.show();
+                    }
+
+                } else {
+                    Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                            "Input a value for Target", Snackbar.LENGTH_LONG);
+                    sb.show();
+                }
+
+            }
+        });
+
+
         return root;
     }
 }

@@ -24,8 +24,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String T2_PK = "ID";
     private static final String T2_CAT = "CATEGORY";
     private static final String T2_TARGET = "TARGET";
-    private static final String T2_AMOUNT = "AMOUNT";
+    private static final String T2_AMOUNT = "AMOUNT"; //not used
     private static final String T2_TARGETMONTH = "MONTH";
+    private static final String TAG = "";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -57,25 +58,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String t1query = "DROP TABLE IF EXISTS " + T1_TABLENAME;
-        String t2query = "DROP TABLE IF EXISTS " + T2_TABLENAME;
-        db.execSQL(t1query);
-        db.execSQL(t2query);
         onCreate(db);
     }
 
-    boolean addBudget(boolean category, int target){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(T2_CAT, target);
-        contentValues.put(T2_TARGET, target);
-
-        long result = db.insert(T2_TABLENAME, null, contentValues);
-
-        return result != -1; //return true if result is not -1
-
-    }
-
+    //------------------------------transactions table TABLE 1--------------------------------------
     boolean addTransaction(boolean expense, int amount, String reference, String category, String date_time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -120,7 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT " + T1_CAT + ", SUM(" + T1_AMOUNT + ")" +
                 " AS " + T1_AMOUNT + " FROM " +
-                T1_TABLENAME + " WHERE " + T1_EXPENSE + " = 1 " +
+                T1_TABLENAME + " WHERE " + T1_EXPENSE + " = 1 " + //only expenses
                 "GROUP BY " + T1_CAT +
                 " ORDER BY " + T1_AMOUNT + " ASC", null);
     }
@@ -150,4 +136,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         incomeCur.close();
         return income - expenses;
     }
+
+    //------------------------------budgeting table TABLE 1-----------------------------------------
+    public boolean addBudget(String category, String target, String targetmonth){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(T2_CAT, category);
+        contentValues.put(T2_TARGET, target);
+        contentValues.put(T2_TARGETMONTH, targetmonth); //current YYYY-MM
+
+        long result = db.insert(T2_TABLENAME, null, contentValues);
+        return result != -1; //return true if result is not -1
+    }
+
+    public boolean budgetExists(String category, String targetmonth){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //select all values in the db that have target month = current month and
+        //category is the same as spinner selection
+        Cursor cur = db.rawQuery("SELECT * FROM " + T2_TABLENAME +
+                " WHERE " + T2_CAT + " = '" + category + "'" +
+                " AND " + T2_TARGETMONTH + " = '" + targetmonth + "'", null);
+
+        if(cur.getCount() <= 0){ //if such a value does not exist
+            cur.close();
+            return false;
+        } else { //if such a value does exist
+            cur.close();
+            return true;
+        }
+    }
+
+    public void updateBudget(String category, String target, String targetmonth){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("UPDATE " + T2_TABLENAME +
+                " SET " + T2_TARGET + " = '" + target + "'" +
+                " WHERE " + T2_CAT + " = '" + category + "'" +
+                " AND " + T2_TARGETMONTH + " = '" + targetmonth + "'");
+    }
+
 }
