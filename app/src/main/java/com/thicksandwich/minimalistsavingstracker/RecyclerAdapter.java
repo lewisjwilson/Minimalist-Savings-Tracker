@@ -1,9 +1,11 @@
 package com.thicksandwich.minimalistsavingstracker;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,8 +39,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         int negative = currentItem.getNegative();
         if(negative==1){//if item is an expense
             holder.mNegativeTextView.setVisibility(View.VISIBLE);
+            holder.main_rvitem_view.setBackgroundColor(Color.parseColor("#1EB82504"));
         } else {
             holder.mNegativeTextView.setVisibility(View.INVISIBLE);
+            holder.main_rvitem_view.setBackgroundColor(Color.parseColor("#1E0AC800"));
         }
 
         //format for commas between each 3 zeros
@@ -64,6 +68,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         final TextView mReferenceTextView;
         final TextView mDateCategoryTextView;
         RecyclerOnClickListener rvonLongClickListener;
+        final RelativeLayout main_rvitem_view;
 
         ItemViewHolder(@NonNull View itemView, RecyclerOnClickListener rvonClickListener) { //onclicklistener passed globally from constructor
             super(itemView);
@@ -71,6 +76,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
             mAmountTextView = itemView.findViewById(R.id.txt_entryamount);
             mReferenceTextView = itemView.findViewById(R.id.txt_entryreference);
             mDateCategoryTextView = itemView.findViewById(R.id.txt_category_date);
+            main_rvitem_view = itemView.findViewById(R.id.main_rvitem_view);
 
             this.rvonLongClickListener = rvonClickListener;
             itemView.setOnLongClickListener(this); //setting the recycler onclicklistener
