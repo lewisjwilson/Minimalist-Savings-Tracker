@@ -145,7 +145,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
     public void RefreshAmounts(DatabaseHelper database, ArrayList<CharSequence> category_list){
         //refresh all amounts in recyclerview
         for (int i=0; i<category_list.size(); i++){ //for categories in category_list
-            database.getAmountToBudget(category_list.get(0).toString());
+            database.getAmountToBudget(category_list.get(i).toString());
         }
     }
 
