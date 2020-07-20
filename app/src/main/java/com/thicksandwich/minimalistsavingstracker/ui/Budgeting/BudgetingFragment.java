@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -146,7 +147,9 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         //refresh all amounts in recyclerview
         for (int i=0; i<category_list.size(); i++){ //for categories in category_list
             database.getAmountToBudget(category_list.get(i).toString());
+
         }
+
     }
 
     public void RefreshView(DatabaseHelper database, RecyclerView.Adapter adapter, String targetmonth){

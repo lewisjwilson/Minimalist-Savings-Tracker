@@ -9,9 +9,11 @@
     app:cardCornerRadius="4dp">
 
     <RelativeLayout
+        android:id="@+id/budget_item_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:layout_margin="4dp"
+        android:background="@drawable/bg_level">
 
         <TextView
             android:id="@+id/txt_budrvcat"
@@ -80,4 +82,5 @@
         </TextView>
 
     </RelativeLayout>
+
 </androidx.cardview.widget.CardView>
