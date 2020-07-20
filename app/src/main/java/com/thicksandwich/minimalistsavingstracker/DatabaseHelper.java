@@ -210,7 +210,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //get data in order of date and time
         return db.rawQuery("SELECT *" +
                 " FROM " + T2_TABLENAME +
-                " WHERE strftime('%Y %m'," + T2_TARGETMONTH + ") = strftime('%Y %m', 'now')", null);
+                " WHERE strftime('%Y %m'," + T2_TARGETMONTH + ") = strftime('%Y %m', 'now')" +
+                " ORDER BY " + T2_CAT + " = 'Monthly Total' DESC, " + T2_CAT + " ASC", null);
+
     }
 
 }

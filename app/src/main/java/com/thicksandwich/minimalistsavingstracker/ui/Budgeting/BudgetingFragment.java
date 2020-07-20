@@ -2,6 +2,7 @@ package com.thicksandwich.minimalistsavingstracker.ui.Budgeting;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,9 +45,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
     private Spinner edit_category;
     private EditText edit_target;
     private Button btn_settarget;
-
     private ArrayList<BudgetRecyclerItem> budgetItemList = new ArrayList<>();
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +59,9 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
             }
         });
 
+        //import database
+        final DatabaseHelper myDB = new DatabaseHelper(getActivity());
+
         //getting current month and year
         DateFormat dateFormatDay = new SimpleDateFormat("dd");
         DateFormat dateFormatMonth = new SimpleDateFormat("MM");
@@ -69,9 +71,6 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         final String month = dateFormatMonth.format(date); //set current month as targetmonth
         final String year = dateFormatYear.format(date); //set current year
         final String targetmonth = year + "-" + month + "-" + day;
-
-        //import database
-        final DatabaseHelper myDB = new DatabaseHelper(getActivity());
 
         //find variables
         edit_category = root.findViewById(R.id.spn_cat_budget);
@@ -88,8 +87,9 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         mRecyclerView.setAdapter(mAdapter);
 
 
-        ArrayList<CharSequence> categories = new ArrayList<CharSequence>(Arrays.asList(getResources().getStringArray(R.array.expense_categories)));
+        final ArrayList<CharSequence> categories = new ArrayList<CharSequence>(Arrays.asList(getResources().getStringArray(R.array.expense_categories)));
         categories.add("Monthly Total"); //add Monthly Total to spinner array
+        RefreshAmounts(myDB, categories); //refresh the "amount" values in the budgeting recyclerview
 
         //fill spinner with arraydata from strings
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getActivity(),
@@ -127,6 +127,9 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
                         sb.show();
                     }
                     myDB.getAmountToBudget(category);
+                    RefreshAmounts(myDB, categories); //refresh the "amount" values in the budgeting recyclerview
+                    RefreshView(myDB, mAdapter, targetmonth);
+                    edit_target.setText("");
 
                 } else {
                     Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
@@ -137,6 +140,20 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
             }
         });
         return root;
+    }
+
+    public void RefreshAmounts(DatabaseHelper database, ArrayList<CharSequence> category_list){
+        //refresh all amounts in recyclerview
+        for (int i=0; i<category_list.size(); i++){ //for categories in category_list
+            database.getAmountToBudget(category_list.get(0).toString());
+        }
+    }
+
+    public void RefreshView(DatabaseHelper database, RecyclerView.Adapter adapter, String targetmonth){
+        budgetItemList.clear();
+        Cursor data = database.getBudgetData(targetmonth);
+        DatatoRecycler(data);
+        adapter.notifyDataSetChanged();
     }
 
     public void DatatoRecycler(Cursor data) {
