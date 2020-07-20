@@ -115,20 +115,18 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
 
                 if(edit_target.length() != 0){
 
-                    if(myDB.budgetExists(category, year, month) == true){ //if such a record already exists
+                    if(myDB.budgetExists(category, year, month)){ //if such a record already exists
                         myDB.updateBudget(category, target, year, month);
-                        myDB.getAmountToBudget(category);
                         Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
-                                "Target Updated", Snackbar.LENGTH_LONG);
+                            "Target Updated", Snackbar.LENGTH_LONG);
                         sb.show();
-
                     } else { //if such a record does not yet exist
                         myDB.addBudget(category, target, targetmonth);
-                        myDB.getAmountToBudget(category);
                         Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
-                                "Budget Added", Snackbar.LENGTH_LONG);
+                            "Budget Added", Snackbar.LENGTH_LONG);
                         sb.show();
                     }
+                    myDB.getAmountToBudget(category);
 
                 } else {
                     Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),

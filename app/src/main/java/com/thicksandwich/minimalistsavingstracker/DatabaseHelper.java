@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import static android.content.ContentValues.TAG;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 2;
@@ -152,12 +154,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void getAmountToBudget(String category){
         SQLiteDatabase db = this.getWritableDatabase();
         //copy summed data from current month/year into budgeting table AMOUNT field for selected category
-        db.execSQL("UPDATE " + T2_TABLENAME +
-                " SET " + T2_AMOUNT + " = (SELECT COALESCE(SUM(" + T1_AMOUNT + "),0) " +
-                " FROM " + T1_TABLENAME +
-                " WHERE " + T1_CAT + " = '" + category + "')" +
-                " WHERE " + T2_CAT + " = '" + category + "'" +
-                " AND strftime('%Y %m'," + T2_TARGETMONTH + ") = strftime('%Y %m', 'now')");
+
+        if(category.equals("Monthly Total")){ //if the category is the monthly total
+            Log.d(TAG, "getAmountToBudget: " + category);
+
+            db.execSQL("UPDATE " + T2_TABLENAME +
+                    " SET " + T2_AMOUNT + " = (SELECT COALESCE(SUM(" + T1_AMOUNT + "),0) " +
+                    " FROM " + T1_TABLENAME +
+                    " WHERE " + T1_EXPENSE + " = '1'" +
+                    " AND strftime('%Y %m'," + T1_DATETIME + ") = strftime('%Y %m', 'now'))" +
+                    " WHERE " + T2_CAT + " = 'Monthly Total'");
+
+        } else { //if not monthly total category
+
+            db.execSQL("UPDATE " + T2_TABLENAME +
+                    " SET " + T2_AMOUNT + " = (SELECT COALESCE(SUM(" + T1_AMOUNT + "),0) " +
+                    " FROM " + T1_TABLENAME +
+                    " WHERE " + T1_CAT + " = '" + category + "'" +
+                    " AND strftime('%Y %m'," + T1_DATETIME + ") = strftime('%Y %m', 'now'))" +
+                    " WHERE " + T2_CAT + " = '" + category + "'");
+
+        }
     }
 
     public boolean budgetExists(String category, String year, String month){
