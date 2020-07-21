@@ -91,6 +91,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         final ArrayList<CharSequence> categories = new ArrayList<CharSequence>(Arrays.asList(getResources().getStringArray(R.array.expense_categories)));
         categories.add("Monthly Total"); //add Monthly Total to spinner array
         RefreshAmounts(myDB, categories); //refresh the "amount" values in the budgeting recyclerview
+        RefreshView(myDB, mAdapter, categories); //refresh the recyclerview so that is transactions are added, it refreshes on switching to this fragment
 
         //fill spinner with arraydata from strings
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getActivity(),
@@ -149,7 +150,6 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
             database.getAmountToBudget(category_list.get(i).toString());
 
         }
-
     }
 
     public void RefreshView(DatabaseHelper database, RecyclerView.Adapter adapter, String targetmonth){
