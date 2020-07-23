@@ -103,11 +103,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + T1_TABLENAME, null);
     }
 
-    public Cursor getSummedData() { //sum expenses by unique category (ordered)
+    public Cursor getSummedData(String year, String month) { //sum expenses by unique category (ordered) for StatsFragment
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT " + T1_CAT + ", SUM(" + T1_AMOUNT + ")" +
                 " AS " + T1_AMOUNT + " FROM " +
                 T1_TABLENAME + " WHERE " + T1_EXPENSE + " = 1 " + //only expenses
+                " AND strftime('%m'," + T1_DATETIME + ")='" + month + "'" + //select month
+                " AND strftime('%Y'," + T1_DATETIME + ")='" + year + "'" + //select year
                 "GROUP BY " + T1_CAT +
                 " ORDER BY " + T1_AMOUNT + " ASC", null);
     }

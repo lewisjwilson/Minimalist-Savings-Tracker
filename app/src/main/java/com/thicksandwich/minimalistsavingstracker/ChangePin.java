@@ -84,6 +84,6 @@ public class ChangePin extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        super.onBackPressed(); //press the back button
     }
 }
