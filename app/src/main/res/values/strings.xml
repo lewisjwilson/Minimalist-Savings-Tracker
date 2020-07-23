@@ -33,6 +33,12 @@
     <string name="choose_category">Choose a Category:</string>
     <string name="target_value">Monthly Target:</string>
     <string name="set_target">Set Target</string>
+    <string name="auth_title">Authentication Required</string>
+    <string name="login">Login</string>
+    <string name="old_pin">Enter Old Pin:</string>
+    <string name="new_pin">Enter New Pin:</string>
+    <string name="verif_pin">Verify New Pin:</string>
+    <string name="change_pin">Change Pin</string> />
 
     <string-array name="income_categories">
         <item>Gift</item>

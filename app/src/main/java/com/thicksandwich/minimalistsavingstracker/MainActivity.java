@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_credits: //if credits is selected
                 startActivity(new Intent(this, Credits.class));
                 return true;
+            case R.id.action_changepin:
+                startActivity(new Intent(this, ChangePin.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

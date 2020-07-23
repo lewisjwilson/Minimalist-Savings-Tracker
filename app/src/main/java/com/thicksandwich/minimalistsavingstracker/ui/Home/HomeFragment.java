@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
     public static final String BAL_OVERRIDE_KEY = "balance_override";
     public static final String DIFF_KEY = "difference";
     private SharedPreferences sharedPreferences;
+
     private ArrayList<MainRecyclerItem> displayedItemList = new ArrayList<>();
 
     //initialise global variables that need to be passed between methods/classes

@@ -13,14 +13,19 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity
+            android:name="com.thicksandwich.minimalistsavingstracker.Authentication"
+            android:label="Minimalist Savings Tracker"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.thicksandwich.minimalistsavingstracker.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.thicksandwich.minimalistsavingstracker.AddTransaction"
@@ -33,6 +38,10 @@
         <activity
             android:name="com.thicksandwich.minimalistsavingstracker.Credits"
             android:label="Credits">
+        </activity>
+        <activity
+            android:name="com.thicksandwich.minimalistsavingstracker.ChangePin"
+            android:label="Change Authentication Pin">
         </activity>
     </application>
 
