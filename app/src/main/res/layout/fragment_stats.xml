@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txt_budyearmth"
+        android:id="@+id/txt_statsyearmth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -35,14 +35,14 @@
         android:textColor="#000000"
         android:textColorHint="#000000"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/btn_budmthnext"
+        app:layout_constraintEnd_toEndOf="@id/btn_statsmthnext"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/btn_budmthprev"
-        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintTop_toBottomOf="@id/divider1_stats"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btn_budmthnext"
+        android:id="@+id/btn_statsmthnext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -56,18 +56,18 @@
         android:src="@drawable/next_icon"
         app:layout_constraintBottom_toTopOf="@id/divider1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintTop_toBottomOf="@id/divider1_stats"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/divider_bud"
+        android:id="@+id/divider2_stats"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_budyearmth" />
+        app:layout_constraintTop_toBottomOf="@id/txt_statsyearmth" />
 
     <TextView
     android:id="@+id/text_slideshow"
@@ -92,7 +92,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider_bud" />
+        app:layout_constraintTop_toBottomOf="@id/divider2_stats" />
 
     <ScrollView
         android:layout_width="match_parent"

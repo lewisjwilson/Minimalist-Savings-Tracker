@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -40,6 +41,9 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
     private EditText edit_target;
     private Button btn_settarget;
     private ArrayList<BudgetRecyclerItem> budgetItemList = new ArrayList<>();
+
+    public static int yearint;
+    public static int monthint;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -131,6 +135,13 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
                             "Input a value for Target", Snackbar.LENGTH_LONG);
                     sb.show();
                 }
+            }
+        });
+
+        ImageButton prev_button = root.findViewById(R.id.btn_budmthprev);
+        prev_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
             }
         });

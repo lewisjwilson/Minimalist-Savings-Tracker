@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +28,6 @@ import com.thicksandwich.minimalistsavingstracker.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import static android.content.ContentValues.TAG;
 
 public class StatsFragment extends Fragment {
 
@@ -61,7 +58,7 @@ public class StatsFragment extends Fragment {
         final String yearstr = String.valueOf(yearint);
         final String monthstr = String.format("%02d", monthint); //padding with leading 0 where needed
         //change textview for year and month
-        final TextView txt_year_month = root.findViewById(R.id.txt_budyearmth);
+        final TextView txt_year_month = root.findViewById(R.id.txt_statsyearmth);
         txt_year_month.setText(yearstr + "/" + monthstr);
 
         //get data to display from DBHelper class
@@ -91,7 +88,7 @@ public class StatsFragment extends Fragment {
             }
         });
 
-        ImageButton next_button = root.findViewById(R.id.btn_budmthnext);
+        ImageButton next_button = root.findViewById(R.id.btn_statsmthnext);
         next_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

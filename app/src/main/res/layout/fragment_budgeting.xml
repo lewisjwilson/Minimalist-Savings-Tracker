@@ -7,6 +7,57 @@
     android:layout_height="match_parent"
     tools:context=".ui.Budgeting.BudgetingFragment" >
 
+    <EditText
+        android:id="@+id/edit_target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_target"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:autofillHints="@string/Amount"
+        android:digits="0123456789"
+        android:ems="10"
+        android:hint="@string/AmountHint"
+        android:inputType="numberDecimal"
+        android:maxLength="10"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_target" />
+
+    <Button
+        android:id="@+id/btn_settarget"
+        android:layout_width="160dp"
+        android:layout_height="42dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp"
+        android:text="@string/set_target"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_target" />
+
+    <TextView
+        android:id="@+id/text_target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="@string/target_value"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spn_cat_budget" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/Yen"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/edit_target"
+        app:layout_constraintTop_toBottomOf="@id/text_target" />
+
     <TextView
         android:id="@+id/text_budgeting"
         android:layout_width="match_parent"
@@ -17,35 +68,23 @@
         android:enabled="true"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-
-    <TextView
-        android:id="@+id/text_choosecat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/choose_category"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_target"
+        android:id="@+id/text_choosecat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/target_value"
+        android:layout_marginTop="8dp"
+        android:text="@string/choose_category"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spn_cat_budget" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spn_cat_budget"
@@ -63,54 +102,74 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_choosecat" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/Yen"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@id/edit_target"
-        app:layout_constraintTop_toBottomOf="@id/text_target" />
-
-    <EditText
-        android:id="@+id/edit_target"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_target"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:autofillHints="@string/Amount"
-        android:digits="0123456789"
-        android:ems="10"
-        android:hint="@string/AmountHint"
-        android:inputType="numberDecimal"
-        android:maxLength="10"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_target" />
-
-    <Button
-        android:id="@+id/btn_settarget"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="@string/set_target"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_target" />
-
     <View
-        android:id="@+id/divider_bud"
+        android:id="@+id/divider1_stats"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_settarget" />
+
+    <ImageButton
+        android:id="@+id/btn_budmthprev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:cropToPadding="false"
+        android:maxWidth="25dp"
+        android:maxHeight="25dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/prev_icon"
+        app:layout_constraintBottom_toTopOf="@id/divider2_stats"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider1_stats" />
+
+    <EditText
+        android:id="@+id/txt_budmthyear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:enabled="false"
+        android:text="YY/MM"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/btn_budmthnext"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/btn_budmthprev"
+        app:layout_constraintTop_toBottomOf="@id/divider1_stats" />
+
+    <ImageButton
+        android:id="@+id/btn_budmthnext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:cropToPadding="false"
+        android:maxWidth="25dp"
+        android:maxHeight="25dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toTopOf="@id/divider2_stats"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider1_stats" />
+
+    <View
+        android:id="@+id/divider2_stats"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_budmthyear" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_bud"
@@ -122,7 +181,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider_bud"
+        app:layout_constraintTop_toBottomOf="@+id/divider2_stats"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
