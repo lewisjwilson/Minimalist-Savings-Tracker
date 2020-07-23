@@ -1,8 +1,6 @@
 package com.thicksandwich.minimalistsavingstracker.ui.Budgeting;
 
-import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,13 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,10 +24,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.minimalistsavingstracker.BudgetRecyclerAdapter;
 import com.thicksandwich.minimalistsavingstracker.BudgetRecyclerItem;
 import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
-import com.thicksandwich.minimalistsavingstracker.MainActivity;
 import com.thicksandwich.minimalistsavingstracker.R;
-import com.thicksandwich.minimalistsavingstracker.RecyclerAdapter;
-import com.thicksandwich.minimalistsavingstracker.RecyclerItem;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -91,7 +84,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         final ArrayList<CharSequence> categories = new ArrayList<CharSequence>(Arrays.asList(getResources().getStringArray(R.array.expense_categories)));
         categories.add("Monthly Total"); //add Monthly Total to spinner array
         RefreshAmounts(myDB, categories); //refresh the "amount" values in the budgeting recyclerview
-        RefreshView(myDB, mAdapter, categories); //refresh the recyclerview so that is transactions are added, it refreshes on switching to this fragment
+        RefreshView(myDB, mAdapter, targetmonth); //refresh the recyclerview so that is transactions are added, it refreshes on switching to this fragment
 
         //fill spinner with arraydata from strings
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getActivity(),
@@ -148,7 +141,6 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         //refresh all amounts in recyclerview
         for (int i=0; i<category_list.size(); i++){ //for categories in category_list
             database.getAmountToBudget(category_list.get(i).toString());
-
         }
     }
 
@@ -160,7 +152,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
     }
 
     public void DatatoRecycler(Cursor data) {
-        //adding to db requires: itemList.add(new RecyclerItem(int, String));
+        //adding to db requires: itemList.add(new MainRecyclerItem(int, String));
         while (data.moveToNext()) {
             //column index 0 of db = id, column index 1 of db = category, column index 2 = amount...
             budgetItemList.add(new BudgetRecyclerItem(data.getLong(0), //id

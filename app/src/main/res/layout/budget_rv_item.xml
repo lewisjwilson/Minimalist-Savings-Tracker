@@ -48,7 +48,6 @@
         </TextView>
 
         <TextView
-            android:id="@+id/txt_budrvslash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="false"

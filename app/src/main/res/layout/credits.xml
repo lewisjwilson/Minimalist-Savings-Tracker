@@ -18,7 +18,6 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/text_specialthanks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
@@ -30,7 +29,6 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/text_icon_attr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
@@ -43,7 +41,6 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/text_becris"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"

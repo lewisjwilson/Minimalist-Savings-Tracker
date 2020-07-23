@@ -15,12 +15,12 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> { //links rv with arraylist
+public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ItemViewHolder> { //links rv with arraylist
 
-    private final ArrayList<RecyclerItem> mItemList;
+    private final ArrayList<MainRecyclerItem> mItemList;
     private RecyclerOnClickListener mrvListener;
 
-    public RecyclerAdapter(ArrayList<RecyclerItem> itemList, RecyclerOnClickListener rvListener) { //Onclicklistener passed to constructor
+    public MainRecyclerAdapter(ArrayList<MainRecyclerItem> itemList, RecyclerOnClickListener rvListener) { //Onclicklistener passed to constructor
         mItemList = itemList;
         this.mrvListener = rvListener; //set to global recyclerview listener variable
     }
@@ -34,7 +34,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) { //int is position of item we are binding
-        RecyclerItem currentItem = mItemList.get(position);
+        MainRecyclerItem currentItem = mItemList.get(position);
 
         int negative = currentItem.getNegative();
         if(negative==1){//if item is an expense
