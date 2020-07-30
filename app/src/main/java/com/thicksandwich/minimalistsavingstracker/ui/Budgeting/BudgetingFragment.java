@@ -31,6 +31,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 import static android.content.ContentValues.TAG;
@@ -44,6 +45,8 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
 
     public static int yearint;
     public static int monthint;
+    public static String yearstr;
+    public static String monthstr;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -60,15 +63,17 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         //import database
         final DatabaseHelper myDB = new DatabaseHelper(getActivity());
 
-        //getting current month and year
-        DateFormat dateFormatDay = new SimpleDateFormat("dd");
-        DateFormat dateFormatMonth = new SimpleDateFormat("MM");
-        DateFormat dateFormatYear = new SimpleDateFormat("YYYY");
-        Date date = new Date();
-        String day = dateFormatDay.format(date); //set current month as targetmonth
-        final String month = dateFormatMonth.format(date); //set current month as targetmonth
-        final String year = dateFormatYear.format(date); //set current year
-        final String targetmonth = year + "-" + month + "-" + day;
+        //current year and month
+        yearint = Calendar.getInstance().get(Calendar.YEAR);
+        monthint = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        int dayint = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        yearstr = String.valueOf(yearint);
+        monthstr = String.format("%02d", monthint); //padding with leading 0 where needed
+        String daystr = String.format("%02d", dayint);
+        final String targetmonth = yearstr + "-" + monthstr + "-" + daystr;
+        //change textview for year and month
+        final TextView txt_year_month = root.findViewById(R.id.txt_budmthyear);
+        txt_year_month.setText(yearstr + "/" + monthstr);
 
         //find variables
         edit_category = root.findViewById(R.id.spn_cat_budget);
@@ -88,7 +93,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         final ArrayList<CharSequence> categories = new ArrayList<CharSequence>(Arrays.asList(getResources().getStringArray(R.array.expense_categories)));
         categories.add("Monthly Total"); //add Monthly Total to spinner array
         RefreshAmounts(myDB, categories); //refresh the "amount" values in the budgeting recyclerview
-        RefreshView(myDB, mAdapter, targetmonth); //refresh the recyclerview so that is transactions are added, it refreshes on switching to this fragment
+        RefreshView(myDB, mAdapter); //refresh the recyclerview so that is transactions are added, it refreshes on switching to this fragment
 
         //fill spinner with arraydata from strings
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getActivity(),
@@ -114,8 +119,8 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
 
                 if(edit_target.length() != 0){
 
-                    if(myDB.budgetExists(category, year, month)){ //if such a record already exists
-                        myDB.updateBudget(category, target, year, month);
+                    if(myDB.budgetExists(category, yearstr, monthstr)){ //if such a record already exists
+                        myDB.updateBudget(category, target, yearstr, monthstr);
                         Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),
                             "Target Updated", Snackbar.LENGTH_LONG);
                         sb.show();
@@ -127,7 +132,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
                     }
                     myDB.getAmountToBudget(category);
                     RefreshAmounts(myDB, categories); //refresh the "amount" values in the budgeting recyclerview
-                    RefreshView(myDB, mAdapter, targetmonth);
+                    RefreshView(myDB, mAdapter);
                     edit_target.setText("");
 
                 } else {
@@ -138,10 +143,28 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
             }
         });
 
+
+
         ImageButton prev_button = root.findViewById(R.id.btn_budmthprev);
         prev_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(monthint>1){ //changing the year and month values
+                    monthint--;
+                } else {
+                    yearint--;
+                    monthint = 12;
+                }
+                String newyearstr = String.valueOf(yearint);
+                String newmonthstr = String.format("%02d", monthint);
+
+                budgetItemList.clear(); //clear current recycler item list
+                Cursor data = myDB.getDisplayData(newyearstr, newmonthstr); //get data within new year and month
+                DatatoRecycler(data); //add the data to the recycler adapter
+                RefreshAmounts(myDB, categories); //refresh the "amount" values in the budgeting recyclerview
+                RefreshView(myDB, mAdapter); //refresh the recyclerview so that is transactions are added, it refreshes on switching to this fragment
+                mAdapter.notifyDataSetChanged(); //update the recyclerview
+                txt_year_month.setText(newyearstr + "/" + newmonthstr); //set textview text
 
             }
         });
@@ -155,8 +178,11 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         }
     }
 
-    public void RefreshView(DatabaseHelper database, RecyclerView.Adapter adapter, String targetmonth){
+    public void RefreshView(DatabaseHelper database, RecyclerView.Adapter adapter){
         budgetItemList.clear();
+        yearstr = String.valueOf(yearint);
+        monthstr = String.format("%02d", monthint); //padding with leading 0 where needed
+        String targetmonth = yearstr + "-" + monthstr + "-01";
         Cursor data = database.getBudgetData(targetmonth);
         DatatoRecycler(data);
         adapter.notifyDataSetChanged();
