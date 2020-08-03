@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txt_forgotinfo"
+        android:layout_width="326dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/forgot_info"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_forgotsecurityq"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/securityq"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_forgotinfo" />
+
+    <TextView
+        android:id="@+id/txt_forgotchosenq"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="question"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_forgotsecurityq" />
+
+    <TextView
+        android:id="@+id/txt_forgotanswer"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/answer"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_forgotchosenq" />
+
+    <EditText
+        android:id="@+id/edit_forgotanswer"
+        android:layout_width="292dp"
+        android:layout_height="58dp"
+        android:autofillHints="(pin)"
+        android:ems="10"
+        android:hint="(answer)"
+        android:maxLength="30"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_forgotanswer" />
+
+    <Button
+        android:id="@+id/btn_forgot"
+        android:layout_width="142dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_forgotanswer" />
+</androidx.constraintlayout.widget.ConstraintLayout>

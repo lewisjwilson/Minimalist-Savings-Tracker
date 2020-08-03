@@ -33,9 +33,9 @@ public class ChangePin extends AppCompatActivity {
 
 
         final EditText edit_oldpin = findViewById(R.id.edit_oldpin);
-        final EditText edit_newpin = findViewById(R.id.edit_newpin);
-        final EditText edit_verifpin = findViewById(R.id.edit_newpinverif);
-        Button btn_changepin = findViewById(R.id.btn_change_pin);
+        final EditText edit_newpin = findViewById(R.id.edit_forgotnewpin);
+        final EditText edit_verifpin = findViewById(R.id.edit_forgotpinverif);
+        Button btn_changepin = findViewById(R.id.btn_forgotpinchange);
 
         btn_changepin.setOnClickListener(new View.OnClickListener() {
             @Override

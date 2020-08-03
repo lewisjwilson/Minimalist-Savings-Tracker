@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.thicksandwich.minimalistsavingstracker.forgotpin.ForgotPin;
 import com.thicksandwich.minimalistsavingstracker.initialization.PinSetup;
 
-import static android.content.ContentValues.TAG;
 
 public class Authentication extends AppCompatActivity {
 
@@ -39,10 +39,9 @@ public class Authentication extends AppCompatActivity {
         }
         current_pin = sharedPreferences.getString(CURRENT_PIN, "0000"); //default pin is 0000
 
-        final TextView currentpin = findViewById(R.id.current_pin);
-        currentpin.setText(current_pin);
         final EditText edit_pin = findViewById(R.id.edit_pin);
         Button btn_login = findViewById(R.id.btn_login);
+        TextView forgot_pin = findViewById(R.id.txt_forgotpin);
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,5 +59,17 @@ public class Authentication extends AppCompatActivity {
                 }
             }
         });
+
+        forgot_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Authentication.this, ForgotPin.class));
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Do nothing
     }
 }

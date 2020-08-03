@@ -61,7 +61,6 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
                 String question = spn_questions.getSelectedItem().toString();
                 String answer_str = answer.getText().toString();
                 String verif_str = verif.getText().toString();
-                Log.wtf(TAG, "TwoFactorSetup: " + pin + " " + question + " " + answer_str);
 
                 if(answer_str.equals(verif_str)){
                     //save pin and answer to sharedpreferences

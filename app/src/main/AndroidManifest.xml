@@ -37,6 +37,14 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
+            android:name="com.thicksandwich.minimalistsavingstracker.forgotpin.ForgotPin"
+            android:label = "Forgot Pin">
+        </activity>
+        <activity
+            android:name="com.thicksandwich.minimalistsavingstracker.forgotpin.ForgotPinChange"
+            android:label = "Change Pin">
+        </activity>
+        <activity
             android:name="com.thicksandwich.minimalistsavingstracker.AddTransaction"
             android:label = "New Transaction">
         </activity>

@@ -47,6 +47,10 @@
     <string name="twofactor_info">Select a security question and provide an answer.</string>
     <string name="answer">Answer:</string>
     <string name="verify_answer">Verify Answer:</string>
+    <string name="twofactor_note">Note: This answer will be used for pin recovery</string>
+    <string name="forgot_pin">forgot your pin?</string>
+    <string name="forgot_info">Please input your security question answer.</string>
+    <string name="securityq">Security Question:</string>
     />
 
     <string-array name="income_categories">
