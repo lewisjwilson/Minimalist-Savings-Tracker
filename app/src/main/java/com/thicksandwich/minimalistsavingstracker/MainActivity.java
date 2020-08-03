@@ -1,11 +1,13 @@
 package com.thicksandwich.minimalistsavingstracker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.thicksandwich.minimalistsavingstracker.initialization.PinSetup;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -38,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         //start of own code....above is menubar layout stuff!
-
 
     }
 

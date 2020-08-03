@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.thicksandwich.minimalistsavingstracker.initialization.PinSetup;
 
 import static android.content.ContentValues.TAG;
 
@@ -20,6 +21,8 @@ public class Authentication extends AppCompatActivity {
     //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String CURRENT_PIN = "current_pin";
+    public static final String SEC_QUESTION = "security_question";
+    public static final String SEC_ANSWER = "security_answer";
     public static String current_pin;
     private SharedPreferences sharedPreferences;
 
@@ -30,6 +33,10 @@ public class Authentication extends AppCompatActivity {
 
         //Get SharedPreferences---------------------------------------------------------------------
         sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        //if sharepreferences does not have a pin, security question or security answer, initialise PinSetup.java
+        if(!sharedPreferences.contains(CURRENT_PIN)||!sharedPreferences.contains(SEC_QUESTION)||!sharedPreferences.contains(SEC_ANSWER)){
+            startActivity(new Intent(Authentication.this, PinSetup.class));
+        }
         current_pin = sharedPreferences.getString(CURRENT_PIN, "0000"); //default pin is 0000
 
         final TextView currentpin = findViewById(R.id.current_pin);

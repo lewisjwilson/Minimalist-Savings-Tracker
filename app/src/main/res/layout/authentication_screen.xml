@@ -38,6 +38,7 @@
         android:ems="10"
         android:hint="(pin)"
         android:inputType="numberPassword"
+        android:maxLength="12"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -7,54 +7,39 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/txt_enteroldpin"
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_pinsetupwelcome"
+        android:layout_width="294dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/old_pin"
-        android:textColor="@android:color/black"
-        android:textSize="28sp"
+        android:layout_marginTop="28dp"
+        android:text="@string/pin_setup_welcome"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edit_oldpin"
-        android:layout_width="236dp"
-        android:layout_height="60dp"
-        android:autofillHints="(pin)"
-        android:ems="10"
-        android:hint="(old pin)"
-        android:inputType="numberPassword"
-        android:maxLength="12"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_enteroldpin" />
-
     <TextView
-        android:id="@+id/txt_enternewpin"
+        android:id="@+id/txt_pinsetuppin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/new_pin"
+        android:layout_marginTop="24dp"
+        android:text="@string/create_pin"
         android:textColor="@android:color/black"
-        android:textSize="28sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_oldpin" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_pinsetupwelcome" />
 
     <EditText
-        android:id="@+id/edit_newpin"
+        android:id="@+id/edit_pinsetuppin"
         android:layout_width="236dp"
         android:layout_height="60dp"
         android:autofillHints="(pin)"
         android:ems="10"
-        android:hint="(new pin)"
+        android:hint="(pin)"
         android:inputType="numberPassword"
         android:maxLength="12"
         android:textAlignment="center"
@@ -62,28 +47,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_enternewpin" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_pinsetuppin" />
 
     <TextView
-        android:id="@+id/txt_newpinverif"
+        android:id="@+id/txt_pinsetupverif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/verif_newpin"
+        android:layout_marginTop="24dp"
+        android:text="@string/verif_pin"
         android:textColor="@android:color/black"
-        android:textSize="28sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_newpin" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_pinsetuppin" />
 
     <EditText
-        android:id="@+id/edit_newpinverif"
+        android:id="@+id/edit_pinsetupverif"
         android:layout_width="236dp"
         android:layout_height="60dp"
         android:autofillHints="(pin)"
         android:ems="10"
-        android:hint="(new pin)"
+        android:hint="(verify pin)"
         android:inputType="numberPassword"
         android:maxLength="12"
         android:textAlignment="center"
@@ -91,16 +75,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_newpinverif" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_pinsetupverif" />
 
     <Button
-        android:id="@+id/btn_change_pin"
-        android:layout_width="131dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/change_pin"
+        android:id="@+id/btn_pinsetupnext"
+        android:layout_width="142dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/button_next"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_newpinverif" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_pinsetupverif" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

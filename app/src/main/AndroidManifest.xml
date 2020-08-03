@@ -25,7 +25,16 @@
             android:name="com.thicksandwich.minimalistsavingstracker.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
-
+        </activity>
+        <activity
+            android:name="com.thicksandwich.minimalistsavingstracker.initialization.PinSetup"
+            android:label = "Pin Setup"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.thicksandwich.minimalistsavingstracker.initialization.TwoFactorSetup"
+            android:label = "Security Question Setup"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name="com.thicksandwich.minimalistsavingstracker.AddTransaction"

@@ -37,8 +37,17 @@
     <string name="login">Login</string>
     <string name="old_pin">Enter Old Pin:</string>
     <string name="new_pin">Enter New Pin:</string>
-    <string name="verif_pin">Verify New Pin:</string>
-    <string name="change_pin">Change Pin</string> />
+    <string name="verif_newpin">Verify New Pin:</string>
+    <string name="change_pin">Change Pin</string>
+    <string name="create_pin">Create a Pin:</string>
+    <string name="verif_pin">Verify Pin:</string>
+    <string name="pin_setup_welcome">Welcome to Minimalist Savings Tracker.\n\nTo begin, please create a pin.</string>
+    <string name="security_question">Choose a Security Question:</string>
+    <string name="button_next">Next</string>
+    <string name="twofactor_info">Select a security question and provide an answer.</string>
+    <string name="answer">Answer:</string>
+    <string name="verify_answer">Verify Answer:</string>
+    />
 
     <string-array name="income_categories">
         <item>Gift</item>
@@ -70,5 +79,14 @@
         <item>Repayments</item>
         <item>Transportation</item>
         <item>Others</item>
+    </string-array>
+
+    <string-array name="security_questions">
+        <item>What was your childhood nickname?</item>
+        <item>In what city does your nearest sibling live?</item>
+        <item>What is your oldest cousin\'s first name?</item>
+        <item>Who was your favorite teacher?</item>
+        <item>What is the first name of the person you first kissed?</item>
+        <item>What is your favorite movie?</item>
     </string-array>
 </resources>
