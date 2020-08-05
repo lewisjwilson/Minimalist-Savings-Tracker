@@ -1,4 +1,4 @@
-package com.thicksandwich.minimalistsavingstracker.ui.Home;
+package com.thicksandwich.minimalistsavingstracker.menutabs.Home;
 
 import android.content.DialogInterface;
 import android.content.Intent;

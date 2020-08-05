@@ -11,12 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.thicksandwich.minimalistsavingstracker.Authentication;
-import com.thicksandwich.minimalistsavingstracker.ChangePin;
 import com.thicksandwich.minimalistsavingstracker.R;
-import com.thicksandwich.minimalistsavingstracker.initialization.PinSetup;
-
-import org.w3c.dom.Text;
 
 public class ForgotPin extends AppCompatActivity {
 

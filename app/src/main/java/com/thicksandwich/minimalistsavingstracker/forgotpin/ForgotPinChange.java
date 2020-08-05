@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,8 +28,8 @@ public class ForgotPinChange extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_pin_change);
 
-        new_pin = findViewById(R.id.edit_forgotnewpin);
-        verif_pin = findViewById(R.id.edit_forgotpinverif);
+        new_pin = findViewById(R.id.edit_newanswer);
+        verif_pin = findViewById(R.id.edit_newanswerverif);
         change_pin = findViewById(R.id.btn_forgotpinchange);
 
         change_pin.setOnClickListener(new View.OnClickListener() {

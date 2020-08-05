@@ -141,13 +141,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //------------------------------budgeting table TABLE 1-----------------------------------------
-    public boolean addBudget(String category, String target, String targetmonth){
+    public boolean addBudget(String category, String target, String year, String month, String day){
         SQLiteDatabase db = this.getWritableDatabase();
+
+        String today = year + "-" + month + "-" + day;
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(T2_CAT, category);
         contentValues.put(T2_TARGET, target);
-        contentValues.put(T2_TARGETMONTH, targetmonth); //current YYYY-MM-DD
+        contentValues.put(T2_TARGETMONTH, today); //current YYYY-MM-DD
 
         long result = db.insert(T2_TABLENAME, null, contentValues);
         return result != -1; //return true if result is not -1
@@ -186,7 +188,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //category is the same as spinner selection
         Cursor cur = db.rawQuery("SELECT * FROM " + T2_TABLENAME +
                 " WHERE " + T2_CAT + " = '" + category + "'" +
-                " AND strftime('%Y %m', 'now') = '" + year + " " + month + "'", null);
+                " AND strftime('%Y %m', " + T2_TARGETMONTH + ") = '" + year + " " + month + "'", null);
 
         if(cur.getCount() <= 0){ //if such a value does not exist
             cur.close();
@@ -207,12 +209,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //get data to display from the database
-    public Cursor getBudgetData(String targetmonth) { //YYYY-MM-DD
+    public Cursor getBudgetData(String year, String month) { //YYYY-MM-DD
         SQLiteDatabase db = this.getWritableDatabase();
         //get data in order of date and time
         return db.rawQuery("SELECT *" +
                 " FROM " + T2_TABLENAME +
-                " WHERE strftime('%Y %m'," + T2_TARGETMONTH + ") = strftime('%Y %m', 'now')" +
+                " WHERE strftime('%Y %m', " + T2_TARGETMONTH + ") = '" + year + " " + month + "'" +
                 " ORDER BY " + T2_CAT + " = 'Monthly Total' DESC, " + T2_CAT + " ASC", null);
 
     }

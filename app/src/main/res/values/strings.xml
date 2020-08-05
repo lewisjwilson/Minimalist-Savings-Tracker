@@ -4,9 +4,7 @@
     <string name="nav_header_subtitle">Simple Finance Tracking</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_credits">Credits</string>
-
     <string name="menu_home">Home</string>
-
     <string name="Income">Income</string>
     <string name="Income_Expenses">Income/Expenses</string>
     <string name="Amount">Amount:</string>
@@ -50,9 +48,10 @@
     <string name="twofactor_note">Note: This answer will be used for pin recovery</string>
     <string name="forgot_pin">forgot your pin?</string>
     <string name="forgot_info">Please input your security question answer.</string>
-    <string name="securityq">Security Question:</string>
+    <string name="securityq">Security Question:</string><![CDATA[
     />
 
+    ]]>
     <string-array name="income_categories">
         <item>Gift</item>
         <item>Refunds</item>
@@ -93,4 +92,5 @@
         <item>What is the first name of the person you first kissed?</item>
         <item>What is your favorite movie?</item>
     </string-array>
+    <string name="change_security">Change</string>
 </resources>

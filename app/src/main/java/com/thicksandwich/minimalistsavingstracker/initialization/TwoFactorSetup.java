@@ -3,7 +3,6 @@ package com.thicksandwich.minimalistsavingstracker.initialization;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,7 +40,7 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
         sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         final String pin = getIntent().getStringExtra("pin"); //get pin from PinSetup.java
 
-        spn_questions = findViewById(R.id.spn_questions);
+        spn_questions = findViewById(R.id.spn_changequestions);
         answer = findViewById(R.id.edit_twofactoranswer);
         verif = findViewById(R.id.edit_twofactorverif);
         Button submit = findViewById(R.id.btn_twofactorsubmit);

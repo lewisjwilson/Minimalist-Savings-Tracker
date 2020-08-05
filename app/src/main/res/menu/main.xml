@@ -6,6 +6,10 @@
         android:title="@string/change_pin"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_changetwofactor"
+        android:title="Change Security Question"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_credits"
         android:title="@string/action_credits"
         app:showAsAction="never" />

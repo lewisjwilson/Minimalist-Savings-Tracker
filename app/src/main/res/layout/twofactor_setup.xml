@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_twofactorinfo" />
 
     <Spinner
-        android:id="@+id/spn_questions"
+        android:id="@+id/spn_changequestions"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_alignParentEnd="true"
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spn_questions" />
+        app:layout_constraintTop_toBottomOf="@+id/spn_changequestions" />
 
     <EditText
         android:id="@+id/edit_twofactoranswer"

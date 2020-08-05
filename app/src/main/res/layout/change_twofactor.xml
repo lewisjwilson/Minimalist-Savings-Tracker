@@ -7,15 +7,14 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/txt_currentanswer"
+        android:id="@+id/txt_twofactor_pin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/old_pin"
+        android:layout_marginTop="24dp"
+        android:text="Current Pin:"
         android:textColor="@android:color/black"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,9 +22,10 @@
         android:id="@+id/edit_twofactor_pin"
         android:layout_width="236dp"
         android:layout_height="60dp"
+        android:layout_marginTop="12dp"
         android:autofillHints="(pin)"
         android:ems="10"
-        android:hint="(old pin)"
+        android:hint="(pin)"
         android:inputType="numberPassword"
         android:maxLength="12"
         android:textAlignment="center"
@@ -33,30 +33,56 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_currentanswer" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_twofactor_pin" />
+
+    <TextView
+        android:id="@+id/txt_selectnewquestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Select a new question:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_twofactor_pin" />
+
+    <Spinner
+        android:id="@+id/spn_changequestions"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:autofillHints=""
+        android:background="@drawable/border"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_selectnewquestion" />
 
     <TextView
         android:id="@+id/txt_answerverif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/new_pin"
+        android:layout_marginTop="24dp"
+        android:text="New Answer:"
         android:textColor="@android:color/black"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_twofactor_pin" />
+        app:layout_constraintTop_toBottomOf="@+id/spn_changequestions" />
 
     <EditText
         android:id="@+id/edit_newanswer"
-        android:layout_width="236dp"
+        android:layout_width="292dp"
         android:layout_height="60dp"
         android:autofillHints="(pin)"
         android:ems="10"
-        android:hint="(new pin)"
-        android:inputType="numberPassword"
-        android:maxLength="12"
+        android:hint="(answer)"
+        android:maxLength="30"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/verif_newpin"
+        android:text="Verify New Answer:"
         android:textColor="@android:color/black"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,13 +105,12 @@
 
     <EditText
         android:id="@+id/edit_newanswerverif"
-        android:layout_width="236dp"
+        android:layout_width="292dp"
         android:layout_height="60dp"
         android:autofillHints="(pin)"
         android:ems="10"
-        android:hint="(new pin)"
-        android:inputType="numberPassword"
-        android:maxLength="12"
+        android:hint="(answer)"
+        android:maxLength="30"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +123,7 @@
         android:layout_width="131dp"
         android:layout_height="49dp"
         android:layout_marginTop="32dp"
-        android:text="@string/change_pin"
+        android:text="@string/change_security"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_newanswerverif" />

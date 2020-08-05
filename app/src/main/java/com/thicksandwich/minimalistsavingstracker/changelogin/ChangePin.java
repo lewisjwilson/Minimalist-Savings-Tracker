@@ -1,4 +1,4 @@
-package com.thicksandwich.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker.changelogin;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.MyApplication;
+import com.thicksandwich.minimalistsavingstracker.R;
 
 import static android.content.ContentValues.TAG;
 
@@ -32,9 +33,9 @@ public class ChangePin extends AppCompatActivity {
         Log.d(TAG, "current pin: " + CURRENT_PIN);
 
 
-        final EditText edit_oldpin = findViewById(R.id.edit_oldpin);
-        final EditText edit_newpin = findViewById(R.id.edit_forgotnewpin);
-        final EditText edit_verifpin = findViewById(R.id.edit_forgotpinverif);
+        final EditText edit_oldpin = findViewById(R.id.edit_twofactor_pin);
+        final EditText edit_newpin = findViewById(R.id.edit_newanswer);
+        final EditText edit_verifpin = findViewById(R.id.edit_newanswerverif);
         Button btn_changepin = findViewById(R.id.btn_forgotpinchange);
 
         btn_changepin.setOnClickListener(new View.OnClickListener() {

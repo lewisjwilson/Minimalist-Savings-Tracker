@@ -1,16 +1,16 @@
-package com.thicksandwich.minimalistsavingstracker.ui.Stats;
+package com.thicksandwich.minimalistsavingstracker.menutabs.Home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class StatsViewModel extends ViewModel {
+public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public StatsViewModel() {
+    public HomeViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is the stats fragment");
+        mText.setValue("Balance");
     }
 
     public LiveData<String> getText() {

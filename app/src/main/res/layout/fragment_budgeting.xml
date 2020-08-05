@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Budgeting.BudgetingFragment" >
+    tools:context=".menutabs.Budgeting.BudgetingFragment" >
 
     <EditText
         android:id="@+id/edit_target"

@@ -1,4 +1,4 @@
-package com.thicksandwich.minimalistsavingstracker.ui.Stats;
+package com.thicksandwich.minimalistsavingstracker.menutabs.Stats;
 
 import android.database.Cursor;
 import android.graphics.Color;

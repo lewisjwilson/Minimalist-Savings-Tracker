@@ -1,13 +1,13 @@
 package com.thicksandwich.minimalistsavingstracker;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import com.thicksandwich.minimalistsavingstracker.initialization.PinSetup;
+import com.thicksandwich.minimalistsavingstracker.changelogin.ChangePin;
+import com.thicksandwich.minimalistsavingstracker.changelogin.ChangeTwoFactor;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_changepin:
                 startActivity(new Intent(this, ChangePin.class));
+                return true;
+            case R.id.action_changetwofactor:
+                startActivity(new Intent(this, ChangeTwoFactor.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
