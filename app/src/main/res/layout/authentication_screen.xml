@@ -5,6 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/bg_authentication"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:backgroundTintMode="multiply" />
+
     <TextView
         android:id="@+id/text_authentication"
         android:layout_width="wrap_content"
@@ -13,7 +20,7 @@
         android:singleLine="false"
         android:text="@string/auth_title"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,11 +32,15 @@
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
         android:autofillHints="(pin)"
+        android:backgroundTint="@android:color/white"
         android:ems="10"
+        android:foregroundTint="@android:color/white"
         android:hint="(pin)"
+        android:textColorHint="#BDBDBD"
         android:inputType="numberPassword"
         android:maxLength="12"
         android:textAlignment="center"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -41,7 +52,11 @@
         android:layout_width="113dp"
         android:layout_height="47dp"
         android:layout_marginTop="36dp"
+        android:background="@color/colorAccent"
+        android:backgroundTint="@android:color/white"
+        android:backgroundTintMode="multiply"
         android:text="@string/login"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_twofactor_pin" />
