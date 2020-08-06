@@ -41,7 +41,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_home" />
+        app:layout_constraintTop_toBottomOf="@+id/text_home"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:id="@+id/txt_edit_balance"
@@ -53,7 +54,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/num_balance" />
+        app:layout_constraintTop_toBottomOf="@+id/num_balance"
+        android:focusable="true" />
 
     <View
         android:id="@+id/divider1_stats"
@@ -79,7 +81,9 @@
         android:src="@drawable/prev_icon"
         app:layout_constraintBottom_toTopOf="@id/divider1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider1_stats" />
+        app:layout_constraintTop_toBottomOf="@id/divider1_stats"
+        android:contentDescription="TODO"
+        tools:ignore="ContentDescription" />
 
     <EditText
         android:id="@+id/txt_year_month"
@@ -96,7 +100,8 @@
         app:layout_constraintEnd_toEndOf="@id/btn_month_next"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/btn_month_prev"
-        app:layout_constraintTop_toBottomOf="@id/divider1_stats" />
+        app:layout_constraintTop_toBottomOf="@id/divider1_stats"
+        tools:ignore="LabelFor" />
 
     <ImageButton
         android:id="@+id/btn_month_next"
@@ -112,7 +117,8 @@
         android:src="@drawable/next_icon"
         app:layout_constraintBottom_toTopOf="@id/divider1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider1_stats" />
+        app:layout_constraintTop_toBottomOf="@id/divider1_stats"
+        android:contentDescription="TODO" />
 
     <View
         android:id="@+id/divider1"

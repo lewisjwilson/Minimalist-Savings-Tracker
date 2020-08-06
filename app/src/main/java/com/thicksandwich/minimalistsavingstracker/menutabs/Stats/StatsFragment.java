@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -135,7 +136,7 @@ public class StatsFragment extends Fragment {
 
             BarDataSet barDataSet = new BarDataSet(barEntries, "");
             barDataSet.setDrawValues(true); //show the values on/by the bars
-            barDataSet.setColor(Color.parseColor("#11f0d9")); //bar colour
+            barDataSet.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent)); //bar colour
 
             BarData barData = new BarData(barDataSet);
             barData.setValueTextSize(10f);
