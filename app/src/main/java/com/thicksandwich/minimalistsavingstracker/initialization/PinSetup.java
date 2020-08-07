@@ -31,16 +31,22 @@ public class PinSetup extends AppCompatActivity {
                 String verif_str = verif.getText().toString();
                 Log.d(TAG, "PinSetup: " + pin_str + " " + verif_str);
 
-                if(pin_str.equals(verif_str)){
-                    //start new activity --> setup security question
-                    Intent intent = new Intent(PinSetup.this, TwoFactorSetup.class);
-                    intent.putExtra("pin", pin_str);
-                    startActivity(intent);
-                    finish();
+                if(pin_str.length()>=4) {
+                    if (pin_str.equals(verif_str)) {
+                        //start new activity --> setup security question
+                        Intent intent = new Intent(PinSetup.this, TwoFactorSetup.class);
+                        intent.putExtra("pin", pin_str);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Snackbar sb_pin_error = Snackbar.make(findViewById(android.R.id.content),
+                                "New pins do not match", Snackbar.LENGTH_LONG);
+                        sb_pin_error.show();
+                    }
                 } else {
-                    Snackbar sb_pin_error = Snackbar.make(findViewById(android.R.id.content),
-                            "New pins do not match", Snackbar.LENGTH_LONG);
-                    sb_pin_error.show();
+                    Snackbar sb_pin_short = Snackbar.make(findViewById(android.R.id.content),
+                            "Pin must be 4 characters or more", Snackbar.LENGTH_LONG);
+                    sb_pin_short.show();
                 }
             }
         });

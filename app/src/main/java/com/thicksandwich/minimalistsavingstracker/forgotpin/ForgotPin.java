@@ -42,8 +42,8 @@ public class ForgotPin extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user_answer = answer.getText().toString();
-                String true_answer = sharedPreferences.getString(SEC_ANSWER, null); //default answer is null
+                String user_answer = answer.getText().toString().toLowerCase();
+                String true_answer = sharedPreferences.getString(SEC_ANSWER, null).toLowerCase(); //default answer is null
                 if(user_answer.equals(true_answer)){
                     Intent intent = new Intent(ForgotPin.this, ForgotPinChange.class);
                     startActivity(intent);

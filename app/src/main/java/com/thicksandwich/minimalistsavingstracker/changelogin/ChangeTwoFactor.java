@@ -63,21 +63,27 @@ public class ChangeTwoFactor extends AppCompatActivity implements AdapterView.On
                 String question_str = questions.getSelectedItem().toString();
 
                 if(pin_str.equals(current_pin)){
-                    if(answer_str.equals(verif_str)){
-                        //change pin to newpin in SharedPreferences
-                        savePrefs(question_str, answer_str);
+                    if(answer_str.length()>=4) {
+                        if (answer_str.equals(verif_str)) {
+                            //change pin to newpin in SharedPreferences
+                            savePrefs(question_str, answer_str);
 
-                        Snackbar sb_newpin_change = Snackbar.make(findViewById(android.R.id.content),
-                                "Pin Changed", Snackbar.LENGTH_LONG);
-                        sb_newpin_change.show();
+                            Snackbar sb_newpin_change = Snackbar.make(findViewById(android.R.id.content),
+                                    "Pin Changed", Snackbar.LENGTH_LONG);
+                            sb_newpin_change.show();
 
-                        //go back to previous activity
-                        onBackPressed();
+                            //go back to previous activity
+                            onBackPressed();
 
+                        } else {
+                            Snackbar sb_newpin_error = Snackbar.make(findViewById(android.R.id.content),
+                                    "New answers do not match", Snackbar.LENGTH_LONG);
+                            sb_newpin_error.show();
+                        }
                     } else {
-                        Snackbar sb_newpin_error = Snackbar.make(findViewById(android.R.id.content),
-                                "New answer do not match", Snackbar.LENGTH_LONG);
-                        sb_newpin_error.show();
+                        Snackbar sb_twofactor_short = Snackbar.make(findViewById(android.R.id.content),
+                                "Security question answer must be 4 characters or more", Snackbar.LENGTH_LONG);
+                        sb_twofactor_short.show();
                     }
                 } else {
                     Snackbar sb_pin_error = Snackbar.make(findViewById(android.R.id.content),

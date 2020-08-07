@@ -38,16 +38,15 @@ public class ChangePin extends AppCompatActivity {
         final EditText edit_verifpin = findViewById(R.id.edit_newanswerverif);
         Button btn_changepin = findViewById(R.id.btn_forgotpinchange);
 
-        btn_changepin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn_changepin.setOnClickListener(view -> {
 
-                String oldpin = edit_oldpin.getText().toString();
-                String newpin = edit_newpin.getText().toString();
-                String verifpin = edit_verifpin.getText().toString();
+            String oldpin = edit_oldpin.getText().toString();
+            String newpin = edit_newpin.getText().toString();
+            String verifpin = edit_verifpin.getText().toString();
 
-                if(oldpin.equals(current_pin)){
-                    if(newpin.equals(verifpin)){
+            if(oldpin.equals(current_pin)){
+                if(newpin.length()>=4) {
+                    if (newpin.equals(verifpin)) {
                         //change pin to newpin in SharedPreferences
                         savePrefs(newpin);
 
@@ -64,12 +63,16 @@ public class ChangePin extends AppCompatActivity {
                         sb_newpin_error.show();
                     }
                 } else {
-                    Snackbar sb_oldpin_error = Snackbar.make(findViewById(android.R.id.content),
-                            "Old pin is incorrect", Snackbar.LENGTH_LONG);
-                    sb_oldpin_error.show();
+                    Snackbar sb_pin_short = Snackbar.make(findViewById(android.R.id.content),
+                            "Pin must be 4 characters or more", Snackbar.LENGTH_LONG);
+                    sb_pin_short.show();
                 }
-
+            } else {
+                Snackbar sb_oldpin_error = Snackbar.make(findViewById(android.R.id.content),
+                        "Old pin is incorrect", Snackbar.LENGTH_LONG);
+                sb_oldpin_error.show();
             }
+
         });
 
 

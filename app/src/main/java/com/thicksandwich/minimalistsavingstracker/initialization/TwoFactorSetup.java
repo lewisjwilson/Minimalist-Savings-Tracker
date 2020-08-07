@@ -54,14 +54,13 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
 
 
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String question = spn_questions.getSelectedItem().toString();
-                String answer_str = answer.getText().toString();
-                String verif_str = verif.getText().toString();
+        submit.setOnClickListener(view -> {
+            String question = spn_questions.getSelectedItem().toString();
+            String answer_str = answer.getText().toString();
+            String verif_str = verif.getText().toString();
 
-                if(answer_str.equals(verif_str)){
+            if(answer_str.length()>=4) {
+                if (answer_str.equals(verif_str)) {
                     //save pin and answer to sharedpreferences
                     savePrefs(pin, question, answer_str);
 
@@ -74,8 +73,12 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
                             "Answers do not match", Snackbar.LENGTH_LONG);
                     sb_twofactor_error.show();
                 }
-
+            } else {
+                Snackbar sb_twofactor_short = Snackbar.make(findViewById(android.R.id.content),
+                        "Security question answer must be 4 characters or more", Snackbar.LENGTH_LONG);
+                sb_twofactor_short.show();
             }
+
         });
 
     }
