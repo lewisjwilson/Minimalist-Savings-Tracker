@@ -32,24 +32,27 @@ public class ForgotPinChange extends AppCompatActivity {
         verif_pin = findViewById(R.id.edit_newanswerverif);
         change_pin = findViewById(R.id.btn_forgotpinchange);
 
-        change_pin.setOnClickListener(view -> {
-            String new_pin_str = new_pin.getText().toString();
-            String verif_pin_str = verif_pin.getText().toString();
+        change_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String new_pin_str = new_pin.getText().toString();
+                String verif_pin_str = verif_pin.getText().toString();
 
-            if(new_pin_str.length()>=4) {
-                if (new_pin_str.equals(verif_pin_str)) {
-                    savePrefs(new_pin_str);
-                    Intent intent = new Intent(ForgotPinChange.this, Authentication.class);
-                    startActivity(intent);
+                if (new_pin_str.length() >= 4) {
+                    if (new_pin_str.equals(verif_pin_str)) {
+                        savePrefs(new_pin_str);
+                        Intent intent = new Intent(ForgotPinChange.this, Authentication.class);
+                        ForgotPinChange.this.startActivity(intent);
+                    } else {
+                        Snackbar sb_newpin_error = Snackbar.make(ForgotPinChange.this.findViewById(android.R.id.content),
+                                "New pins do not match", Snackbar.LENGTH_LONG);
+                        sb_newpin_error.show();
+                    }
                 } else {
-                    Snackbar sb_newpin_error = Snackbar.make(findViewById(android.R.id.content),
-                            "New pins do not match", Snackbar.LENGTH_LONG);
-                    sb_newpin_error.show();
+                    Snackbar sb_pin_short = Snackbar.make(ForgotPinChange.this.findViewById(android.R.id.content),
+                            "Pin must be 4 characters or more", Snackbar.LENGTH_LONG);
+                    sb_pin_short.show();
                 }
-            } else {
-                Snackbar sb_pin_short = Snackbar.make(findViewById(android.R.id.content),
-                        "Pin must be 4 characters or more", Snackbar.LENGTH_LONG);
-                sb_pin_short.show();
             }
         });
 

@@ -38,41 +38,44 @@ public class ChangePin extends AppCompatActivity {
         final EditText edit_verifpin = findViewById(R.id.edit_newanswerverif);
         Button btn_changepin = findViewById(R.id.btn_forgotpinchange);
 
-        btn_changepin.setOnClickListener(view -> {
+        btn_changepin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-            String oldpin = edit_oldpin.getText().toString();
-            String newpin = edit_newpin.getText().toString();
-            String verifpin = edit_verifpin.getText().toString();
+                String oldpin = edit_oldpin.getText().toString();
+                String newpin = edit_newpin.getText().toString();
+                String verifpin = edit_verifpin.getText().toString();
 
-            if(oldpin.equals(current_pin)){
-                if(newpin.length()>=4) {
-                    if (newpin.equals(verifpin)) {
-                        //change pin to newpin in SharedPreferences
-                        savePrefs(newpin);
+                if (oldpin.equals(current_pin)) {
+                    if (newpin.length() >= 4) {
+                        if (newpin.equals(verifpin)) {
+                            //change pin to newpin in SharedPreferences
+                            savePrefs(newpin);
 
-                        Snackbar sb_newpin_change = Snackbar.make(findViewById(android.R.id.content),
-                                "Pin Changed", Snackbar.LENGTH_LONG);
-                        sb_newpin_change.show();
+                            Snackbar sb_newpin_change = Snackbar.make(ChangePin.this.findViewById(android.R.id.content),
+                                    "Pin Changed", Snackbar.LENGTH_LONG);
+                            sb_newpin_change.show();
 
-                        //go back to previous activity
-                        onBackPressed();
+                            //go back to previous activity
+                            ChangePin.this.onBackPressed();
 
+                        } else {
+                            Snackbar sb_newpin_error = Snackbar.make(ChangePin.this.findViewById(android.R.id.content),
+                                    "New pins do not match", Snackbar.LENGTH_LONG);
+                            sb_newpin_error.show();
+                        }
                     } else {
-                        Snackbar sb_newpin_error = Snackbar.make(findViewById(android.R.id.content),
-                                "New pins do not match", Snackbar.LENGTH_LONG);
-                        sb_newpin_error.show();
+                        Snackbar sb_pin_short = Snackbar.make(ChangePin.this.findViewById(android.R.id.content),
+                                "Pin must be 4 characters or more", Snackbar.LENGTH_LONG);
+                        sb_pin_short.show();
                     }
                 } else {
-                    Snackbar sb_pin_short = Snackbar.make(findViewById(android.R.id.content),
-                            "Pin must be 4 characters or more", Snackbar.LENGTH_LONG);
-                    sb_pin_short.show();
+                    Snackbar sb_oldpin_error = Snackbar.make(ChangePin.this.findViewById(android.R.id.content),
+                            "Old pin is incorrect", Snackbar.LENGTH_LONG);
+                    sb_oldpin_error.show();
                 }
-            } else {
-                Snackbar sb_oldpin_error = Snackbar.make(findViewById(android.R.id.content),
-                        "Old pin is incorrect", Snackbar.LENGTH_LONG);
-                sb_oldpin_error.show();
-            }
 
+            }
         });
 
 

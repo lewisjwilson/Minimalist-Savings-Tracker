@@ -64,7 +64,7 @@
         android:id="@+id/txt_pinsetupverif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:text="@string/verif_pin"
         android:textColor="@android:color/white"
         android:textSize="24sp"
@@ -91,17 +91,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_pinsetupverif" />
 
+    <TextView
+        android:id="@+id/txt_pinsetupcurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Currency:"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_pinsetupverif" />
+
+    <Spinner
+        android:id="@+id/spn_currencies"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:autofillHints=""
+        android:background="@drawable/border"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_pinsetupcurrency" />
+
     <Button
         android:id="@+id/btn_pinsetupnext"
         android:layout_width="142dp"
         android:layout_height="46dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:background="@color/colorAccent"
         android:text="@string/button_next"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_pinsetupverif" />
+        app:layout_constraintTop_toBottomOf="@+id/spn_currencies" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

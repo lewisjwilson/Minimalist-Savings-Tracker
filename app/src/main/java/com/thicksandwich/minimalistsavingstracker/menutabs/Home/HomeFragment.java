@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
     //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String CURRENCY = "currency_symbol";
     public static final String BAL_OVERRIDE_KEY = "balance_override";
     public static final String DIFF_KEY = "difference";
     private SharedPreferences sharedPreferences;
@@ -55,6 +56,8 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
     public static int difference;
     public static int yearint;
     public static int monthint;
+
+    public static String currency_symbol;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -70,9 +73,9 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
         //Get SharedPreferences---------------------------------------------------------------------
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        currency_symbol = sharedPreferences.getString(CURRENCY, "?");
         balance_override = sharedPreferences.getInt(BAL_OVERRIDE_KEY, 0);
         difference = sharedPreferences.getInt(DIFF_KEY, 0);
-        Log.d(TAG, "difference: " + difference);
 
         //Link Database to Arraylist----------------------------------------------------------------
         //current year and month
@@ -109,7 +112,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         //format balance display--------------------------------------------------------------------
         String string_balance = NumberFormat.getNumberInstance(Locale.US).format(transaction_balance); //commas
         TextView edit_balance = root.findViewById(R.id.num_balance);
-        String final_value = "¥" + string_balance; //add the yen symbol
+        String final_value = currency_symbol + string_balance; //add the currency symbol
         edit_balance.setText(final_value);
 
         //balance override "edit" click-------------------------------------------------------------
@@ -210,7 +213,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         MyApplication.mEditor.putInt(BAL_OVERRIDE_KEY, balance_override);
         MyApplication.mEditor.putInt(DIFF_KEY, difference);
         MyApplication.mEditor.commit();
-
     }
 
 
