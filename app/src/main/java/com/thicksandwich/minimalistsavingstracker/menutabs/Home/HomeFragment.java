@@ -26,14 +26,17 @@ import com.thicksandwich.minimalistsavingstracker.AddTransaction;
 import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
 import com.thicksandwich.minimalistsavingstracker.DeleteDialog;
 import com.thicksandwich.minimalistsavingstracker.EditBalance;
+import com.thicksandwich.minimalistsavingstracker.LocaleGetter;
 import com.thicksandwich.minimalistsavingstracker.MainActivity;
 import com.thicksandwich.minimalistsavingstracker.MainRecyclerItem;
 import com.thicksandwich.minimalistsavingstracker.R;
 import com.thicksandwich.minimalistsavingstracker.MainRecyclerAdapter;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
@@ -43,7 +46,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
     //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String CURRENCY = "currency_symbol";
+    public static final String CURRENCY = "currency";
     public static final String BAL_OVERRIDE_KEY = "balance_override";
     public static final String DIFF_KEY = "difference";
     private SharedPreferences sharedPreferences;
@@ -57,7 +60,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
     public static int yearint;
     public static int monthint;
 
-    public static String currency_symbol;
+    public static String currency_code;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -73,9 +76,19 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
         //Get SharedPreferences---------------------------------------------------------------------
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        currency_symbol = sharedPreferences.getString(CURRENCY, "?");
+        currency_code = sharedPreferences.getString(CURRENCY, "?");
         balance_override = sharedPreferences.getInt(BAL_OVERRIDE_KEY, 0);
         difference = sharedPreferences.getInt(DIFF_KEY, 0);
+
+        //Setting currency
+        Currency currency = Currency.getInstance(currency_code);
+        Log.d(TAG, "onCreateView: " + currency.getDisplayName());
+
+        //User Locale based on Currency
+        Locale locale = new LocaleGetter().UserLocale(currency_code);
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+        numberFormat.setCurrency(currency); //Set currency format as per users selected currency of choice
+
 
         //Link Database to Arraylist----------------------------------------------------------------
         //current year and month
@@ -83,7 +96,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         monthint = Calendar.getInstance().get(Calendar.MONTH) + 1;
         final String yearstr = String.valueOf(yearint);
         final String monthstr = String.format("%02d", monthint); //padding with leading 0 where needed
-        Log.d(TAG, "onCreateView: " + yearstr + " " + monthstr);
         final DatabaseHelper myDB = new DatabaseHelper(getActivity());
         Cursor data = myDB.getDisplayData(yearstr, monthstr); //add data from database into recyclerview
 
@@ -110,9 +122,9 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         transaction_balance = transaction_balance + difference;
 
         //format balance display--------------------------------------------------------------------
-        String string_balance = NumberFormat.getNumberInstance(Locale.US).format(transaction_balance); //commas
+        String string_balance = numberFormat.format(transaction_balance); //commas
         TextView edit_balance = root.findViewById(R.id.num_balance);
-        String final_value = currency_symbol + string_balance; //add the currency symbol
+        String final_value = string_balance; //add the currency symbol
         edit_balance.setText(final_value);
 
         //balance override "edit" click-------------------------------------------------------------

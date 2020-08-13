@@ -17,11 +17,17 @@ import com.thicksandwich.MyApplication;
 import com.thicksandwich.minimalistsavingstracker.MainActivity;
 import com.thicksandwich.minimalistsavingstracker.R;
 
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
+
+import static java.util.Currency.getInstance;
+
 public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String CURRENCY = "currency_symbol";
+    public static final String CURRENCY = "currency";
     public static final String CURRENT_PIN = "current_pin";
     public static final String SEC_QUESTION = "security_question";
     public static final String SEC_ANSWER = "security_answer";
@@ -39,7 +45,7 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
         //Get SharedPreferences---------------------------------------------------------------------
         sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         final String pin = getIntent().getStringExtra("pin"); //get pin from PinSetup.java
-        final String currency_symbol = getIntent().getStringExtra("currency"); //get pin from PinSetup.java
+        final String currency = getIntent().getStringExtra("currency"); //get pin from PinSetup.java
 
         spn_questions = findViewById(R.id.spn_changequestions);
         answer = findViewById(R.id.edit_twofactoranswer);
@@ -65,7 +71,7 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
                 if (answer_str.length() >= 4) {
                     if (answer_str.equals(verif_str)) {
                         //save pin and answer to sharedpreferences
-                        savePrefs(currency_symbol, pin, question, answer_str);
+                        savePrefs(currency, pin, question, answer_str);
 
 
                         TwoFactorSetup.this.startActivity(new Intent(TwoFactorSetup.this, MainActivity.class));
@@ -94,6 +100,7 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
         MyApplication.mEditor.putString(CURRENT_PIN, pin);
         MyApplication.mEditor.putString(SEC_QUESTION, question);
         MyApplication.mEditor.putString(SEC_ANSWER, answer);
+
         MyApplication.mEditor.commit();
 
     }

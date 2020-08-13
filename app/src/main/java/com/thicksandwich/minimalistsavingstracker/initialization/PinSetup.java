@@ -15,6 +15,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.minimalistsavingstracker.R;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
+import java.util.Set;
 
 public class PinSetup extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -31,10 +34,13 @@ public class PinSetup extends AppCompatActivity implements AdapterView.OnItemSel
         Button next = findViewById(R.id.btn_pinsetupnext);
         final Spinner spn_currencies = findViewById(R.id.spn_currencies);
 
+        Set<Currency> all_currencies = Currency.getAvailableCurrencies();
+
+
         ArrayList<String> currency_list = new ArrayList<>();
-        currency_list.add("British Pound (£)");
-        currency_list.add("Japanese Yen (¥)");
-        currency_list.add("US Dollar ($)");
+        currency_list.add("British Pound (GBP)");
+        currency_list.add("Japanese Yen (JPY)");
+        currency_list.add("US Dollar (USD)");
 
         //fill spinner with arraydata from strings
         adapter = new ArrayAdapter<>(this,
