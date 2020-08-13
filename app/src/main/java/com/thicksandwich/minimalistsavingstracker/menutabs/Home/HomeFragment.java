@@ -32,6 +32,8 @@ import com.thicksandwich.minimalistsavingstracker.MainRecyclerItem;
 import com.thicksandwich.minimalistsavingstracker.R;
 import com.thicksandwich.minimalistsavingstracker.MainRecyclerAdapter;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -121,10 +123,17 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         //transactions plus the difference between the most recent override
         transaction_balance = transaction_balance + difference;
 
-        //format balance display--------------------------------------------------------------------
-        String string_balance = numberFormat.format(transaction_balance); //commas
+        //format balance display based on locale----------------------------------------------------
+        BigDecimal bd_value;
+
+        if(currency_code.equals("GBP")||currency_code.equals("USD")){
+            bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance), 2); //2dp
+        } else {
+            bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance)); //0dp
+        }
+
+        String final_value = numberFormat.format(bd_value); //commas
         TextView edit_balance = root.findViewById(R.id.num_balance);
-        String final_value = string_balance; //add the currency symbol
         edit_balance.setText(final_value);
 
         //balance override "edit" click-------------------------------------------------------------

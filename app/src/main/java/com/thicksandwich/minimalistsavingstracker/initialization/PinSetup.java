@@ -36,7 +36,6 @@ public class PinSetup extends AppCompatActivity implements AdapterView.OnItemSel
 
         Set<Currency> all_currencies = Currency.getAvailableCurrencies();
 
-
         ArrayList<String> currency_list = new ArrayList<>();
         currency_list.add("British Pound (GBP)");
         currency_list.add("Japanese Yen (JPY)");
