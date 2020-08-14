@@ -15,9 +15,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.minimalistsavingstracker.R;
 
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Locale;
-import java.util.Set;
 
 public class PinSetup extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -32,21 +29,19 @@ public class PinSetup extends AppCompatActivity implements AdapterView.OnItemSel
         pin = findViewById(R.id.edit_pinsetuppin);
         verif = findViewById(R.id.edit_pinsetupverif);
         Button next = findViewById(R.id.btn_pinsetupnext);
-        final Spinner spn_currencies = findViewById(R.id.spn_currencies);
+        final Spinner spn_countries = findViewById(R.id.spn_countries);
 
-        Set<Currency> all_currencies = Currency.getAvailableCurrencies();
-
-        ArrayList<String> currency_list = new ArrayList<>();
-        currency_list.add("British Pound (GBP)");
-        currency_list.add("Japanese Yen (JPY)");
-        currency_list.add("US Dollar (USD)");
+        ArrayList<String> country_list = new ArrayList<>();
+        country_list.add("Great Britain");
+        country_list.add("Japan");
+        country_list.add("United States");
 
         //fill spinner with arraydata from strings
         adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, currency_list);
+                android.R.layout.simple_spinner_item, country_list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_currencies.setAdapter(adapter);
-        spn_currencies.setOnItemSelectedListener(this);
+        spn_countries.setAdapter(adapter);
+        spn_countries.setOnItemSelectedListener(this);
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,13 +53,12 @@ public class PinSetup extends AppCompatActivity implements AdapterView.OnItemSel
                 if(pin_str.length()>=4) {
                     if (pin_str.equals(verif_str)) {
 
-                        String currency_choice = spn_currencies.getSelectedItem().toString();
-                        String currency_symbol = currency_choice.substring(currency_choice.indexOf("(")+1,currency_choice.indexOf(")"));
+                        String country_choice = spn_countries.getSelectedItem().toString();
 
                         //start new activity --> setup security question
                         Intent intent = new Intent(PinSetup.this, TwoFactorSetup.class);
                         intent.putExtra("pin", pin_str);
-                        intent.putExtra("currency", currency_symbol);
+                        intent.putExtra("country", country_choice);
                         startActivity(intent);
                         finish();
                     } else {

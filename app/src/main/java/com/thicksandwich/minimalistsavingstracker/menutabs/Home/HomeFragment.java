@@ -26,7 +26,7 @@ import com.thicksandwich.minimalistsavingstracker.AddTransaction;
 import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
 import com.thicksandwich.minimalistsavingstracker.DeleteDialog;
 import com.thicksandwich.minimalistsavingstracker.EditBalance;
-import com.thicksandwich.minimalistsavingstracker.LocaleGetter;
+import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 import com.thicksandwich.minimalistsavingstracker.MainActivity;
 import com.thicksandwich.minimalistsavingstracker.MainRecyclerItem;
 import com.thicksandwich.minimalistsavingstracker.R;
@@ -34,11 +34,8 @@ import com.thicksandwich.minimalistsavingstracker.MainRecyclerAdapter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Currency;
 import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
@@ -63,6 +60,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
     public static int monthint;
 
     public static String currency_code;
+    public static Locale locale;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -76,21 +74,13 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
             }
         });
 
+        new CurrencyFormat();
+
         //Get SharedPreferences---------------------------------------------------------------------
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         currency_code = sharedPreferences.getString(CURRENCY, "?");
         balance_override = sharedPreferences.getInt(BAL_OVERRIDE_KEY, 0);
         difference = sharedPreferences.getInt(DIFF_KEY, 0);
-
-        //Setting currency
-        Currency currency = Currency.getInstance(currency_code);
-        Log.d(TAG, "onCreateView: " + currency.getDisplayName());
-
-        //User Locale based on Currency
-        Locale locale = new LocaleGetter().UserLocale(currency_code);
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
-        numberFormat.setCurrency(currency); //Set currency format as per users selected currency of choice
-
 
         //Link Database to Arraylist----------------------------------------------------------------
         //current year and month
@@ -124,15 +114,17 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         transaction_balance = transaction_balance + difference;
 
         //format balance display based on locale----------------------------------------------------
-        BigDecimal bd_value;
+        //BigDecimal bd_value;
 
-        if(currency_code.equals("GBP")||currency_code.equals("USD")){
-            bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance), 2); //2dp
-        } else {
-            bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance)); //0dp
-        }
+        //if(locale.equals(Locale.UK)||locale.equals(Locale.US)){
+        //    bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance), 2); //2dp
+        //} else {
+        //    bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance)); //0dp
+        //}
 
-        String final_value = numberFormat.format(bd_value); //commas
+        BigDecimal bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance));
+
+        String final_value = CurrencyFormat.currencyFormat.format(bd_value); //commas
         TextView edit_balance = root.findViewById(R.id.num_balance);
         edit_balance.setText(final_value);
 

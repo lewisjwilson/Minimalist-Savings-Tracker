@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
+import com.thicksandwich.minimalistsavingstracker.menutabs.Home.HomeFragment;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -46,9 +49,8 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         }
 
         //format for commas between each 3 zeros
-        String amount_display = NumberFormat.getNumberInstance(Locale.US).format(currentItem.getAmount());
-        String final_display = "¥" + amount_display;
-        holder.mAmountTextView.setText(final_display);
+        String amount_display = CurrencyFormat.currencyFormat.format(currentItem.getAmount());
+        holder.mAmountTextView.setText(amount_display);
         holder.mReferenceTextView.setText(currentItem.getReference());
 
         //format the date and category values in the recyclerview

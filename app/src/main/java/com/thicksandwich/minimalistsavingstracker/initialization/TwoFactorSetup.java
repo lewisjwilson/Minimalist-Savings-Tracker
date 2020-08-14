@@ -21,13 +21,14 @@ import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
 
+import static android.provider.ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY;
 import static java.util.Currency.getInstance;
 
 public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String CURRENCY = "currency";
+    public static final String COUNTRY = "country";
     public static final String CURRENT_PIN = "current_pin";
     public static final String SEC_QUESTION = "security_question";
     public static final String SEC_ANSWER = "security_answer";
@@ -45,7 +46,7 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
         //Get SharedPreferences---------------------------------------------------------------------
         sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         final String pin = getIntent().getStringExtra("pin"); //get pin from PinSetup.java
-        final String currency = getIntent().getStringExtra("currency"); //get pin from PinSetup.java
+        final String country = getIntent().getStringExtra("country"); //get pin from PinSetup.java
 
         spn_questions = findViewById(R.id.spn_changequestions);
         answer = findViewById(R.id.edit_twofactoranswer);
@@ -71,7 +72,7 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
                 if (answer_str.length() >= 4) {
                     if (answer_str.equals(verif_str)) {
                         //save pin and answer to sharedpreferences
-                        savePrefs(currency, pin, question, answer_str);
+                        savePrefs(country, pin, question, answer_str);
 
 
                         TwoFactorSetup.this.startActivity(new Intent(TwoFactorSetup.this, MainActivity.class));
@@ -94,9 +95,9 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
     }
 
     //save the global variable values as sharedpreferences
-    public static void savePrefs(String currency, String pin, String question, String answer) {
+    public static void savePrefs(String country, String pin, String question, String answer) {
         //Save SharedPreferences using 'MyApplication' context--------------------------------------
-        MyApplication.mEditor.putString(CURRENCY, currency);
+        MyApplication.mEditor.putString(COUNTRY, country);
         MyApplication.mEditor.putString(CURRENT_PIN, pin);
         MyApplication.mEditor.putString(SEC_QUESTION, question);
         MyApplication.mEditor.putString(SEC_ANSWER, answer);
