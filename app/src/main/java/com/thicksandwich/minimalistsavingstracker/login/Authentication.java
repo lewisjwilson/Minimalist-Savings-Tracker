@@ -1,4 +1,4 @@
-package com.thicksandwich.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker.login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.thicksandwich.minimalistsavingstracker.MainActivity;
+import com.thicksandwich.minimalistsavingstracker.R;
 import com.thicksandwich.minimalistsavingstracker.forgotpin.ForgotPin;
 import com.thicksandwich.minimalistsavingstracker.initialization.PinSetup;
 

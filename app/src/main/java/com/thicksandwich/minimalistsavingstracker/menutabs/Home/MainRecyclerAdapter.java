@@ -1,4 +1,4 @@
-package com.thicksandwich.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker.menutabs.Home;
 
 import android.graphics.Color;
 import android.util.Log;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.thicksandwich.minimalistsavingstracker.R;
 import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 
 import java.math.BigDecimal;

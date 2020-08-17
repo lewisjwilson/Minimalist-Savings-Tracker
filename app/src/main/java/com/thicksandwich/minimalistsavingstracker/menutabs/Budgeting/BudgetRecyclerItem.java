@@ -1,4 +1,4 @@
-package com.thicksandwich.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker.menutabs.Budgeting;
 
 public class BudgetRecyclerItem { //used to fill the recyclerview
     private final long mID;

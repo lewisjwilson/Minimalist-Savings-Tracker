@@ -22,8 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.thicksandwich.minimalistsavingstracker.BudgetRecyclerAdapter;
-import com.thicksandwich.minimalistsavingstracker.BudgetRecyclerItem;
 import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
 import com.thicksandwich.minimalistsavingstracker.R;
 import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
@@ -212,7 +210,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         next_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(month_display <12){ //changing the year and month values
+                if(month_display<12){ //changing the year and month values
                     month_display++;
                 } else {
                     year_display++;

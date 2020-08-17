@@ -1,4 +1,4 @@
-package com.thicksandwich.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker.menutabs.Home;
 
 public class MainRecyclerItem { //used to fill the recyclerview
     private final long mID;

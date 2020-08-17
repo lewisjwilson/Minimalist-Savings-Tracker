@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name="com.thicksandwich.minimalistsavingstracker.Authentication"
+            android:name="com.thicksandwich.minimalistsavingstracker.login.Authentication"
             android:label="Minimalist Savings Tracker"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -45,7 +45,7 @@
             android:label = "Change Pin">
         </activity>
         <activity
-            android:name="com.thicksandwich.minimalistsavingstracker.changelogin.ChangeTwoFactor"
+            android:name="com.thicksandwich.minimalistsavingstracker.login.ChangeTwoFactor"
             android:label = "Change Security Question">
         </activity>
         <activity
@@ -61,7 +61,7 @@
             android:label="Credits">
         </activity>
         <activity
-            android:name="com.thicksandwich.minimalistsavingstracker.changelogin.ChangePin"
+            android:name="com.thicksandwich.minimalistsavingstracker.login.ChangePin"
             android:label="Change Authentication Pin">
         </activity>
     </application>

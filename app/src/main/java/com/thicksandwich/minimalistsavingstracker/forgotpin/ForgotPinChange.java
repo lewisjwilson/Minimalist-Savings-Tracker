@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.MyApplication;
-import com.thicksandwich.minimalistsavingstracker.Authentication;
+import com.thicksandwich.minimalistsavingstracker.login.Authentication;
 import com.thicksandwich.minimalistsavingstracker.R;
 
 public class ForgotPinChange extends AppCompatActivity {

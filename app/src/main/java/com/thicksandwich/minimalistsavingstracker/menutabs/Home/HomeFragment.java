@@ -28,9 +28,7 @@ import com.thicksandwich.minimalistsavingstracker.DeleteDialog;
 import com.thicksandwich.minimalistsavingstracker.EditBalance;
 import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 import com.thicksandwich.minimalistsavingstracker.MainActivity;
-import com.thicksandwich.minimalistsavingstracker.MainRecyclerItem;
 import com.thicksandwich.minimalistsavingstracker.R;
-import com.thicksandwich.minimalistsavingstracker.MainRecyclerAdapter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

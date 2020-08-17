@@ -1,26 +1,20 @@
-package com.thicksandwich.minimalistsavingstracker;
+package com.thicksandwich.minimalistsavingstracker.menutabs.Budgeting;
 
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.thicksandwich.minimalistsavingstracker.R;
 import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
 
 public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAdapter.ItemViewHolder> { //links rv with arraylist
 

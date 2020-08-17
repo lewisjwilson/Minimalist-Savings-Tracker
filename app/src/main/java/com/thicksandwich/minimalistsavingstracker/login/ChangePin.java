@@ -1,4 +1,4 @@
-package com.thicksandwich.minimalistsavingstracker.changelogin;
+package com.thicksandwich.minimalistsavingstracker.login;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

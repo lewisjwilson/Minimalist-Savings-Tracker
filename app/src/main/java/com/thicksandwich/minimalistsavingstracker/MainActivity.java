@@ -6,8 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import com.thicksandwich.minimalistsavingstracker.changelogin.ChangePin;
-import com.thicksandwich.minimalistsavingstracker.changelogin.ChangeTwoFactor;
+import com.thicksandwich.minimalistsavingstracker.login.ChangePin;
+import com.thicksandwich.minimalistsavingstracker.login.ChangeTwoFactor;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;

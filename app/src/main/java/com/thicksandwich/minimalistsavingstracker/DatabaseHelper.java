@@ -166,7 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " SET " + T2_AMOUNT + " = (SELECT COALESCE(SUM(" + T1_AMOUNT + "),0) " +
                     " FROM " + T1_TABLENAME +
                     " WHERE " + T1_EXPENSE + " = '1'" +
-                    " AND strftime('%Y %m'," + T1_DATETIME + ") = strftime('%Y %m', 'now'))" +
+                    " AND strftime('%Y %m'," + T1_DATETIME + ") = strftime('%Y %m', " + T2_TARGETMONTH + "))" +
                     " WHERE " + T2_CAT + " = 'Monthly Total'");
 
         } else { //if not monthly total category
@@ -175,7 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " SET " + T2_AMOUNT + " = (SELECT COALESCE(SUM(" + T1_AMOUNT + "),0) " +
                     " FROM " + T1_TABLENAME +
                     " WHERE " + T1_CAT + " = '" + category + "'" +
-                    " AND strftime('%Y %m'," + T1_DATETIME + ") = strftime('%Y %m', 'now'))" +
+                    " AND strftime('%Y %m'," + T1_DATETIME + ") = strftime('%Y %m', " + T2_TARGETMONTH + "))" +
                     " WHERE " + T2_CAT + " = '" + category + "'");
 
         }

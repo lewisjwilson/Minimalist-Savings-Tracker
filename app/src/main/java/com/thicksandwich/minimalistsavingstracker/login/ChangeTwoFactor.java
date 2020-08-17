@@ -1,8 +1,7 @@
-package com.thicksandwich.minimalistsavingstracker.changelogin;
+package com.thicksandwich.minimalistsavingstracker.login;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.MyApplication;
 import com.thicksandwich.minimalistsavingstracker.R;
-
-import static android.content.ContentValues.TAG;
 
 public class ChangeTwoFactor extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
