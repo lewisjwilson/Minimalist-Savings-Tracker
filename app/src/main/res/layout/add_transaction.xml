@@ -50,7 +50,7 @@
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/txt_yen"
+        android:id="@+id/txt_currencysymbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_income_expenses"
@@ -62,7 +62,7 @@
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/edit_amount"
+        android:id="@+id/edit_amountnodp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_income_expenses"
@@ -70,13 +70,55 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="28dp"
-        android:layout_toEndOf="@+id/txt_yen"
+        android:layout_toEndOf="@+id/txt_currencysymbol"
         android:autofillHints="@string/Amount"
-        android:digits="0123456789"
         android:ems="10"
         android:hint="@string/AmountHint"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:maxLength="7"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/edit_amountdp1"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_income_expenses"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/txt_currencysymbol"
+        android:autofillHints="@string/Amount"
+        android:hint="21"
+        android:inputType="number"
+        android:maxLength="7"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/txt_decimalpoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_income_expenses"
+        android:layout_marginTop="31dp"
+        android:layout_toEndOf="@+id/edit_amountdp1"
+        android:text="."
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:visibility="visible"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/edit_amountdp2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_income_expenses"
+        android:layout_alignParentEnd="false"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/txt_decimalpoint"
+        android:autofillHints="@string/Amount"
+        android:ems="10"
+        android:hint="50"
+        android:inputType="number"
+        android:maxLength="2"
         android:textAlignment="center" />
 
     <TextView
@@ -95,10 +137,10 @@
         android:id="@+id/edit_reference"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_amount"
+        android:layout_below="@+id/txt_currencysymbol"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="19dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="26dp"
         android:layout_marginEnd="29dp"
         android:layout_toEndOf="@+id/txt_reference"
         android:autofillHints=""

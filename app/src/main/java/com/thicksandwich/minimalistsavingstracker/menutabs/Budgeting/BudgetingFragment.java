@@ -26,6 +26,7 @@ import com.thicksandwich.minimalistsavingstracker.BudgetRecyclerAdapter;
 import com.thicksandwich.minimalistsavingstracker.BudgetRecyclerItem;
 import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
 import com.thicksandwich.minimalistsavingstracker.R;
+import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +37,8 @@ import static android.content.ContentValues.TAG;
 public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter.RecyclerOnClickListener {
 
     private Spinner edit_category;
-    private EditText edit_target;
+    private EditText edit_target, edit_targetdp1, edit_targetdp2;
+    private TextView txt_budcursymb, txt_buddecimalpoint;
     private Button btn_settarget;
     private ArrayList<BudgetRecyclerItem> budgetItemList = new ArrayList<>();
 
@@ -44,7 +46,6 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
     public static int month_display;
     public static String display_yearstr;
     public static String display_monthstr;
-
 
     public static int current_year;
     public static int current_month;
@@ -86,9 +87,24 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         display_monthstr = String.format("%02d", month_display);
 
         //find variables
+        txt_budcursymb = root.findViewById(R.id.txt_budcursymb);
+        txt_buddecimalpoint = root.findViewById(R.id.txt_buddecimalpoint);
         edit_category = root.findViewById(R.id.spn_cat_budget);
         edit_target = root.findViewById(R.id.edit_target);
+        edit_targetdp1 = root.findViewById(R.id.edit_targetdp1);
+        edit_targetdp2 = root.findViewById(R.id.edit_targetdp2);
         btn_settarget = root.findViewById(R.id.btn_settarget);
+
+        txt_budcursymb.setText(CurrencyFormat.currency_symbol);
+
+        if(CurrencyFormat.decimal_currency){
+            edit_target.setVisibility(View.GONE);
+        } else {
+            edit_targetdp1.setVisibility(View.GONE);
+            edit_targetdp2.setVisibility(View.GONE);
+            txt_buddecimalpoint.setVisibility(View.GONE);
+        }
+
         Cursor data = myDB.getBudgetData(display_yearstr, display_monthstr);
         DatatoRecycler(data);
 
@@ -124,10 +140,20 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
             @Override
             public void onClick(View v) {
 
-                String category = edit_category.getSelectedItem().toString();
-                String target = edit_target.getText().toString();
+                String target;
+                if(CurrencyFormat.decimal_currency){ //if currency is a decimal type currency
+                    if(edit_targetdp2.getText().toString().length()<2){
+                        edit_targetdp2.setText("00");
+                    }
+                    //concatenate edittext fields
+                    target = edit_targetdp1.getText().toString() + edit_targetdp2.getText().toString();
+                } else {
+                    target = edit_target.getText().toString();
+                }
 
-                if(edit_target.length() != 0){
+                String category = edit_category.getSelectedItem().toString();
+
+                if(target.length() != 0){
 
                     if(myDB.budgetExists(category, current_yearstr, current_monthstr)){ //if such a record already exists
                         Log.d(TAG, "current month string: " + current_monthstr);
@@ -145,6 +171,8 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
                     RefreshAmounts(myDB, categories); //refresh the "amount" values in the budgeting recyclerview
                     RefreshView(myDB, mAdapter);
                     edit_target.setText("");
+                    edit_targetdp1.setText("");
+                    edit_targetdp2.setText("");
 
                 } else {
                     Snackbar sb = Snackbar.make(getActivity().findViewById(android.R.id.content),

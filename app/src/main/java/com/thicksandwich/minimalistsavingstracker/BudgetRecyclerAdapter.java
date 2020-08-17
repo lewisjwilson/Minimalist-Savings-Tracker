@@ -12,6 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -42,11 +46,11 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
         holder.mCategoryTextView.setText(currentItem.getCategory());
 
         //format for commas between each 3 zeros
-        String amount_display = NumberFormat.getNumberInstance(Locale.US).format(currentItem.getAmount());
+        String amount_display = moneyFormat(currentItem.getAmount());
         holder.mAmountTextView.setText(amount_display);
 
         //format for commas between each 3 zeros
-        String target_display = NumberFormat.getNumberInstance(Locale.US).format(currentItem.getTarget());
+        String target_display = moneyFormat(currentItem.getTarget());
         holder.mTargetTextView.setText(target_display);
 
         int level = 0;
@@ -93,5 +97,17 @@ public class BudgetRecyclerAdapter extends RecyclerView.Adapter<BudgetRecyclerAd
 
     public interface RecyclerOnClickListener { //interprets click
         void RecyclerOnClick(int position); //sends position of clicked item
+    }
+
+    public String moneyFormat(int i){
+        BigDecimal output;
+
+        if(CurrencyFormat.decimal_currency) {
+            output = new BigDecimal(BigInteger.valueOf(i), 2);
+        } else {
+            output = new BigDecimal(BigInteger.valueOf(i));
+        }
+        return CurrencyFormat.cf.format(output); //format currency
+
     }
 }

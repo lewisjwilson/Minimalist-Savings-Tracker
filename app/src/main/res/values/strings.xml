@@ -48,7 +48,9 @@
     <string name="twofactor_note">Note: This answer will be used for pin recovery</string>
     <string name="forgot_pin">forgot your pin?</string>
     <string name="forgot_info">Please input your security question answer.</string>
-    <string name="securityq">Security Question:</string><![CDATA[
+    <string name="change_security">Change</string>
+    <string name="securityq">Security Question:</string>
+    <string name="decimal_point">.</string><![CDATA[
     />
 
     ]]>
@@ -92,5 +94,12 @@
         <item>What is the first name of the person you first kissed?</item>
         <item>What is your favorite movie?</item>
     </string-array>
-    <string name="change_security">Change</string>
+
+    <string-array name="currency_list">
+        <item>British Pound (GBP)</item>
+        <item>Euro (EUR)</item>
+        <item>Japanese Yen (JPY)</item>
+        <item>US Dollar (USD)</item>
+    </string-array>
+
 </resources>
