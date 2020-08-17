@@ -140,7 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return income - expenses;
     }
 
-    //------------------------------budgeting table TABLE 1-----------------------------------------
+    //------------------------------budgeting table TABLE 2-----------------------------------------
     public boolean addBudget(String category, String target, String year, String month, String day){
         SQLiteDatabase db = this.getWritableDatabase();
 

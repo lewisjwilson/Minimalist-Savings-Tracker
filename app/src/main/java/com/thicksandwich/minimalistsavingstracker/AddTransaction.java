@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
+import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 
 import java.util.Calendar;
 
@@ -26,8 +28,8 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
 
     private DatabaseHelper myDB;
     private ToggleButton btn_income_expenses; //not checked = income, checked = expense
-    private TextView txt_minus;
-    private EditText edit_amount, edit_reference, edit_date;
+    private TextView txt_minus, txt_currencysymbol, txt_decimalpoint;
+    private EditText edit_amountnodp, edit_amountdp1, edit_amountdp2, edit_reference, edit_date;
     private String new_amount, new_reference, new_category, new_date;
     private Spinner edit_category;
     private Button btn_submit;
@@ -43,11 +45,25 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
 
         btn_income_expenses = findViewById(R.id.btn_income_expenses);
         txt_minus = findViewById(R.id.txt_minus_rv);
-        edit_amount = findViewById(R.id.edit_amount);
+        txt_currencysymbol = findViewById(R.id.txt_currencysymbol);
+        txt_decimalpoint = findViewById(R.id.txt_decimalpoint);
+        edit_amountnodp = findViewById(R.id.edit_amountnodp);
+        edit_amountdp1 = findViewById(R.id.edit_amountdp1);
+        edit_amountdp2 = findViewById(R.id.edit_amountdp2);
         edit_reference = findViewById(R.id.edit_reference);
         edit_category = findViewById(R.id.spn_cat_add);
         edit_date = findViewById(R.id.edit_date);
         btn_submit = findViewById(R.id.btn_submit);
+
+        txt_currencysymbol.setText(CurrencyFormat.currency_symbol);
+
+        if(CurrencyFormat.decimal_currency){
+                edit_amountnodp.setVisibility(View.GONE);
+        } else {
+                edit_amountdp1.setVisibility(View.GONE);
+                edit_amountdp2.setVisibility(View.GONE);
+                txt_decimalpoint.setVisibility(View.GONE);
+        }
 
         btn_income_expenses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +87,6 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
         edit_category.setAdapter(adapter);
         edit_category.setOnItemSelectedListener(this);
 
-
         edit_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,10 +95,23 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
         });
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
+            private static final String TAG = "";
+
             @Override
             public void onClick(View v) {
 
-                new_amount = edit_amount.getText().toString();
+                if(CurrencyFormat.decimal_currency) {
+                    if(edit_amountdp2.getText().toString().length()<2){
+                        edit_amountdp2.setText("00");
+                    }
+                    new_amount = edit_amountdp1.getText().toString() + edit_amountdp2.getText().toString();
+                } else {
+                    new_amount = edit_amountnodp.getText().toString();
+                }
+
+                Log.d(TAG, "amount: " + new_amount);
+
+
                 new_reference = edit_reference.getText().toString();
                 new_category = edit_category.getSelectedItem().toString();
                 new_date = edit_date.getText().toString();
@@ -92,7 +120,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
                 {
                     new_amount_val = Integer.parseInt(new_amount); //parse string value as integer
                     AddData(new_amount_val, new_reference, new_category, new_date);
-                    edit_amount.setText("");
+                    edit_amountnodp.setText("");
                     edit_reference.setText("");
                     edit_date.setText("");
 

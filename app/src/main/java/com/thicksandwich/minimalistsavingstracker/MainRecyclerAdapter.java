@@ -12,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
-import com.thicksandwich.minimalistsavingstracker.menutabs.Home.HomeFragment;
 
-import java.text.NumberFormat;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ItemViewHolder> { //links rv with arraylist
 
@@ -49,7 +48,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         }
 
         //format for commas between each 3 zeros
-        String amount_display = CurrencyFormat.currencyFormat.format(currentItem.getAmount());
+        String amount_display = moneyFormat(currentItem.getAmount());
         holder.mAmountTextView.setText(amount_display);
         holder.mReferenceTextView.setText(currentItem.getReference());
 
@@ -98,5 +97,17 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     public interface RecyclerOnClickListener { //interprets click
         void RecyclerOnClick(int position); //sends position of clicked item
+    }
+
+    public String moneyFormat(int i){
+        BigDecimal output;
+
+        if(CurrencyFormat.decimal_currency) {
+            output = new BigDecimal(BigInteger.valueOf(i), 2);
+        } else {
+            output = new BigDecimal(BigInteger.valueOf(i));
+        }
+        return CurrencyFormat.cf.format(output); //format currency
+
     }
 }

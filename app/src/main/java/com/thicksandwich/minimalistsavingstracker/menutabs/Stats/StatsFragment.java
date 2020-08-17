@@ -26,7 +26,10 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
 import com.thicksandwich.minimalistsavingstracker.R;
+import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -61,6 +64,9 @@ public class StatsFragment extends Fragment {
         //change textview for year and month
         final TextView txt_year_month = root.findViewById(R.id.txt_statsyearmth);
         txt_year_month.setText(yearstr + "/" + monthstr);
+
+        final TextView txt_YLabel = root.findViewById(R.id.txt_YLabel);
+        txt_YLabel.setText("Amount Spent (" + CurrencyFormat.currency_symbol + ")");
 
         //get data to display from DBHelper class
         Cursor data = myDB.getSummedData(yearstr, monthstr); //get summmed data from the db
@@ -130,11 +136,11 @@ public class StatsFragment extends Fragment {
             //adding data from db to arraylists
             for (int i = 0; i < dataCount; i++) {
                 data.moveToNext();
-                barEntries.add(new BarEntry(i, data.getFloat(1))); //add values to arraylist
+                barEntries.add(new BarEntry(i, Float.parseFloat(moneyFormat(data.getLong(1))))); //add values to arraylist
                 labels.add(data.getString(0)); //add labels to arraylist
             }
 
-            BarDataSet barDataSet = new BarDataSet(barEntries, "");
+            BarDataSet barDataSet = new BarDataSet(barEntries, CurrencyFormat.currency_symbol);
             barDataSet.setDrawValues(true); //show the values on/by the bars
             barDataSet.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent)); //bar colour
 
@@ -163,6 +169,19 @@ public class StatsFragment extends Fragment {
             paint.setTextSize(60);
             barChart.setData(barData); //tie data to barchart
         }
+
+    }
+    public String moneyFormat(long i){
+        BigDecimal output;
+
+        if(CurrencyFormat.decimal_currency) {
+            output = new BigDecimal(BigInteger.valueOf(i), 2);
+        } else {
+            output = new BigDecimal(BigInteger.valueOf(i));
+        }
+
+        //special formatting as barentries do not accept symbols. Remove currency sign and and commas
+        return CurrencyFormat.cf.format(output).substring(1).replaceAll("[,]",""); //format currency
 
     }
 }

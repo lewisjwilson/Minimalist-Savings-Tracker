@@ -113,18 +113,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         //transactions plus the difference between the most recent override
         transaction_balance = transaction_balance + difference;
 
-        //format balance display based on locale----------------------------------------------------
-        //BigDecimal bd_value;
-
-        //if(locale.equals(Locale.UK)||locale.equals(Locale.US)){
-        //    bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance), 2); //2dp
-        //} else {
-        //    bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance)); //0dp
-        //}
-
-        BigDecimal bd_value = new BigDecimal(BigInteger.valueOf(transaction_balance));
-
-        String final_value = CurrencyFormat.currencyFormat.format(bd_value); //commas
+        String final_value = moneyFormat(transaction_balance); //commas
         TextView edit_balance = root.findViewById(R.id.num_balance);
         edit_balance.setText(final_value);
 
@@ -249,6 +238,18 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         });
 
         dialog.show(getActivity().getSupportFragmentManager(), "deletedialog");
+
+    }
+
+    public String moneyFormat(int i){
+        BigDecimal output;
+
+        if(CurrencyFormat.decimal_currency) {
+            output = new BigDecimal(BigInteger.valueOf(i), 2);
+        } else {
+            output = new BigDecimal(BigInteger.valueOf(i));
+        }
+        return CurrencyFormat.cf.format(output); //format currency
 
     }
 }

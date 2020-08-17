@@ -49,7 +49,8 @@
     <string name="forgot_pin">forgot your pin?</string>
     <string name="forgot_info">Please input your security question answer.</string>
     <string name="change_security">Change</string>
-    <string name="securityq">Security Question:</string><![CDATA[
+    <string name="securityq">Security Question:</string>
+    <string name="decimal_point">.</string><![CDATA[
     />
 
     ]]>
