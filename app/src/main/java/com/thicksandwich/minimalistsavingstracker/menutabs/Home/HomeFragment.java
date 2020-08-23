@@ -1,19 +1,25 @@
 package com.thicksandwich.minimalistsavingstracker.menutabs.Home;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -30,11 +36,16 @@ import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 import com.thicksandwich.minimalistsavingstracker.MainActivity;
 import com.thicksandwich.minimalistsavingstracker.R;
 
+import org.w3c.dom.Text;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+
+import me.toptas.fancyshowcase.FancyShowCaseQueue;
+import me.toptas.fancyshowcase.FancyShowCaseView;
 
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
@@ -43,6 +54,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
     //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String FIRST_TIME = "first_time";
     public static final String CURRENCY = "currency";
     public static final String BAL_OVERRIDE_KEY = "balance_override";
     public static final String DIFF_KEY = "difference";
@@ -58,8 +70,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
     public static int monthint;
 
     public static String currency_code;
-    public static Locale locale;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -74,11 +84,35 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
         new CurrencyFormat();
 
+        //linking xml items-------------------------------------------------------------------------
+        final ImageButton btn_hints = root.findViewById(R.id.btn_hints);
+        final TextView txt_year_month = root.findViewById(R.id.txt_year_month);
+        final RecyclerView mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
+        TextView edit_balance = root.findViewById(R.id.num_balance);
+        final TextView tv_edit_balance = root.findViewById(R.id.txt_edit_balance);
+        ImageButton prev_month = root.findViewById(R.id.btn_month_prev);
+        ImageButton next_month = root.findViewById(R.id.btn_month_next);
+        final FloatingActionButton fab = root.findViewById(R.id.fab);
+
         //Get SharedPreferences---------------------------------------------------------------------
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        //check for first time run
+        if(sharedPreferences.getBoolean(FIRST_TIME, false)){ //if first time
+            Log.d(TAG, "SHAREDPREFERENCES: First time run");
+            firstTimeHints(getActivity(), fab, tv_edit_balance, btn_hints);
+            sharedPreferences.edit().putBoolean(FIRST_TIME, false).commit();
+        }
         currency_code = sharedPreferences.getString(CURRENCY, "?");
         balance_override = sharedPreferences.getInt(BAL_OVERRIDE_KEY, 0);
         difference = sharedPreferences.getInt(DIFF_KEY, 0);
+
+        btn_hints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firstTimeHints(getActivity(), fab, tv_edit_balance, btn_hints);
+            }
+        });
 
         //Link Database to Arraylist----------------------------------------------------------------
         //current year and month
@@ -90,7 +124,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         Cursor data = myDB.getDisplayData(yearstr, monthstr); //add data from database into recyclerview
 
         //change textview for year and month
-        final TextView txt_year_month = root.findViewById(R.id.txt_year_month);
         txt_year_month.setText(yearstr + "/" + monthstr);
 
         //inflating the recyclerview example item and attaching the data to the adapter-------------
@@ -98,7 +131,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         final TextView txt_minus_rv = rv_item.findViewById(R.id.txt_minus_rv);
         DatatoRecycler(data, txt_minus_rv); //get database data and put into recyclerview
 
-        final RecyclerView mRecyclerView = root.findViewById(R.id.recycler_income_expenses);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         final RecyclerView.Adapter mAdapter = new MainRecyclerAdapter(displayedItemList, this);
@@ -112,11 +144,9 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         transaction_balance = transaction_balance + difference;
 
         String final_value = moneyFormat(transaction_balance); //commas
-        TextView edit_balance = root.findViewById(R.id.num_balance);
         edit_balance.setText(final_value);
 
         //balance override "edit" click-------------------------------------------------------------
-        TextView tv_edit_balance = root.findViewById(R.id.txt_edit_balance);
         tv_edit_balance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +157,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         });
 
         //previous month button click
-        ImageButton prev_month = root.findViewById(R.id.btn_month_prev);
         prev_month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +179,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         });
 
         //next month button click
-        ImageButton next_month = root.findViewById(R.id.btn_month_next);
         next_month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +201,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         });
 
         //add transaction floatingactionbutton click
-        FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -250,4 +277,53 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         return CurrencyFormat.cf.format(output); //format currency
 
     }
+
+    public void firstTimeHints(Activity activity, FloatingActionButton addTrans, TextView edit, ImageButton hints){
+
+        final FancyShowCaseView intro = new FancyShowCaseView.Builder(activity)
+                .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .title("Welcome to MST. Here are a few hints to get you started.")
+                .titleStyle(R.style.HintsStyle, Gravity.CENTER)
+                .fitSystemWindows(true)
+                .enableAutoTextPosition()
+                .build();
+
+        final FancyShowCaseView fab = new FancyShowCaseView.Builder(activity)
+                .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .focusOn(addTrans)
+                .title("Use this button to add a new income or expense")
+                .titleStyle(R.style.HintsStyle, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
+                .fitSystemWindows(true)
+                .enableAutoTextPosition()
+                .build();
+
+        final FancyShowCaseView edit_amount = new FancyShowCaseView.Builder(activity)
+                .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .focusOn(edit)
+                .title("If you need to edit your balance at any time, click here")
+                .titleStyle(R.style.HintsStyle, Gravity.TOP | Gravity.CENTER_HORIZONTAL)
+                .fitSystemWindows(true)
+                .enableAutoTextPosition()
+                .build();
+
+
+        final FancyShowCaseView again = new FancyShowCaseView.Builder(activity)
+                .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .focusOn(hints)
+                .title("To see these hints again, please use this button.")
+                .titleStyle(R.style.HintsStyle, Gravity.TOP | Gravity.CENTER_HORIZONTAL)
+                .fitSystemWindows(true)
+                .enableAutoTextPosition()
+                .build();
+
+        FancyShowCaseQueue mQueue = new FancyShowCaseQueue()
+                .add(intro)
+                .add(fab)
+                .add(edit_amount)
+                .add(again);
+
+        mQueue.show();
+    }
+
+
 }

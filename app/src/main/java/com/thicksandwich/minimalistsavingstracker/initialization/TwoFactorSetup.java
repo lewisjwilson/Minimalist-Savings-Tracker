@@ -28,6 +28,7 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
 
     //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String FIRST_TIME = "first_time";
     public static final String COUNTRY = "country";
     public static final String CURRENT_PIN = "current_pin";
     public static final String SEC_QUESTION = "security_question";
@@ -97,6 +98,7 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
     //save the global variable values as sharedpreferences
     public static void savePrefs(String country, String pin, String question, String answer) {
         //Save SharedPreferences using 'MyApplication' context--------------------------------------
+        MyApplication.mEditor.putBoolean(FIRST_TIME, true);
         MyApplication.mEditor.putString(COUNTRY, country);
         MyApplication.mEditor.putString(CURRENT_PIN, pin);
         MyApplication.mEditor.putString(SEC_QUESTION, question);
