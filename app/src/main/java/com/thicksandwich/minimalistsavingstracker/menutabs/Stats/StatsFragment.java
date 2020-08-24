@@ -1,9 +1,13 @@
 package com.thicksandwich.minimalistsavingstracker.menutabs.Stats;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +37,18 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import me.toptas.fancyshowcase.FancyShowCaseQueue;
+import me.toptas.fancyshowcase.FancyShowCaseView;
+
+import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
+
 public class StatsFragment extends Fragment {
+
+    //initialise values for SharedPreferences
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String FIRST_TIME_STATS = "first_time_stats";
+    private SharedPreferences sharedPreferences;
 
     public static int yearint;
     public static int monthint;
@@ -49,6 +64,16 @@ public class StatsFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        //Get SharedPreferences---------------------------------------------------------------------
+        sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        //check for first time run
+        if(sharedPreferences.getBoolean(FIRST_TIME_STATS, true)){ //if first time
+            Log.d(TAG, "HomeFragment: First time run");
+            firstTimeHints(getActivity());
+            sharedPreferences.edit().putBoolean(FIRST_TIME_STATS, false).apply();
+        }
 
         //import database
         final DatabaseHelper myDB = new DatabaseHelper(getActivity());
@@ -183,5 +208,21 @@ public class StatsFragment extends Fragment {
         //special formatting as barentries do not accept symbols. Remove currency sign and and commas
         return CurrencyFormat.cf.format(output).substring(1).replaceAll("[,]",""); //format currency
 
+    }
+
+    public void firstTimeHints(Activity activity){
+
+        final FancyShowCaseView intro = new FancyShowCaseView.Builder(activity)
+                .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .title("This is the Stats screen. Here you can see your spending habits.")
+                .titleStyle(R.style.HintsStyle, Gravity.CENTER)
+                .fitSystemWindows(true)
+                .enableAutoTextPosition()
+                .build();
+
+        FancyShowCaseQueue mQueue = new FancyShowCaseQueue()
+                .add(intro);
+
+        mQueue.show();
     }
 }

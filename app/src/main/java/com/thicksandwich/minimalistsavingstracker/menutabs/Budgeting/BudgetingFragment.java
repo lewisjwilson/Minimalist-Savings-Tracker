@@ -1,8 +1,11 @@
 package com.thicksandwich.minimalistsavingstracker.menutabs.Budgeting;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -30,11 +34,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import me.toptas.fancyshowcase.FancyShowCaseQueue;
+import me.toptas.fancyshowcase.FancyShowCaseView;
+
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter.RecyclerOnClickListener {
 
-    private Spinner edit_category;
+    //initialise values for SharedPreferences
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String FIRST_TIME_BUD = "first_time_bud";
+    private SharedPreferences sharedPreferences;
+
+    private Spinner spn_category;
     private EditText edit_target, edit_targetdp1, edit_targetdp2;
     private TextView txt_budcursymb, txt_buddecimalpoint;
     private Button btn_settarget;
@@ -64,6 +77,16 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
             }
         });
 
+        //Get SharedPreferences---------------------------------------------------------------------
+        sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        //check for first time run
+        if(sharedPreferences.getBoolean(FIRST_TIME_BUD, true)){ //if first time
+            Log.d(TAG, "BudgetingFragment: First time run");
+            firstTimeHints(getActivity());
+            sharedPreferences.edit().putBoolean(FIRST_TIME_BUD, false).apply();
+        }
+
         //import database
         final DatabaseHelper myDB = new DatabaseHelper(getActivity());
 
@@ -87,7 +110,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         //find variables
         txt_budcursymb = root.findViewById(R.id.txt_budcursymb);
         txt_buddecimalpoint = root.findViewById(R.id.txt_buddecimalpoint);
-        edit_category = root.findViewById(R.id.spn_cat_budget);
+        spn_category = root.findViewById(R.id.spn_cat_budget);
         edit_target = root.findViewById(R.id.edit_target);
         edit_targetdp1 = root.findViewById(R.id.edit_targetdp1);
         edit_targetdp2 = root.findViewById(R.id.edit_targetdp2);
@@ -123,8 +146,8 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        edit_category.setAdapter(adapter);
-        edit_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spn_category.setAdapter(adapter);
+        spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
             }
@@ -149,7 +172,7 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
                     target = edit_target.getText().toString();
                 }
 
-                String category = edit_category.getSelectedItem().toString();
+                String category = spn_category.getSelectedItem().toString();
 
                 if(target.length() != 0){
 
@@ -266,5 +289,22 @@ public class BudgetingFragment extends Fragment implements BudgetRecyclerAdapter
     public void RecyclerOnClick(int position) { //when recyclerview is clicked
         long databaseid = budgetItemList.get(position).getID(); //get the database id of the clicked item
         Log.d(TAG, "RecyclerOnClick: " + position + " clicked");
+    }
+
+    public void firstTimeHints(Activity activity){
+
+        final FancyShowCaseView intro = new FancyShowCaseView.Builder(activity)
+                .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .title("This is the Budgeting screen. Here you can set monthly targets for various categories.")
+                .titleStyle(R.style.HintsStyle, Gravity.CENTER)
+                .fitSystemWindows(true)
+                .enableAutoTextPosition()
+                .build();
+
+
+        FancyShowCaseQueue mQueue = new FancyShowCaseQueue()
+                .add(intro);
+
+        mQueue.show();
     }
 }

@@ -1,19 +1,16 @@
 package com.thicksandwich.minimalistsavingstracker.menutabs.Home;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -36,16 +33,14 @@ import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 import com.thicksandwich.minimalistsavingstracker.MainActivity;
 import com.thicksandwich.minimalistsavingstracker.R;
 
-import org.w3c.dom.Text;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 import me.toptas.fancyshowcase.FancyShowCaseQueue;
 import me.toptas.fancyshowcase.FancyShowCaseView;
+import me.toptas.fancyshowcase.FocusShape;
 
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
@@ -54,7 +49,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
     //initialise values for SharedPreferences
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String FIRST_TIME = "first_time";
+    public static final String FIRST_TIME_HOME = "first_time_home";
     public static final String CURRENCY = "currency";
     public static final String BAL_OVERRIDE_KEY = "balance_override";
     public static final String DIFF_KEY = "difference";
@@ -98,10 +93,10 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
         //check for first time run
-        if(sharedPreferences.getBoolean(FIRST_TIME, false)){ //if first time
-            Log.d(TAG, "SHAREDPREFERENCES: First time run");
+        if(sharedPreferences.getBoolean(FIRST_TIME_HOME, true)){ //if first time
+            Log.d(TAG, "HomeFragment: First time run");
             firstTimeHints(getActivity(), fab, tv_edit_balance, btn_hints);
-            sharedPreferences.edit().putBoolean(FIRST_TIME, false).commit();
+            sharedPreferences.edit().putBoolean(FIRST_TIME_HOME, false).apply();
         }
         currency_code = sharedPreferences.getString(CURRENCY, "?");
         balance_override = sharedPreferences.getInt(BAL_OVERRIDE_KEY, 0);
@@ -299,13 +294,21 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
         final FancyShowCaseView edit_amount = new FancyShowCaseView.Builder(activity)
                 .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
                 .focusOn(edit)
-                .title("If you need to edit your balance at any time, click here")
+                .title("If you need to edit your balance at any time, click here. Please use this to set your current bank balance")
                 .titleStyle(R.style.HintsStyle, Gravity.TOP | Gravity.CENTER_HORIZONTAL)
                 .fitSystemWindows(true)
                 .enableAutoTextPosition()
                 .build();
 
+        final FancyShowCaseView menu_items = new FancyShowCaseView.Builder(activity)
+                .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .title("You can use the other menus items to set budgeting targets and see your spending stats.")
+                .titleStyle(R.style.HintsStyle, Gravity.CENTER)
+                .fitSystemWindows(true)
+                .enableAutoTextPosition()
+                .build();
 
         final FancyShowCaseView again = new FancyShowCaseView.Builder(activity)
                 .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
@@ -320,6 +323,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
                 .add(intro)
                 .add(fab)
                 .add(edit_amount)
+                .add(menu_items)
                 .add(again);
 
         mQueue.show();

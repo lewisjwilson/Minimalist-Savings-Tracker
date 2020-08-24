@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_transactions"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/btn_hints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:maxWidth="25dp"
+        android:maxHeight="25dp"
+        android:scaleType="centerInside"
+        android:src="@android:drawable/ic_menu_help"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ToggleButton
         android:id="@+id/btn_income_expenses"
@@ -83,7 +103,7 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_income_expenses"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="37dp"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@+id/txt_currencysymbol"
         android:autofillHints="@string/Amount"
@@ -134,7 +154,7 @@
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/edit_reference"
+        android:id="@+id/edit_ref"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_currencysymbol"
@@ -166,7 +186,7 @@
         android:id="@+id/spn_cat_add"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_below="@+id/edit_reference"
+        android:layout_below="@+id/edit_ref"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="18dp"

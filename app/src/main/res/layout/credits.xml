@@ -35,7 +35,7 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
-                android:text="@string/icon_attr"
+                android:text="Icon Attributes (www.flaticon.com)"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -46,10 +46,78 @@
                 android:ellipsize="none"
                 android:paddingStart="10dp"
                 android:paddingLeft="10dp"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:scrollHorizontally="false"
-                android:text="Left/Right Icons made by Becris from www.flaticon.com"
+                android:text="Left/Right Icons made by Becris"
+                android:textAlignment="center"
+                android:textColor="@android:color/tertiary_text_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:scrollHorizontally="false"
+                android:text="Home/Budgeting Menu icons made by Freepik"
+                android:textAlignment="center"
+                android:textColor="@android:color/tertiary_text_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:scrollHorizontally="false"
+                android:text="Stats Menu icon made by Kiranshastry"
+                android:textAlignment="center"
+                android:textColor="@android:color/tertiary_text_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:text="Third-Party Libraries"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:scrollHorizontally="false"
+                android:text="FancyShowCaseView (https://github.com/faruktoptas/FancyShowCaseView)"
+                android:textAlignment="center"
+                android:textColor="@android:color/tertiary_text_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:scrollHorizontally="false"
+                android:text="MPAndroidChart (https://github.com/PhilJay/MPAndroidChart)"
                 android:textAlignment="center"
                 android:textColor="@android:color/tertiary_text_dark"
                 android:textSize="18sp" />

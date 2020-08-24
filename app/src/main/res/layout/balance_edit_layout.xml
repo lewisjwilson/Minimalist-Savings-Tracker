@@ -14,12 +14,12 @@
         android:layout_marginStart="6dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/InputNewBalance"
+        android:text="Input Current Balance:"
         android:textAlignment="center"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/txt_dialog_yen"
+        android:id="@+id/txt_balance_yen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_edit_balance"
@@ -30,7 +30,7 @@
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/et_edit_balance"
+        android:id="@+id/edit_balancenodp"
         android:layout_width="261dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_edit_balance"
@@ -39,7 +39,7 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="73dp"
-        android:layout_toEndOf="@+id/txt_dialog_yen"
+        android:layout_toEndOf="@+id/txt_balance_yen"
         android:ems="10"
         android:hint="@string/_100000"
         android:inputType="numberSigned"
@@ -47,15 +47,57 @@
         android:textAlignment="center"
         android:textSize="20sp" />
 
+    <EditText
+        android:id="@+id/edit_balancedp1"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_edit_balance"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="3dp"
+        android:layout_toEndOf="@id/txt_balance_yen"
+        android:autofillHints="@string/Amount"
+        android:hint="21"
+        android:inputType="number"
+        android:maxLength="7"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/txt_editbaldecimalpoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_edit_balance"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@id/edit_balancedp1"
+        android:text="."
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:visibility="visible" />
+
+    <EditText
+        android:id="@+id/edit_balancedp2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_edit_balance"
+        android:layout_alignParentEnd="false"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="3dp"
+        android:layout_toEndOf="@id/txt_editbaldecimalpoint"
+        android:autofillHints="@string/Amount"
+        android:ems="10"
+        android:hint="50"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textAlignment="center" />
+
     <Button
         android:id="@+id/btn_editbalance"
         android:layout_width="149dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_edit_balance"
+        android:layout_below="@id/txt_balance_yen"
         android:layout_alignParentStart="false"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="131dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="20dp"
         android:text="@string/Submit" />
 
     <TextView
