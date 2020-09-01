@@ -41,6 +41,7 @@ import java.util.Calendar;
 import me.toptas.fancyshowcase.FancyShowCaseQueue;
 import me.toptas.fancyshowcase.FancyShowCaseView;
 import me.toptas.fancyshowcase.FocusShape;
+import me.toptas.fancyshowcase.listener.OnCompleteListener;
 
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
@@ -273,11 +274,28 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
     }
 
-    public void firstTimeHints(Activity activity, FloatingActionButton addTrans, TextView edit, ImageButton hints){
+    public void firstTimeHints(final Activity activity, FloatingActionButton addTrans, TextView edit, ImageButton hints){
 
         final FancyShowCaseView intro = new FancyShowCaseView.Builder(activity)
                 .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
                 .title("Welcome to MST. Here are a few hints to get you started.")
+                .titleStyle(R.style.HintsStyle, Gravity.CENTER)
+                .fitSystemWindows(true)
+                .enableAutoTextPosition()
+                .build();
+
+        final FancyShowCaseView intro_cont = new FancyShowCaseView.Builder(activity)
+                .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .title("You should use this app to record each transaction you make throughout the day. " +
+                        "Make sure to keep your receipts and to log each one under the correct category.")
+                .titleStyle(R.style.HintsStyle, Gravity.CENTER)
+                .fitSystemWindows(true)
+                .enableAutoTextPosition()
+                .build();
+
+        final FancyShowCaseView intro_cont2 = new FancyShowCaseView.Builder(activity)
+                .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
+                .title("You can use the side menu tabs to setup budgeting targets and to view graphs of your spending patterns.")
                 .titleStyle(R.style.HintsStyle, Gravity.CENTER)
                 .fitSystemWindows(true)
                 .enableAutoTextPosition()
@@ -302,9 +320,9 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
                 .enableAutoTextPosition()
                 .build();
 
-        final FancyShowCaseView menu_items = new FancyShowCaseView.Builder(activity)
+        final FancyShowCaseView thank_you = new FancyShowCaseView.Builder(activity)
                 .backgroundColor(ContextCompat.getColor(this.getContext(), R.color.colorHintBg))
-                .title("You can use the other menus items to set budgeting targets and see your spending stats.")
+                .title("I hope you enjoy your stay at MST. Remember to give a 5* rating if you think this app deserves it!")
                 .titleStyle(R.style.HintsStyle, Gravity.CENTER)
                 .fitSystemWindows(true)
                 .enableAutoTextPosition()
@@ -321,12 +339,42 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
         FancyShowCaseQueue mQueue = new FancyShowCaseQueue()
                 .add(intro)
+                .add(intro_cont)
+                .add(intro_cont2)
                 .add(fab)
                 .add(edit_amount)
-                .add(menu_items)
+                .add(thank_you)
                 .add(again);
 
         mQueue.show();
+
+        if(sharedPreferences.getBoolean(FIRST_TIME_HOME, true)) {
+            mQueue.setCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete() {
+                    final FancyShowCaseView setbalance = new FancyShowCaseView.Builder(activity)
+                            .backgroundColor(ContextCompat.getColor(getParentFragment().getContext(), R.color.colorHintBg))
+                            .title("Now, lets set our current balance.")
+                            .titleStyle(R.style.HintsStyle, Gravity.CENTER)
+                            .fitSystemWindows(true)
+                            .enableAutoTextPosition()
+                            .build();
+
+                    FancyShowCaseQueue mQueuetwo = new FancyShowCaseQueue()
+                            .add(setbalance);
+                    mQueuetwo.show();
+
+                    mQueuetwo.setCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete() {
+                            Intent intent = new Intent(getActivity(), EditBalance.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
+            });
+        }
+
     }
 
 

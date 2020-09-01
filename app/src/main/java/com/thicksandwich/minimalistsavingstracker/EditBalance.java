@@ -18,7 +18,7 @@ public class EditBalance extends AppCompatActivity {
 
     private EditText edit_balancenodp, edit_balancedp1, edit_balancedp2;
     private Button btn_editbalance;
-    private TextView txt_currencysymb, txt_reset, txt_decimalpoint;
+    private TextView txt_currencysymb, txt_decimalpoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,6 @@ public class EditBalance extends AppCompatActivity {
         edit_balancedp2 = findViewById(R.id.edit_balancedp2);
         txt_decimalpoint = findViewById(R.id.txt_editbaldecimalpoint);
         btn_editbalance = findViewById(R.id.btn_editbalance);
-        txt_reset = findViewById(R.id.txt_reset);
         txt_currencysymb = findViewById(R.id.txt_balance_yen);
 
         txt_currencysymb.setText(CurrencyFormat.currency_symbol);
@@ -72,16 +71,6 @@ public class EditBalance extends AppCompatActivity {
             }
         });
 
-        txt_reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragment.balance_override = 0;
-                HomeFragment.difference = 0;
-                HomeFragment.savePrefs();
-                startActivity(new Intent(EditBalance.this, MainActivity.class));
-                finish();
-            }
-        });
     }
 
     @Override

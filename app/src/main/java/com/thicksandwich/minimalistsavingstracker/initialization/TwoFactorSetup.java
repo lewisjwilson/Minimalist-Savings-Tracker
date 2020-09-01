@@ -75,7 +75,6 @@ public class TwoFactorSetup extends AppCompatActivity implements AdapterView.OnI
                         //save pin and answer to sharedpreferences
                         savePrefs(country, pin, question, answer_str);
 
-
                         TwoFactorSetup.this.startActivity(new Intent(TwoFactorSetup.this, MainActivity.class));
                         TwoFactorSetup.this.finish();
 
