@@ -1,14 +1,22 @@
 package com.thicksandwich.minimalistsavingstracker;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.google.android.material.navigation.NavigationView;
 import com.thicksandwich.minimalistsavingstracker.login.ChangePin;
 import com.thicksandwich.minimalistsavingstracker.login.ChangeTwoFactor;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -16,6 +24,8 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,9 +72,49 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_changetwofactor:
                 startActivity(new Intent(this, ChangeTwoFactor.class));
                 return true;
+            case R.id.action_notifications:
+                enableDisableNotifications();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void enableDisableNotifications() {
+
+        String channelID = "daily";
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "dailyNotifications";
+            String description = "Daily Notifications Channel";
+            int importance  = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(channelID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
+                //.setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Minimalist Savings Tracker")
+                .setContentText("Don't forget to record your transactions for the day!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        notificationManager.notify(100, builder.build());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 58);
+        calendar.set(Calendar.SECOND, 0);
+
+        //PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
     }
 
     @Override
