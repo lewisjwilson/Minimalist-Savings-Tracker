@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thicksandwich.minimalistsavingstracker" >
     
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:name="com.thicksandwich.MyApplication"
@@ -66,6 +66,15 @@
             android:name="com.thicksandwich.minimalistsavingstracker.login.ChangePin"
             android:label="Change Authentication Pin">
         </activity>
+
+        <receiver
+            android:name=".ReminderBroadcast"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

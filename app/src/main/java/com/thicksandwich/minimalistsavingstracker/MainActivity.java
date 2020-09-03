@@ -5,13 +5,18 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.thicksandwich.MyApplication;
 import com.thicksandwich.minimalistsavingstracker.login.ChangePin;
 import com.thicksandwich.minimalistsavingstracker.login.ChangeTwoFactor;
 
@@ -28,6 +33,12 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+
+    //initialise values for SharedPreferences
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String NOTIFICATIONS = "notifications";
+    private static final String TAG = "";
+    private SharedPreferences sharedPreferences;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -50,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         //start of own code....above is menubar layout stuff!
+        //Get SharedPreferences---------------------------------------------------------------------
+        sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
     }
 
@@ -73,18 +86,30 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ChangeTwoFactor.class));
                 return true;
             case R.id.action_notifications:
-                enableDisableNotifications();
+                Boolean enabled = sharedPreferences.getBoolean(NOTIFICATIONS, false); // if not created, value is false
+                if(enabled){ //
+                    enableDisableNotifications(true);
+                    enabled = false;
+                } else {
+                    enableDisableNotifications(false);
+                    enabled = true;
+                }
+
+                MyApplication.mEditor.putBoolean(NOTIFICATIONS, enabled); //set notifications status in sharedprefs
+                MyApplication.mEditor.commit();
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void enableDisableNotifications() {
+    private void enableDisableNotifications(Boolean enabled) {
 
         String channelID = "daily";
 
+        //create channel
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name = "dailyNotifications";
+            CharSequence name = "Daily Notifications";
             String description = "Daily Notifications Channel";
             int importance  = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(channelID, name, importance);
@@ -94,27 +119,28 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
-                //.setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle("Minimalist Savings Tracker")
-                .setContentText("Don't forget to record your transactions for the day!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-        notificationManager.notify(100, builder.build());
-
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 18);
-        calendar.set(Calendar.MINUTE, 58);
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+        calendar.set(Calendar.MINUTE, 00);
         calendar.set(Calendar.SECOND, 0);
 
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        //AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 100, intent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
+        if(enabled){ //if notifications are enabled
+            try {
+                alarmManager.cancel(pendingIntent);
+                Log.d(TAG, "enableDisableNotifications: Cancelled Notifications");
+                Toast.makeText(this, "Notifications Disabled", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                Log.d(TAG, "enableDisableNotifications: AlarmManager not cancelled ... " + e.toString());
+            }
+        } else { //if notifications are not enabled
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            Toast.makeText(this, "Notifications Enabled at 9pm daily", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
