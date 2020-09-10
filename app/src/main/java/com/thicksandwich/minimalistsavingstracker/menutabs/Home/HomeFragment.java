@@ -245,6 +245,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         Log.d(TAG, "RecyclerOnClick: " + position + " clicked");
         Bundle args = new Bundle();
         args.putLong("id", databaseid);
+        args.putInt("table", 1);
         DeleteDialog dialog = new DeleteDialog();
         dialog.setArguments(args);
 

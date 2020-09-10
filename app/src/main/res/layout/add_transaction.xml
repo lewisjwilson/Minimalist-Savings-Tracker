@@ -243,13 +243,28 @@
         android:textColor="@color/white"
         android:textSize="12sp" />
 
+    <CheckBox
+        android:id="@+id/cb_standingorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_date"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="18dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="Recurring Payment"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edit_date"
+        android:layout_below="@+id/cb_standingorder"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="@string/Submit" />
 
 </RelativeLayout>

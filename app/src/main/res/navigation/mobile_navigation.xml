@@ -23,4 +23,8 @@
         android:name="com.thicksandwich.minimalistsavingstracker.menutabs.Stats.StatsFragment"
         android:label="@string/stats"
         tools:layout="@layout/fragment_stats" />
+    <fragment
+        android:id="@+id/nav_stord"
+        android:name="com.thicksandwich.minimalistsavingstracker.menutabs.StandingOrders.StOrdFragment"
+        android:label="Standing Orders" />
 </navigation>

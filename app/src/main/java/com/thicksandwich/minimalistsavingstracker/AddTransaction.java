@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,13 +26,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.thicksandwich.MyApplication;
 import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import me.toptas.fancyshowcase.FancyShowCaseQueue;
 import me.toptas.fancyshowcase.FancyShowCaseView;
@@ -54,6 +53,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
     private String new_amount, new_reference, new_category, new_date;
     private Spinner spn_cat;
     private Button btn_now, btn_submit;
+    private CheckBox cb_standingorder;
     private ImageButton btn_hints;
     private int new_amount_val;
 
@@ -77,6 +77,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
         spn_cat = findViewById(R.id.spn_cat_add);
         edit_date = findViewById(R.id.edit_date);
         btn_now = findViewById(R.id.btn_now);
+        cb_standingorder = findViewById(R.id.cb_standingorder);
         btn_submit = findViewById(R.id.btn_submit);
 
         //Get SharedPreferences---------------------------------------------------------------------
@@ -157,9 +158,6 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
                     new_amount = edit_amountnodp.getText().toString();
                 }
 
-                Log.d(TAG, "amount: " + new_amount);
-
-
                 new_reference = edit_ref.getText().toString();
                 new_category = spn_cat.getSelectedItem().toString();
                 new_date = edit_date.getText().toString();
@@ -167,6 +165,11 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
                 if((new_amount.length() != 0)&&(new_reference.length() != 0)&&(new_category.length() != 0)&&(new_date.length() != 0))
                 {
                     new_amount_val = Integer.parseInt(new_amount); //parse string value as integer
+
+                    if(cb_standingorder.isChecked()){ //if item is a standing order
+                        AddStandingOrder(new_amount_val, new_reference, new_category, new_date, "monthly"); //only "monthly" is supported right now
+                    }
+
                     AddData(new_amount_val, new_reference, new_category, new_date);
                     edit_amountnodp.setText("");
                     edit_ref.setText("");
@@ -184,8 +187,26 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
 
     }
 
+    private void AddStandingOrder(int amount, String reference, String category, String date_time, String frequency) {
+
+        //checking if item is an expense or income
+        boolean bool_expense = false;
+        if(btn_income_expenses.isChecked()){
+            bool_expense = true;
+        }
+
+        boolean insertStOrder= myDB.addStandingOrder(bool_expense, amount, reference, category, date_time, frequency);
+
+        if(!insertStOrder) { //if data could not be added
+            Snackbar sb_storder_error = Snackbar.make(findViewById(R.id.add_transactions), "Error inserting Standing Order data", Snackbar.LENGTH_LONG);
+            sb_storder_error.show();
+        }
+
+    }
+
     private void AddData(int amount, String reference, String category, String date_time) {
 
+        //checking if item is an expense or income
         boolean bool_expense = false;
         if(btn_income_expenses.isChecked()){
             bool_expense = true;

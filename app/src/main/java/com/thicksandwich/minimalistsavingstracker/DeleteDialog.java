@@ -1,6 +1,7 @@
 package com.thicksandwich.minimalistsavingstracker;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.thicksandwich.minimalistsavingstracker.menutabs.StandingOrders.StOrdFragment;
 
 public class DeleteDialog extends androidx.fragment.app.DialogFragment {
+
     private DialogInterface.OnDismissListener onDismissListener;
 
     public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
@@ -38,13 +43,19 @@ public class DeleteDialog extends androidx.fragment.app.DialogFragment {
             public void onClick(View v) {
                 Bundle mArgs = getArguments();
                 long databaseid = mArgs.getLong("id");
-                myDB.removeItem(databaseid);
+                int table_num = mArgs.getInt("table");
+                if(table_num==1) {
+                    myDB.removeItemT1(databaseid);
+                } else if(table_num == 3) {
+                    myDB.removeItemT3(databaseid);
+                    StOrdFragment.delete_clicked = true;
+                }
                 dismiss();
 
             }
         });
 
-
         return view;
     }
+
 }

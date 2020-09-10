@@ -112,7 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void removeItem(long id) {
+    public void removeItemT1(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(T1_TABLENAME, T1_PK + "=?", new String[]{String.valueOf(id)});
     }
@@ -251,6 +251,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    //---------------------------standing_orders table TABLE 3--------------------------------------
+    //---------------------------fragment_standing_orders table TABLE 3--------------------------------------
+
+    public boolean addStandingOrder(boolean expense, int amount, String reference, String category, String date_time, String frequency) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(T3_EXPENSE, expense);
+        contentValues.put(T3_AMOUNT, amount);
+        contentValues.put(T3_REF, reference);
+        contentValues.put(T3_CAT, category);
+        contentValues.put(T3_DATETIME, date_time);
+        contentValues.put(T3_FREQ, frequency);
+
+        Log.d("DATABASE_HELPER", "Adding data to " + T3_TABLENAME);
+
+        long result = db.insert(T3_TABLENAME, null, contentValues);
+
+        return result != -1; //return true if result is not -1 (if -1, data couldn't be added)
+    }
+
+    public void removeItemT3(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(T3_TABLENAME, T3_PK + "=?", new String[]{String.valueOf(id)});
+    }
+
+    public Cursor getStandingOrders(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + T3_TABLENAME, null);
+    }
+
+    public void updateStandingOrders() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //if standing order months < current month value, create required number of new standing order entries
+    }
 
 }

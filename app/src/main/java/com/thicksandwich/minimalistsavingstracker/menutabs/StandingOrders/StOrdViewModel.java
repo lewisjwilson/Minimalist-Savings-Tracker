@@ -1,16 +1,16 @@
-package com.thicksandwich.minimalistsavingstracker.menutabs.Budgeting;
+package com.thicksandwich.minimalistsavingstracker.menutabs.StandingOrders;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class BudgetingViewModel extends ViewModel {
+public class StOrdViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public BudgetingViewModel() {
+    public StOrdViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is the budgeting fragment");
+        mText.setValue("This is the Standing Orders fragment");
     }
 
     public LiveData<String> getText() {
