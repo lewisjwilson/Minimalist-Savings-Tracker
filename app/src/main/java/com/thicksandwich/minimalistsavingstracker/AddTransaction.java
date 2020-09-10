@@ -28,7 +28,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.MyApplication;
 import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import me.toptas.fancyshowcase.FancyShowCaseQueue;
 import me.toptas.fancyshowcase.FancyShowCaseView;
@@ -50,7 +53,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
     private EditText edit_amountnodp, edit_amountdp1, edit_amountdp2, edit_ref, edit_date;
     private String new_amount, new_reference, new_category, new_date;
     private Spinner spn_cat;
-    private Button btn_submit;
+    private Button btn_now, btn_submit;
     private ImageButton btn_hints;
     private int new_amount_val;
 
@@ -73,6 +76,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
         edit_ref = findViewById(R.id.edit_ref);
         spn_cat = findViewById(R.id.spn_cat_add);
         edit_date = findViewById(R.id.edit_date);
+        btn_now = findViewById(R.id.btn_now);
         btn_submit = findViewById(R.id.btn_submit);
 
         //Get SharedPreferences---------------------------------------------------------------------
@@ -131,6 +135,13 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
+        btn_now.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dateNow();
+            }
+        });
+
         btn_submit.setOnClickListener(new View.OnClickListener() {
             private static final String TAG = "";
 
@@ -186,6 +197,11 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
             sb_insert_error.show();
         }
 
+    }
+
+    private void dateNow() {
+        String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+        edit_date.setText(currentDateandTime);
     }
 
     private void datePicker() {

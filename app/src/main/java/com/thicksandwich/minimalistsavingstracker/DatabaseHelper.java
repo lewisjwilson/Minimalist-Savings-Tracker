@@ -251,4 +251,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    //---------------------------standing_orders table TABLE 3--------------------------------------
+
 }
