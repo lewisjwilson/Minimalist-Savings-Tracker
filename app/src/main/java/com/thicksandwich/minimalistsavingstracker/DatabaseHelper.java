@@ -11,7 +11,7 @@ import static android.content.ContentValues.TAG;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "MST_Income_Expenses.db";
 
     private static final String T1_TABLENAME = "transactions";
@@ -29,6 +29,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String T2_AMOUNT = "AMOUNT"; //not used
     private static final String T2_TARGETMONTH = "MONTH";
 
+    private static final String T3_TABLENAME = "standing_orders";
+    private static final String T3_PK = "ID";
+    private static final String T3_EXPENSE = "EXPENSE";
+    private static final String T3_AMOUNT = "AMOUNT";
+    private static final String T3_REF = "REFERENCE";
+    private static final String T3_CAT = "CATEGORY";
+    private static final String T3_DATETIME = "DATE_TIME";
+    private static final String T3_FREQ = "FREQUENCY";
+
+
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -41,20 +52,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE " + T1_TABLENAME + " (" +
-                T1_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                T1_EXPENSE + " BOOLEAN, " +
-                T1_AMOUNT + " INTEGER, " +
-                T1_REF + " TEXT, " +
-                T1_CAT + " TEXT, " +
-                T1_DATETIME + " TEXT)");
+        try {
+            db.execSQL("CREATE TABLE " + T1_TABLENAME + " (" +
+                    T1_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    T1_EXPENSE + " BOOLEAN, " +
+                    T1_AMOUNT + " INTEGER, " +
+                    T1_REF + " TEXT, " +
+                    T1_CAT + " TEXT, " +
+                    T1_DATETIME + " TEXT)");
+        } catch (Exception e){
+            Log.d(TAG, "onCreate: '" + T1_TABLENAME + "' table already exists.");
+        }
 
-        db.execSQL("CREATE TABLE " + T2_TABLENAME + " (" +
-                T2_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                T2_CAT + " TEXT, " +
-                T2_TARGET + " INTEGER, " +
-                T2_AMOUNT + " INTEGER, " +
-                T2_TARGETMONTH + " TEXT)");
+        try {
+            db.execSQL("CREATE TABLE " + T2_TABLENAME + " (" +
+                    T2_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    T2_CAT + " TEXT, " +
+                    T2_TARGET + " INTEGER, " +
+                    T2_AMOUNT + " INTEGER, " +
+                    T2_TARGETMONTH + " TEXT)");
+        } catch (Exception e){
+            Log.d(TAG, "onCreate: '" + T2_TABLENAME + "' table already exists.");
+        }
+
+        try {
+            db.execSQL("CREATE TABLE " + T3_TABLENAME + " (" +
+                    T3_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    T3_EXPENSE + " BOOLEAN, " +
+                    T3_AMOUNT + " INTEGER, " +
+                    T3_REF + " TEXT, " +
+                    T3_CAT + " TEXT, " +
+                    T3_DATETIME + " TEXT, " +
+                    T3_FREQ + " TEXT)");
+        } catch (Exception e){
+            Log.d(TAG, "onCreate: '" + T3_TABLENAME + "' table already exists.");
+        }
     }
 
     @Override
