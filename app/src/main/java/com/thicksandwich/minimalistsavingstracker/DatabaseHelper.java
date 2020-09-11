@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.Date;
+
 import static android.content.ContentValues.TAG;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -95,7 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //------------------------------transactions table TABLE 1--------------------------------------
-    boolean addTransaction(boolean expense, int amount, String reference, String category, String date_time) {
+    public boolean addTransaction(boolean expense, int amount, String reference, String category, String date_time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(T1_EXPENSE, expense);
@@ -280,10 +282,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + T3_TABLENAME, null);
     }
 
-    public void updateStandingOrders() {
+    public void updateStandingOrders(Integer id, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //if standing order months < current month value, create required number of new standing order entries
+        db.execSQL("UPDATE " + T3_TABLENAME +
+                " SET " + T3_DATETIME + " = '" + date + "'" +
+                " WHERE " + T3_PK + " = '" + id + "'");
+
     }
 
 }

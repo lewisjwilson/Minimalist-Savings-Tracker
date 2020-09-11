@@ -43,10 +43,10 @@ public class StOrdRecyclerAdapter extends RecyclerView.Adapter<StOrdRecyclerAdap
         int negative = currentItem.getNegative();
         if(negative==1){//if item is an expense
             holder.mNegativeTextView.setVisibility(View.VISIBLE);
-            holder.main_rvitem_view.setBackgroundColor(Color.parseColor("#1EB82504"));
+            //holder.main_rvitem_view.setBackgroundColor(Color.parseColor("#1EB82504"));
         } else {
             holder.mNegativeTextView.setVisibility(View.INVISIBLE);
-            holder.main_rvitem_view.setBackgroundColor(Color.parseColor("#1E0AC800"));
+            //holder.main_rvitem_view.setBackgroundColor(Color.parseColor("#1E0AC800"));
         }
 
         //format for commas between each 3 zeros

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -97,12 +96,15 @@ public class StOrdFragment extends Fragment implements StOrdRecyclerAdapter.Recy
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
+
+                //if the delete button was clicked, remove list item
                 if(delete_clicked) {
                     displayedItemList.remove(position);
                     mRecyclerView.removeViewAt(position);
                     mAdapter.notifyItemRemoved(position);
                     mAdapter.notifyItemRangeChanged(position, displayedItemList.size());
                     mAdapter.notifyDataSetChanged();
+                    delete_clicked = false; //reset "clicked" status
                 }
 
             }

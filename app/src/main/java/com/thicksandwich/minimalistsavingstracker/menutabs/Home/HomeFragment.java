@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.MyApplication;
 import com.thicksandwich.minimalistsavingstracker.AddTransaction;
 import com.thicksandwich.minimalistsavingstracker.DatabaseHelper;
@@ -35,8 +36,12 @@ import com.thicksandwich.minimalistsavingstracker.R;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import me.toptas.fancyshowcase.FancyShowCaseQueue;
 import me.toptas.fancyshowcase.FancyShowCaseView;
@@ -122,6 +127,10 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         //change textview for year and month
         txt_year_month.setText(yearstr + "/" + monthstr);
 
+        //Process Standing Orders-------------------------------------------------------------------
+        standingOrders(myDB);
+
+
         //inflating the recyclerview example item and attaching the data to the adapter-------------
         View rv_item = inflater.inflate(R.layout.example_rv_item, container, false);
         final TextView txt_minus_rv = rv_item.findViewById(R.id.txt_minus_rv);
@@ -206,6 +215,20 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
         });
 
         return root; //return the view
+    }
+
+    private void standingOrders(DatabaseHelper db) {
+
+        Cursor sodata = db.getStandingOrders();
+
+        //go through each standing order to check if they need adding to "transactions" table
+        while (sodata.moveToNext()) {
+
+
+            //add transaction for each month between standing order and current date
+
+        }
+
     }
 
     public void DatatoRecycler(Cursor data, TextView txt_minus_rv) {
