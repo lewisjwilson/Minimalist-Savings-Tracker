@@ -13,7 +13,7 @@ import static android.content.ContentValues.TAG;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "MST_Income_Expenses.db";
 
     private static final String T1_TABLENAME = "transactions";
@@ -39,6 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String T3_CAT = "CATEGORY";
     private static final String T3_DATETIME = "DATE_TIME";
     private static final String T3_FREQ = "FREQUENCY";
+    private static final String T3_DAY = "RECUR_DAY";
 
 
 
@@ -85,7 +86,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     T3_REF + " TEXT, " +
                     T3_CAT + " TEXT, " +
                     T3_DATETIME + " TEXT, " +
-                    T3_FREQ + " TEXT)");
+                    T3_FREQ + " TEXT, " +
+                    T3_DAY + " TEXT)");
         } catch (Exception e){
             Log.d(TAG, "onCreate: '" + T3_TABLENAME + "' table already exists.");
         }
@@ -255,7 +257,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //---------------------------fragment_standing_orders table TABLE 3--------------------------------------
 
-    public boolean addStandingOrder(boolean expense, int amount, String reference, String category, String date_time, String frequency) {
+    public boolean addStandingOrder(boolean expense, int amount, String reference, String category, String date_time, String frequency, String recurday) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(T3_EXPENSE, expense);
@@ -264,6 +266,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(T3_CAT, category);
         contentValues.put(T3_DATETIME, date_time);
         contentValues.put(T3_FREQ, frequency);
+        contentValues.put(T3_DAY, recurday);
 
         Log.d("DATABASE_HELPER", "Adding data to " + T3_TABLENAME);
 

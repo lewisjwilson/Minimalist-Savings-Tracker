@@ -274,7 +274,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
             //update the standing orders table
             db.updateStandingOrders(data.getInt(0), sodatestr);
 
-            //add transaction for each month between standing order and current date
 
         }
 

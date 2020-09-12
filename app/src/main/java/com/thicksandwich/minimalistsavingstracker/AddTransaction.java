@@ -28,6 +28,10 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.snackbar.Snackbar;
 import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -195,7 +199,15 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
             bool_expense = true;
         }
 
-        boolean insertStOrder= myDB.addStandingOrder(bool_expense, amount, reference, category, date_time, frequency);
+        //processing datetime string for getting recurring day of month
+        String datestr = date_time;
+        DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+        DateTime recurday = DateTime.parse(datestr, dtf);
+        String recurdaystr = String.format("%02d", recurday.getDayOfMonth());
+
+        Log.d(TAG, "AddTransaction: ");
+
+        boolean insertStOrder= myDB.addStandingOrder(bool_expense, amount, reference, category, date_time, frequency, recurdaystr);
 
         if(!insertStOrder) { //if data could not be added
             Snackbar sb_storder_error = Snackbar.make(findViewById(R.id.add_transactions), "Error inserting Standing Order data", Snackbar.LENGTH_LONG);
