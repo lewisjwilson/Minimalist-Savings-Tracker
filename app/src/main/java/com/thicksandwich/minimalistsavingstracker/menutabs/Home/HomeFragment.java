@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -34,11 +36,19 @@ import com.thicksandwich.minimalistsavingstracker.backend.CurrencyFormat;
 import com.thicksandwich.minimalistsavingstracker.MainActivity;
 import com.thicksandwich.minimalistsavingstracker.R;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Months;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -219,11 +229,50 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
     private void standingOrders(DatabaseHelper db) {
 
-        Cursor sodata = db.getStandingOrders();
+        Cursor data = db.getStandingOrders(); //get all standing orders
+
+        //Joda time Library (to support API<26)
+        String cdatestr = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 
         //go through each standing order to check if they need adding to "transactions" table
-        while (sodata.moveToNext()) {
+        while (data.moveToNext()) {
 
+            String sodatestr = data.getString(5);
+
+            DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+            DateTime sodate = DateTime.parse(sodatestr, dtf);
+            DateTime cdate = DateTime.parse(cdatestr, dtf);
+
+            int days = Days.daysBetween(sodate, cdate).getDays(); //correctly displays days between start and end
+            int months = Months.monthsBetween(sodate, cdate).getMonths(); //correctly displays months between start and end
+            Log.d(TAG, "standingOrders, days: " + days);
+            Log.d(TAG, "standingOrders, months: " + months);
+            Log.d(TAG, "standingOrders, start: " + sodate);
+            Log.d(TAG, "standingOrders, end: " + cdate);
+            Log.d(TAG, "standingOrders, end_str: " + dtf.print(cdate)); //datetime to string
+
+            //for the number of months missed, add transactions to the months
+            for(int i=0; i<months; i++) {
+
+                sodate = sodate.plusMonths(1);
+                sodatestr = dtf.print(sodate);
+
+                boolean bool_expense = data.getInt(1)>0;
+
+                //0=id, 1=expense, 2=amount, 3=ref, 4=cat, 5=date, 6=freq
+                boolean insertData = db.addTransaction(bool_expense, data.getInt(2), data.getString(3),
+                        data.getString(4), sodatestr);
+
+                if(!insertData) {
+                    Log.d(TAG, "standingOrders: Error inserting Standing Order with REF: " + data.getString(3));
+                } else {
+                    Log.d(TAG, "standingOrders: REF: " + data.getString(3) + ", insertion successful.");
+                }
+
+            }
+
+            //update the standing orders table
+            db.updateStandingOrders(data.getInt(0), sodatestr);
 
             //add transaction for each month between standing order and current date
 
