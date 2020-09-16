@@ -52,7 +52,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
 
     private DatabaseHelper myDB;
     private ToggleButton btn_income_expenses; //not checked = income, checked = expense
-    private TextView txt_minus, txt_currencysymbol, txt_decimalpoint;
+    private TextView txt_minus, txt_currencysymbol, txt_decimalpoint, txt_note;
     private EditText edit_amountnodp, edit_amountdp1, edit_amountdp2, edit_ref, edit_date;
     private String new_amount, new_reference, new_category, new_date;
     private Spinner spn_cat;
@@ -74,6 +74,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
         txt_minus = findViewById(R.id.txt_minus_rv);
         txt_currencysymbol = findViewById(R.id.txt_currencysymbol);
         txt_decimalpoint = findViewById(R.id.txt_decimalpoint);
+        txt_note = findViewById(R.id.txt_note);
         edit_amountnodp = findViewById(R.id.edit_amountnodp);
         edit_amountdp1 = findViewById(R.id.edit_amountdp1);
         edit_amountdp2 = findViewById(R.id.edit_amountdp2);
@@ -144,6 +145,17 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onClick(View view) {
                 dateNow();
+            }
+        });
+
+        cb_standingorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(cb_standingorder.isChecked()){
+                    txt_note.setVisibility(View.VISIBLE);
+                } else {
+                    txt_note.setVisibility(View.GONE);
+                }
             }
         });
 
