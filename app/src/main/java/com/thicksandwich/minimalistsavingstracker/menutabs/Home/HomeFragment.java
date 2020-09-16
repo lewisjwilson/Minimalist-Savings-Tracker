@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -188,7 +186,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
                 Cursor data = myDB.getDisplayData(newyearstr, newmonthstr); //get data within new year and month
                 DatatoRecycler(data, txt_minus_rv); //add the data to the recycler adapter
                 mAdapter.notifyDataSetChanged(); //update the recyclerview
-                Log.d(TAG, "onClick: " + monthint);
                 txt_year_month.setText(newyearstr + "/" + newmonthstr); //set textview text
             }
         });
@@ -210,7 +207,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
                 Cursor data = myDB.getDisplayData(newyearstr, newmonthstr); //get data within new year and month
                 DatatoRecycler(data, txt_minus_rv); //add the data to the recycler adapter
                 mAdapter.notifyDataSetChanged(); //update the recyclerview
-                Log.d(TAG, "onClick: " + monthint);
                 txt_year_month.setText(newyearstr + "/" + newmonthstr); //set textview text
             }
         });
@@ -243,25 +239,31 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
             DateTime sodate = DateTime.parse(sodatestr, dtf);
             DateTime cdate = DateTime.parse(cdatestr, dtf);
 
-            int days = Days.daysBetween(sodate, cdate).getDays(); //correctly displays days between start and end
-            int months = Months.monthsBetween(sodate, cdate).getMonths(); //correctly displays months between start and end
-            Log.d(TAG, "standingOrders, days: " + days);
-            Log.d(TAG, "standingOrders, months: " + months);
-            Log.d(TAG, "standingOrders, start: " + sodate);
-            Log.d(TAG, "standingOrders, end: " + cdate);
-            Log.d(TAG, "standingOrders, end_str: " + dtf.print(cdate)); //datetime to string
+            int months = Months.monthsBetween(sodate, cdate).getMonths(); //displays months between sodate and cdate
 
-            //for the number of months missed, add transactions to the months
+            //for the number of months missed, add standing order transactions to the months
             for(int i=0; i<months; i++) {
 
+                int recur_day = Integer.parseInt(data.getString(7));
+
+                //increment the month
                 sodate = sodate.plusMonths(1);
+
+                //while the standing order day is less than the recur day
+                //only happens if previous month had less days than current month
+                while(sodate.getDayOfMonth()<recur_day && sodate.getDayOfMonth() != sodate.dayOfMonth().getMaximumValue()){
+                    sodate = sodate.plusDays(1);
+                }
+
                 sodatestr = dtf.print(sodate);
 
+                //get expense boolean value from standing_orders table
                 boolean bool_expense = data.getInt(1)>0;
 
                 //0=id, 1=expense, 2=amount, 3=ref, 4=cat, 5=date, 6=freq
                 boolean insertData = db.addTransaction(bool_expense, data.getInt(2), data.getString(3),
                         data.getString(4), sodatestr);
+
 
                 if(!insertData) {
                     Log.d(TAG, "standingOrders: Error inserting Standing Order with REF: " + data.getString(3));
@@ -271,7 +273,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
             }
 
-            //update the standing orders table
+            //update the standing orders table (date is last date that the standing order was run)
             db.updateStandingOrders(data.getInt(0), sodatestr);
 
 
@@ -313,7 +315,6 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
     @Override
     public void RecyclerOnClick(int position) {
         long databaseid = displayedItemList.get(position).getID(); //get the database id of the clicked item
-        Log.d(TAG, "RecyclerOnClick: " + position + " clicked");
         Bundle args = new Bundle();
         args.putLong("id", databaseid);
         args.putInt("table", 1);
@@ -329,9 +330,7 @@ public class HomeFragment extends Fragment implements MainRecyclerAdapter.Recycl
 
             }
         });
-
         dialog.show(getActivity().getSupportFragmentManager(), "deletedialog");
-
     }
 
     public String moneyFormat(int i){

@@ -12,20 +12,19 @@
         android:id="@+id/main_rvitem_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:layout_margin="4dp"
+        android:gravity="center">
 
         <TextView
-            android:id="@+id/txt_entryamount"
+            android:id="@+id/txt_entryreference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="amount"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText">
+            android:text="Reference"
+            android:textColor="@color/black"
+            android:textSize="24sp">
 
         </TextView>
 
@@ -33,45 +32,44 @@
             android:id="@+id/txt_minus_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_entryreference"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="2dp"
             android:layout_marginBottom="20dp"
             android:text="-"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText">
+            android:textSize="16sp"
+            android:textStyle="bold">
 
         </TextView>
 
         <TextView
-            android:id="@+id/txt_entryreference"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="2dp"
-            android:text="Reference"
-            android:textSize="20sp"
-            tools:ignore="HardcodedText">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/txt_category_date"
+            android:id="@+id/txt_entryamount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_entryreference"
-            android:layout_alignParentEnd="true"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="2dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
-            android:text="Date / Category"
-            android:textSize="12sp"
-            tools:ignore="HardcodedText">
+            android:layout_toEndOf="@id/txt_minus_rv"
+            android:text="amount"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold">
 
         </TextView>
+
+        <TextView
+            android:id="@+id/txt_recurday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:text="recur_day"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

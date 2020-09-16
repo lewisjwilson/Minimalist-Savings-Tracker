@@ -75,10 +75,12 @@ public class StOrdFragment extends Fragment implements StOrdRecyclerAdapter.Recy
                 txt_minus_rv.setVisibility(View.INVISIBLE);
             }
 
+            String recur_day_text = "Day of Month: " + data.getString(7);
+
             Log.d("TAG", "StOrdtoRecycler getRef: " + data.getString(3));
             //column index 0 of db = id, column index 1 of db = expense, column index 2 = amount...
-            displayedItemList.add(new StOrdRecyclerItem(data.getLong(0), data.getInt(1), data.getInt(2), data.getString(3),
-                    data.getString(4) + " " + data.getString(5)));
+            displayedItemList.add(new StOrdRecyclerItem(data.getLong(0), data.getInt(1), data.getInt(2),
+                    data.getString(3), recur_day_text));
         }
     }
 

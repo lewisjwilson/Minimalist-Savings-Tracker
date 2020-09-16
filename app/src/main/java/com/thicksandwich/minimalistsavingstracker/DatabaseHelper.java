@@ -42,14 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String T3_DAY = "RECUR_DAY";
 
 
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.setVersion(oldVersion);
     }
 
     @Override
@@ -98,6 +92,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.setVersion(oldVersion);
+    }
+
     //------------------------------transactions table TABLE 1--------------------------------------
     public boolean addTransaction(boolean expense, int amount, String reference, String category, String date_time) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -130,13 +129,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         " WHERE strftime('%m'," + T1_DATETIME + ")='" + month + "'" + //select month
                         " AND strftime('%Y'," + T1_DATETIME + ")='" + year + "'" + //select year
                         " ORDER BY datetime(" + T1_DATETIME + ") DESC", null);
-    }
-
-    //get all data from the database
-    public Cursor getAllData() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        //get data in order of date and time
-        return db.rawQuery("SELECT * FROM " + T1_TABLENAME, null);
     }
 
     public Cursor getSummedData(String year, String month) { //sum expenses by unique category (ordered) for StatsFragment

@@ -17,7 +17,8 @@
         <activity
             android:name="com.thicksandwich.minimalistsavingstracker.login.Authentication"
             android:label="Minimalist Savings Tracker"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -52,7 +53,8 @@
         </activity>
         <activity
             android:name="com.thicksandwich.minimalistsavingstracker.AddTransaction"
-            android:label = "New Transaction">
+            android:label = "New Transaction"
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name="com.thicksandwich.minimalistsavingstracker.EditBalance"

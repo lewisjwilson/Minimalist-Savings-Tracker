@@ -148,8 +148,7 @@ public class AddTransaction extends AppCompatActivity implements AdapterView.OnI
         });
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
-            private static final String TAG = "";
-
+            
             @Override
             public void onClick(View v) {
 

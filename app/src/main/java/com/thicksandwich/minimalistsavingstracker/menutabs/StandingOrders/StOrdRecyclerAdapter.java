@@ -53,15 +53,7 @@ public class StOrdRecyclerAdapter extends RecyclerView.Adapter<StOrdRecyclerAdap
         String amount_display = moneyFormat(currentItem.getAmount());
         holder.mAmountTextView.setText(amount_display);
         holder.mReferenceTextView.setText(currentItem.getReference());
-
-        //format the date and category values in the recyclerview
-        String unformatted_date_category = currentItem.getDateCategory();
-        Log.d("Date Category ", unformatted_date_category);
-        String formatted_date = unformatted_date_category.substring(unformatted_date_category.length()-16, unformatted_date_category.length()-6);
-        String formatted_category = unformatted_date_category.substring(0, unformatted_date_category.length()-17);
-        String formatted_date_category = formatted_date + " / " + formatted_category;
-
-        holder.mDateCategoryTextView.setText(formatted_date_category);
+        holder.mRecurDayTextView.setText(currentItem.getRecurDay());
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
@@ -69,7 +61,7 @@ public class StOrdRecyclerAdapter extends RecyclerView.Adapter<StOrdRecyclerAdap
         final TextView mNegativeTextView;
         final TextView mAmountTextView;
         final TextView mReferenceTextView;
-        final TextView mDateCategoryTextView;
+        final TextView mRecurDayTextView;
         RecyclerOnClickListener rvonLongClickListener;
         final RelativeLayout main_rvitem_view;
 
@@ -78,7 +70,7 @@ public class StOrdRecyclerAdapter extends RecyclerView.Adapter<StOrdRecyclerAdap
             mNegativeTextView = itemView.findViewById(R.id.txt_minus_rv);
             mAmountTextView = itemView.findViewById(R.id.txt_entryamount);
             mReferenceTextView = itemView.findViewById(R.id.txt_entryreference);
-            mDateCategoryTextView = itemView.findViewById(R.id.txt_category_date);
+            mRecurDayTextView = itemView.findViewById(R.id.txt_recurday);
             main_rvitem_view = itemView.findViewById(R.id.main_rvitem_view);
 
             this.rvonLongClickListener = rvonClickListener;

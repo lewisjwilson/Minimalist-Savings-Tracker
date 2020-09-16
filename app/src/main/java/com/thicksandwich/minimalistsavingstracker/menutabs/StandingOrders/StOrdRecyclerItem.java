@@ -5,14 +5,14 @@ public class StOrdRecyclerItem { //used to fill the recyclerview
     private final int mNegative;
     private final int mAmount;
     private final String mReference;
-    private final String mDateCategory;
+    private final String mRecurDay;
 
-    public StOrdRecyclerItem(long id, int negative, int amount, String reference, String date_category) { //define an item
+    public StOrdRecyclerItem(long id, int negative, int amount, String reference, String recur_day) { //define an item
         mID = id;
         mNegative = negative; //1 means minus sign should show, 0 means the opposite
         mAmount = amount;
         mReference = reference;
-        mDateCategory = date_category;
+        mRecurDay = recur_day;
     }
     public long getID() {
         return mID;
@@ -30,7 +30,7 @@ public class StOrdRecyclerItem { //used to fill the recyclerview
         return mReference;
     }
 
-    public String getDateCategory() {
-        return mDateCategory;
+    public String getRecurDay() {
+        return mRecurDay;
     }
 }

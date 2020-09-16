@@ -10,7 +10,7 @@ public class StOrdViewModel extends ViewModel {
 
     public StOrdViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is the Standing Orders fragment");
+        mText.setValue("No Standing Orders have been created");
     }
 
     public LiveData<String> getText() {
