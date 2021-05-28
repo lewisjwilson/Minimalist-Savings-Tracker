@@ -3,5 +3,5 @@
 # Minimalist Savings Tracker
 A simple finance tracker, with stats, graphs and budgeting capabilities.
 
-###How to use:
+### How to use
 Keep your receipts. When you have time, plug in the receipt details and track your spending on a monthly basis.
